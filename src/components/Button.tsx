@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
 
-interface Button {
-    children : ReactNode
-  }
-  
+interface Props {
+  children: ReactNode;
+  color: string;
+}
 
-function Button( {children} : Button ) {
-  return <button className="btn btn-warning" >{ children }</button>;
+type OptionalProps = Partial<Props>;
+
+function Button({ children, color }: OptionalProps) {
+  return <button className={"my-3 btn btn-outline-" + color}>{children}</button>;
 }
 
 export default Button;

@@ -1,29 +1,32 @@
-import { ReactNode } from "react";
 import Button from "./components/Button";
 import ListGroup from "./components/ListGroup";
 import pokemon from "./data.json";
-
+import { handle, ordering } from "./Functions/functions";
 
 function App() {
-  const pokemon_display = pokemon.slice(0, 10).map((item) => {
+  const maxListLength = 15;
+  const heading = "Pokemon";
+  const sortBy = 'type';
+  const pokemon_display = pokemon.slice(0, maxListLength).map((item) => {
     return {
       id: item.id,
       name: item.name.french,
       type: item.type,
     };
-  });  
-
-  const handle = (item : any) => {
-    console.log(item.name)
-  };
-
-  const heading = "Pokemon"
+  });
 
   return (
-    <section>
-      <ListGroup heading={ heading } onSelectItem = { handle } data={ pokemon_display }>
-        <Button> App Button </Button>
-        </ListGroup>
+    <section className="container">
+      <ListGroup
+        heading={heading}
+        dataFunction={ordering}
+        sortBy={sortBy}
+        onSelectItem={handle}
+        data={pokemon_display}
+      >
+        <Button color="primary"> App Button </Button>
+        <Button color="info"> App Button 2 </Button>
+      </ListGroup>
     </section>
   );
 }
