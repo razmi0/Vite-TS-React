@@ -1,25 +1,20 @@
 import { ReactNode, useState } from "react";
-import { DataType, DataTypes } from "../SharedTypes/types";
-import { KeyOfDataType } from "../SharedTypes/types";
+import { DataType, DataTypes, KeyOfDataType } from "../SharedTypes/types";
+import Button from "./Button";
+import { ordering } from "../Functions/functions";
 
 interface Props {
   heading: string;
   onSelectItem: (item: DataType) => void;
-  dataFunction?: (items: DataTypes, sortBy : KeyOfDataType) => DataTypes;
   data: DataTypes;
-  sortBy: KeyOfDataType
+  sortBy: KeyOfDataType;
   children?: ReactNode;
 }
 
-function ListGroup({
-  heading,
-  onSelectItem,
-  dataFunction,
-  data,
-  sortBy,
-  children,
-}: Props) {
+function ListGroup({ heading, onSelectItem, data, sortBy }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [sortedData, setSortedData] = useState<DataTypes>(data);
+  
 
   const setStyle = (selectedIndex: number, index: number): string => {
     return selectedIndex === index
@@ -27,15 +22,11 @@ function ListGroup({
       : "list-group-item";
   };
 
-  if (dataFunction) {
-    data = dataFunction(data, sortBy);
-  }
-
   return (
     <>
       <h1 className="my-2"> {heading} </h1>
       <ul className="list-group">
-        {data.map((item, index) => (
+        {sortedData.map((item, index) => (
           <li
             className={setStyle(selectedIndex, index)}
             key={item.id}
@@ -49,7 +40,16 @@ function ListGroup({
         ))}
       </ul>
       <hr />
-      <div className="d-flex flex-row justify-content-evenly">{children}</div>
+
+      <div className="d-flex flex-row justify-content-evenly">
+        <Button color="primary" sortBy='id' data={sortedData} updateData={setSortedData}>
+          Sort by
+        </Button>
+        <Button color="info" sortBy='name' data={sortedData} updateData={setSortedData} >
+          Sort by
+        </Button>
+      </div>
+
       <hr />
     </>
   );
