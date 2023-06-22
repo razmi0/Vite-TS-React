@@ -21,12 +21,23 @@ function App() {
       };
     });
 
+    console.log(pokemon_display[0].Attack);
+    console.log(pokemon_display[0].SpAttack);
+
+
   const sortsTypes: SortsTypes = Object.keys(
     pokemon_display[0]
   ) as KeyOfDataType[];
 
   const colors = ["success", "danger", "warning", "info", "light", "secondary", "primary"];
   const title = "Pokemon";
+
+  const isAsc = true;
+
+
+  
+  
+
 
   return (
     <section className="container-sm">
@@ -35,6 +46,7 @@ function App() {
         data={pokemon_display}
         sorts={sortsTypes}
         colors={colors}
+        isAsc={isAsc}
       ></Table>
     </section>
   );

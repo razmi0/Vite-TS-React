@@ -1,25 +1,23 @@
 import { ReactNode, useState } from "react";
-import {
-  DataType,
-  DataTypes,
-  KeyOfDataType,
-  SortsTypes,
-} from "../SharedTypes/types";
+import { DataTypes, KeyOfDataType, SortsTypes } from "../SharedTypes/types";
 import THeader from "./THeader";
+import TBody from "./Tbody";
 
 interface Props {
   heading: string;
   data: DataTypes;
   children?: ReactNode;
   sorts: SortsTypes;
+  isAsc?: boolean;
   colors?: string[];
 }
 
-function Table({ heading, data, sorts, colors }: Props) {
+function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
   if (!data) return <></>;
 
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [activeSortBy, setactiveSortBy] = useState<KeyOfDataType>(sorts[0]);
+  const [sortByAsc, setSortByAsc] = useState<boolean>(isAsc);
 
   const handleClick = (index: number) => {
     setSelectedIndex(index);
@@ -29,55 +27,36 @@ function Table({ heading, data, sorts, colors }: Props) {
     return selectedIndex === index ? "table-dark" : "table-secondary";
   };
 
-  const PokemonRow = ({
-    item,
-    index,
-    handleClick,
-    selectedIndex,
-  }: {
-    item: DataType;
-    index: number;
-    handleClick: (index: number, item: DataType) => void;
-    selectedIndex: number;
-  }) => {
-    return (
-      <tr
-        className={setStyle(selectedIndex, index)}
-        key={item.id}
-        onClick={() => {
-          handleClick(index, item);
-        }}
-      >
-        <td>{item.id}</td>
-        <td>{item.name}</td>
-        <td>{item.type.join(" ")}</td>
-
-        <td>{item.HP}</td>
-        <td>{item.Attack}</td>
-        <td>{item.Defense}</td>
-        <td>{item.SpAttack}</td>
-        <td>{item.SpDefense}</td>
-        <td>{item.Speed}</td>
-      </tr>
-    );
-  };
-
-  /*  ASC */
-  const sorting = (data: DataTypes, sortBy: KeyOfDataType): DataTypes => {
+  const sorting = (
+    data: DataTypes,
+    sortBy: KeyOfDataType,
+    asc: boolean
+  ): DataTypes => {
     if (Array.isArray(data)) {
       data.sort((a, b) => {
-        if (a[sortBy] < b[sortBy]) return -1;
-        if (a[sortBy] > b[sortBy]) return 1;
-        return 0;
+        const valueA = a[sortBy];
+        const valueB = b[sortBy];
+
+        if (typeof valueA === "number" && typeof valueB === "number") {
+          return asc ? valueA - valueB : valueB - valueA;
+        } else if (typeof valueA === "string" && typeof valueB === "string") {
+          return asc
+            ? valueA.localeCompare(valueB)
+            : valueB.localeCompare(valueA);
+        } else if (Array.isArray(valueA) && Array.isArray(valueB)) {
+          return asc
+            ? valueA[0].localeCompare(valueB[0])
+            : valueB[0].localeCompare(valueA[0]);
+        } else {
+          return 0;
+        }
       });
+
       return data;
     }
+
     return data;
   };
-
-  /*  DESC */
- 
-
 
   const setColor = (
     index: number,
@@ -88,7 +67,7 @@ function Table({ heading, data, sorts, colors }: Props) {
     return index < colors.length ? colors[index] : colors[sortsLength % index];
   };
 
-  const sortedData = sorting(data, activeSortBy);
+  const sortedData = sorting(data, activeSortBy, sortByAsc);
 
   return (
     <>
@@ -102,6 +81,8 @@ function Table({ heading, data, sorts, colors }: Props) {
                 color={setColor(index, colors, sorts.length)}
                 sortBy={sortBy}
                 onActive={setactiveSortBy}
+                currentAsc={sortByAsc}
+                onAsc={setSortByAsc}
               >
                 Sort by
               </THeader>
@@ -110,12 +91,13 @@ function Table({ heading, data, sorts, colors }: Props) {
         </thead>
         <tbody>
           {sortedData.map((item, index) => (
-            <PokemonRow
+            <TBody
               item={item}
               index={index}
               handleClick={handleClick}
               selectedIndex={selectedIndex}
               key={item.id}
+              setStyle={setStyle}
             />
           ))}
         </tbody>
