@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import { DataTypes, KeyOfDataType, SortsTypes } from "../SharedTypes/types";
 import THeader from "./THeader";
-import TBody from "./Tbody";
+import TBody from "./TBody";
 
 interface Props {
   heading: string;
