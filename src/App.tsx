@@ -5,6 +5,8 @@ import "./App.css";
 
 function App() {
 
+  
+
   const maxListLength = 20;
   const sortsTypes : SortsTypes = ["id", "name", "type"];
   const colors = ["success", "danger", "warning", "info", "light", "dark"];
@@ -19,7 +21,7 @@ function App() {
   
 
   return (
-    <section className="container">
+    <section className="container-sm">
       <Table heading={title} data={pokemon_display} sorts={sortsTypes} colors={colors}>
       </Table>
     </section>
