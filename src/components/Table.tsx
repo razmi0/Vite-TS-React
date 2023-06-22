@@ -1,5 +1,10 @@
 import { ReactNode, useState } from "react";
-import { DataType, DataTypes, KeyOfDataType, SortsTypes } from '../SharedTypes/types';
+import {
+  DataType,
+  DataTypes,
+  KeyOfDataType,
+  SortsTypes,
+} from "../SharedTypes/types";
 import Button from "./Button";
 
 interface Props {
@@ -9,12 +14,11 @@ interface Props {
   sorts: SortsTypes;
 }
 
-function ListGroup({ heading, data, sorts }: Props) {
+function Table({ heading, data, sorts }: Props) {
   if (!data) return <></>;
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [activeSortBy, setactiveSortBy] = useState<KeyOfDataType>(sorts[0]);
-
 
   const handleClick = (index: number) => {
     setSelectedIndex(index);
@@ -38,15 +42,17 @@ function ListGroup({ heading, data, sorts }: Props) {
     selectedIndex: number;
   }) => {
     return (
-      <li
+      <tr
         className={setStyle(selectedIndex, index)}
         key={item.id}
         onClick={() => {
           handleClick(index, item);
         }}
       >
-        {item.name} | {item.type.join(" ")} | {item.id}
-      </li>
+        <td>{item.name}</td>
+        <td>{item.type.join(" ")}</td>
+        <td>{item.id}</td>
+      </tr>
     );
   };
 
@@ -63,12 +69,25 @@ function ListGroup({ heading, data, sorts }: Props) {
   };
 
   const sortedData = sorting(data, activeSortBy);
-  
 
   return (
     <>
       <h1 className="my-2"> {heading} </h1>
-      <ul className="list-group">
+      <table className="list-group">
+        <thead>
+          <tr>
+            {sorts.map((sortBy, index) => (
+              <Button
+                key={index}
+                color="primary"
+                sortBy={sortBy}
+                onActive={setactiveSortBy}
+              >
+                Sort by
+              </Button>
+            ))}
+          </tr>
+        </thead>
         {sortedData.map((item, index) => (
           <PokemonRow
             item={item}
@@ -78,21 +97,12 @@ function ListGroup({ heading, data, sorts }: Props) {
             key={item.id}
           />
         ))}
-      </ul>
+      </table>
       <hr />
-
-      <div className="d-flex flex-row justify-content-evenly">
-        <Button color="primary" sortBy="id" onActive={setactiveSortBy}>
-          Sort by
-        </Button>
-        <Button color="info" sortBy="name" onActive={setactiveSortBy}>
-          Sort by
-        </Button>
-      </div>
-
+      <div className="d-flex flex-row justify-content-evenly"></div>
       <hr />
     </>
   );
 }
 
-export default ListGroup;
+export default Table;
