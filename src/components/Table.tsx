@@ -5,7 +5,7 @@ import {
   KeyOfDataType,
   SortsTypes,
 } from "../SharedTypes/types";
-import THeader from "./Theader";
+import THeader from "./THeader";
 
 interface Props {
   heading: string;
