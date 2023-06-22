@@ -1,29 +1,23 @@
-import { ReactNode, useState } from "react";
-import { KeyOfDataType, DataTypes } from "../SharedTypes/types";
-import { ordering } from "../Functions/functions";
+import { ReactNode } from "react";
+import { KeyOfDataType } from '../SharedTypes/types';
 
 interface Props {
   children: ReactNode;
   color: string;
-  //   setSort: (items: DataTypes, sortBy: KeyOfDataType) => DataTypes;
   sortBy: KeyOfDataType;
-  data: DataTypes;
-  updateData: (items: DataTypes) => void;
+  onActive: (sortBy : KeyOfDataType) => void;
 }
 
-type OptionalProps = Partial<Props>;
+function Button({ children, color, sortBy, onActive }: Props) {
+  if (!sortBy) return <></>;
 
-function Button({ children, color, sortBy, data, updateData }: OptionalProps) {
+  const handleClick = () => {
+    console.log(`Button ${sortBy} clicked`);
+    onActive(sortBy); 
+  };
+
   return (
-    <button
-      className={"my-3 btn btn-outline-" + color}
-      onClick={() => {
-        const sortedData = ordering(data, sortBy);
-        updateData(sortedData);
-        console.log(sortedData);
-        
-      }}
-    >
+    <button className={"my-3 btn btn-outline-" + color} onClick={handleClick}>
       {children} {sortBy}
     </button>
   );

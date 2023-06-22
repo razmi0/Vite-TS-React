@@ -1,13 +1,12 @@
 import ListGroup from "./components/ListGroup";
 import pokemon from "./data.json";
-import { handle } from "./Functions/functions";
+import { SortsTypes } from "./SharedTypes/types";
 
 function App() {
-  const maxListLength = 15;
+
+  const maxListLength = 20;
+  const sortsTypes : SortsTypes = ["id", "name", "type"];
   const heading = "Pokemon";
-  const sortByName = "name";
-  const sortById = "id";
-  const sortByType = "type";
   const pokemon_display = pokemon.slice(0, maxListLength).map((item) => {
     return {
       id: item.id,
@@ -19,7 +18,7 @@ function App() {
 
   return (
     <section className="container">
-      <ListGroup heading={heading} onSelectItem={handle} data={pokemon_display} sortBy={sortByName}>
+      <ListGroup heading={heading} data={pokemon_display} sorts={sortsTypes}>
       </ListGroup>
     </section>
   );

@@ -14,3 +14,5 @@ export type HasName = {
 export type KeyOfDataType = keyof DataType;
 
 export type KeyOf<P> = keyof P;
+
+export type SortsTypes = KeyOfDataType[];
