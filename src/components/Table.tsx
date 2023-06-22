@@ -5,16 +5,17 @@ import {
   KeyOfDataType,
   SortsTypes,
 } from "../SharedTypes/types";
-import Button from "./Button";
+import THeader from "./Theader";
 
 interface Props {
   heading: string;
   data: DataTypes;
   children?: ReactNode;
   sorts: SortsTypes;
+  colors? : string[];
 }
 
-function Table({ heading, data, sorts }: Props) {
+function Table({ heading, data, sorts, colors }: Props) {
   if (!data) return <></>;
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -26,8 +27,8 @@ function Table({ heading, data, sorts }: Props) {
 
   const setStyle = (selectedIndex: number, index: number): string => {
     return selectedIndex === index
-      ? "list-group-item active"
-      : "list-group-item";
+      ? "table-dark"
+      : "table-secondary";
   };
 
   const PokemonRow = ({
@@ -49,9 +50,9 @@ function Table({ heading, data, sorts }: Props) {
           handleClick(index, item);
         }}
       >
+        <td>{item.id}</td>
         <td>{item.name}</td>
         <td>{item.type.join(" ")}</td>
-        <td>{item.id}</td>
       </tr>
     );
   };
@@ -73,34 +74,33 @@ function Table({ heading, data, sorts }: Props) {
   return (
     <>
       <h1 className="my-2"> {heading} </h1>
-      <table className="list-group">
+      <table className="table table-striped table-bordered table-hover">
         <thead>
           <tr>
             {sorts.map((sortBy, index) => (
-              <Button
+              <THeader
                 key={index}
-                color="primary"
+                color={ colors ? colors[index] : "primary"}
                 sortBy={sortBy}
                 onActive={setactiveSortBy}
               >
                 Sort by
-              </Button>
+              </THeader>
             ))}
           </tr>
         </thead>
-        {sortedData.map((item, index) => (
-          <PokemonRow
-            item={item}
-            index={index}
-            handleClick={handleClick}
-            selectedIndex={selectedIndex}
-            key={item.id}
-          />
-        ))}
+        <tbody>
+          {sortedData.map((item, index) => (
+            <PokemonRow
+              item={item}
+              index={index}
+              handleClick={handleClick}
+              selectedIndex={selectedIndex}
+              key={item.id}
+            />
+          ))}
+        </tbody>
       </table>
-      <hr />
-      <div className="d-flex flex-row justify-content-evenly"></div>
-      <hr />
     </>
   );
 }

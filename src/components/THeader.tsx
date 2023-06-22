@@ -8,19 +8,19 @@ interface Props {
   onActive: (sortBy : KeyOfDataType) => void;
 }
 
-function Button({ children, color, sortBy, onActive }: Props) {
+function THeader({ children, color, sortBy, onActive }: Props) {
   if (!sortBy) return <></>;
 
   const handleClick = () => {
-    console.log(`Button ${sortBy} clicked`);
+    console.log(`Sorting by ${sortBy}`);
     onActive(sortBy); 
   };
 
   return (
-    <button className={"my-3 btn btn-outline-" + color} onClick={handleClick}>
+    <th scope="col" className={"my-3 table-" + color} onClick={handleClick}>
       {children} {sortBy}
-    </button>
+    </th>
   );
 }
 
-export default Button;
+export default THeader;

@@ -1,12 +1,14 @@
 import Table from "./components/Table";
 import pokemon from "./data.json";
 import { DataTypes, SortsTypes } from "./SharedTypes/types";
+import "./App.css";
 
 function App() {
 
   const maxListLength = 20;
   const sortsTypes : SortsTypes = ["id", "name", "type"];
-  const heading = "Pokemon";
+  const colors = ["success", "danger", "warning", "info", "light", "dark"];
+  const title = "Pokemon";
   const pokemon_display : DataTypes = pokemon.slice(0, maxListLength).map((item) => {
     return {
       id: item.id,
@@ -18,7 +20,7 @@ function App() {
 
   return (
     <section className="container">
-      <Table heading={heading} data={pokemon_display} sorts={sortsTypes}>
+      <Table heading={title} data={pokemon_display} sorts={sortsTypes} colors={colors}>
       </Table>
     </section>
   );
