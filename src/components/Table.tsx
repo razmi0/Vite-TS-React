@@ -12,7 +12,7 @@ interface Props {
   data: DataTypes;
   children?: ReactNode;
   sorts: SortsTypes;
-  colors? : string[];
+  colors?: string[];
 }
 
 function Table({ heading, data, sorts, colors }: Props) {
@@ -26,9 +26,7 @@ function Table({ heading, data, sorts, colors }: Props) {
   };
 
   const setStyle = (selectedIndex: number, index: number): string => {
-    return selectedIndex === index
-      ? "table-dark"
-      : "table-secondary";
+    return selectedIndex === index ? "table-dark" : "table-secondary";
   };
 
   const PokemonRow = ({
@@ -53,10 +51,18 @@ function Table({ heading, data, sorts, colors }: Props) {
         <td>{item.id}</td>
         <td>{item.name}</td>
         <td>{item.type.join(" ")}</td>
+
+        <td>{item.HP}</td>
+        <td>{item.Attack}</td>
+        <td>{item.Defense}</td>
+        <td>{item.SpAttack}</td>
+        <td>{item.SpDefense}</td>
+        <td>{item.Speed}</td>
       </tr>
     );
   };
 
+  /*  ASC */
   const sorting = (data: DataTypes, sortBy: KeyOfDataType): DataTypes => {
     if (Array.isArray(data)) {
       data.sort((a, b) => {
@@ -67,6 +73,19 @@ function Table({ heading, data, sorts, colors }: Props) {
       return data;
     }
     return data;
+  };
+
+  /*  DESC */
+ 
+
+
+  const setColor = (
+    index: number,
+    colors: string[] | undefined,
+    sortsLength: number
+  ): string => {
+    if (!colors) return "primary";
+    return index < colors.length ? colors[index] : colors[sortsLength % index];
   };
 
   const sortedData = sorting(data, activeSortBy);
@@ -80,7 +99,7 @@ function Table({ heading, data, sorts, colors }: Props) {
             {sorts.map((sortBy, index) => (
               <THeader
                 key={index}
-                color={ colors ? colors[index] : "primary"}
+                color={setColor(index, colors, sorts.length)}
                 sortBy={sortBy}
                 onActive={setactiveSortBy}
               >

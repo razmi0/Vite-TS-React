@@ -4,5 +4,12 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Lora', serif;
-    /* user-select: none; */
+    user-select: none;
+}
+td {
+    padding: 10px;
+    text-align: center;
+}
+th{
+    cursor: pointer;
 }
