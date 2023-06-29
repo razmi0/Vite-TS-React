@@ -12,42 +12,47 @@ function App() {
         id: item.id,
         name: item.name.french,
         type: item.type,
-        Attack: item.base.Attack,
-        Defense: item.base.Defense,
-        Speed: item.base.Speed,
+        Attack: item.base["Attack"],
+        Defense: item.base["Defense"],
+        Speed: item.base["Speed"],
         SpAttack: item.base["Sp. Attack"],
         SpDefense: item.base["Sp. Defense"],
-        HP: item.base.HP,
+        HP: item.base["HP"],
       };
     });
-
-    console.log(pokemon_display[0].Attack);
-    console.log(pokemon_display[0].SpAttack);
-
 
   const sortsTypes: SortsTypes = Object.keys(
     pokemon_display[0]
   ) as KeyOfDataType[];
 
-  const colors = ["success", "danger", "warning", "info", "light", "secondary", "primary"];
+  console.log(sortsTypes);
+
+  const colors = [
+    "success",
+    "danger",
+    "warning",
+    "info",
+    "light",
+    "secondary",
+    "primary",
+  ];
   const title = "Pokemon";
 
   const isAsc = true;
 
-
-  
-  
-
+  console.log(pokemon_display[0]);
 
   return (
     <section className="container-sm">
-      <Table
-        heading={title}
-        data={pokemon_display}
-        sorts={sortsTypes}
-        colors={colors}
-        isAsc={isAsc}
-      ></Table>
+      {pokemon_display.length > 0 && (
+        <Table
+          heading={title}
+          data={pokemon_display}
+          sorts={sortsTypes}
+          colors={colors}
+          isAsc={isAsc}
+        />
+      )}
     </section>
   );
 }

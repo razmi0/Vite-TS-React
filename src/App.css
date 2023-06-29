@@ -1,15 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lora&display=swap");
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Lora', serif;
-    user-select: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Lora", serif;
+  user-select: none;
+}
+html,
+body,
+#root {
+  background-color: grey;
+}
+table {
+  border-collapse: collapse;
+  width: 80%;
+  border: 1px solid #ddd;
+  border-radius: 2%;
+  box-shadow: inset 0 0 10px #000000;
+}
+tr {
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ddd;
+  height: 25px;
+  width: 32px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
 }
 td {
-    padding: 10px;
-    text-align: center;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ddd;
+  height: 25px;
+  width: 32px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
 }
-th{
-    cursor: pointer;
+th {
+  cursor: pointer;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #ddd;
+  height: 25px;
+  width: 32px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
 }

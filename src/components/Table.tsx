@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { DataTypes, KeyOfDataType, SortsTypes } from "../SharedTypes/types";
 import THeader from "./THeader";
 import TBody from "./TBody";
@@ -11,6 +11,8 @@ interface Props {
   isAsc?: boolean;
   colors?: string[];
 }
+
+let count = 0;
 
 function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
   if (!data) return <></>;
@@ -32,6 +34,10 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
     sortBy: KeyOfDataType,
     asc: boolean
   ): DataTypes => {
+    const t1 = performance.now();
+    count += 1;
+    console.log(`Sorting for the ${count} and by ${sortBy}`);
+
     if (Array.isArray(data)) {
       data.sort((a, b) => {
         const valueA = a[sortBy];
@@ -52,6 +58,13 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
         }
       });
 
+      const t2 = performance.now();
+      console.log(
+        `Sorting took ${t2 - t1} milliseconds. ${
+          (t2 - t1) / data.length
+        } ms / pokemon.`
+      );
+
       return data;
     }
 
@@ -67,8 +80,8 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
     return index < colors.length ? colors[index] : colors[sortsLength % index];
   };
 
+  console.log(`Table rendered ${count} times`);
   const sortedData = sorting(data, activeSortBy, sortByAsc);
-
   return (
     <>
       <h1 className="my-2"> {heading} </h1>
