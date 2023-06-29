@@ -1,5 +1,4 @@
-import Table from "./components/Table";
-import Range from "./components/Range";
+import { Table, Range, Types } from "./components/index";
 import pokemon from "./data.json";
 import { useState } from "react";
 import { DataTypes, SortsTypes, KeyOfDataType } from "./SharedTypes/types";
@@ -38,27 +37,45 @@ function App() {
       };
     });
 
+  const pokemon_types = pokemon_display.slice(0, userPoksLength).map((item) => {
+    return {
+      name: item.name,
+      type: item.type,
+    };
+  });
+
   const sortsTypes: SortsTypes = Object.keys(
     pokemon_display[0]
   ) as KeyOfDataType[];
 
   return (
-    <section className="container-sm">
-      <h1 className="mt-5 d-block"> Pokemon Table </h1>
-      <Range
-        userPoksLength={userPoksLength}
-        setUserPoksLength={setUserPoksLength}
-        poksLength={poksLength}
-      />
-      {pokemon_display.length > 0 && (
-        <Table
-          data={pokemon_display}
-          sorts={sortsTypes}
-          colors={colors}
-          isAsc={isAsc}
-        />
-      )}
-    </section>
+    <>
+      <h1 className="mt-5 mb-5 text-center"> Pokemon Table </h1>
+      <div className="row px-5">
+        <div className=" row flex-grow-1">
+          <div /* FILTERS */ className="col-3">
+            <Range
+              userPoksLength={userPoksLength}
+              setUserPoksLength={setUserPoksLength}
+              poksLength={poksLength}
+            />
+          </div>
+          <div className="col-5 d-flex flex-wrap justify-content-start align-content-start ">
+            {pokemon_types.length > 0 && <Types data={pokemon_types} />}
+          </div>
+        </div>
+        <section /* TABLE */>
+          {pokemon_display.length > 0 && (
+            <Table
+              data={pokemon_display}
+              sorts={sortsTypes}
+              colors={colors}
+              isAsc={isAsc}
+            />
+          )}
+        </section>
+      </div>
+    </>
   );
 }
 

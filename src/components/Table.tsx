@@ -1,7 +1,6 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import { DataTypes, KeyOfDataType, SortsTypes } from "../SharedTypes/types";
-import THeader from "./THeader";
-import TBody from "./TBody";
+import { THeader, TBody } from "./index";
 
 let count = 0;
 
