@@ -1,33 +1,31 @@
-import React from "react";
-
 interface TypesProps {
-  data: {
-    name: string;
-    type: string[];
-  }[];
+  data: string[];
+  checked: boolean[];
+  handleToggle: (index: number) => void;
 }
 
-function Types({ data }: TypesProps) {
-  const allTypes = data.map((item) => item.type).flat();
-  const uniqueTypes = [...new Set(allTypes)];
-
+function Types({ data, checked, handleToggle }: TypesProps) {
   return (
     <>
-      {uniqueTypes.map((item, index) => (
+      {data.map((item, index) => (
         <>
           <input
             type="checkbox"
             className="btn-check"
             id={`btn-check-outlined-${index}`}
             autoComplete="off"
-            key={index}
+            checked={checked[index]}
+            key={data[index]}
+            onChange={() => {
+              handleToggle(index);
+            }}
           />
           <label
             className="btn btn-outline-success btn-types"
             htmlFor={`btn-check-outlined-${index}`}
             key={index + 1}
           >
-            {item}
+            {data[index]}
           </label>
         </>
       ))}

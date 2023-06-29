@@ -8,8 +8,6 @@ export function Range({
   poksLength: number;
 }) {
   const handleChange = (value: number): void => {
-    console.log(value + " " + typeof value);
-
     if (value < 1) {
       value = 1;
     }

@@ -2,7 +2,13 @@ import { ReactNode, useState } from "react";
 import { DataTypes, KeyOfDataType, SortsTypes } from "../SharedTypes/types";
 import { THeader, TBody } from "./index";
 
-let count = 0;
+function calcPerf(t1: number, count: number) {
+  performance.now() - t1;
+  console.table({ count, Table_renderingTime: performance.now() - t1 });
+}
+
+let sortingCount = 0;
+let tableCount = 0;
 
 interface Props {
   heading?: string;
@@ -31,6 +37,8 @@ const setStyle = (selectedIndex: number, index: number): string => {
 /* --------- */
 
 function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
+  tableCount += 1;
+  let t1 = performance.now();
   if (!data) return <></>;
 
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
@@ -42,8 +50,7 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
     sortBy: KeyOfDataType,
     asc: boolean
   ): DataTypes => {
-    const t1 = performance.now();
-    count += 1;
+    sortingCount += 1;
 
     if (Array.isArray(data)) {
       data.sort((a, b) => {
@@ -65,10 +72,7 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
         }
       });
 
-      const t2 = performance.now();
-      const perf = t2 - t1;
-      const perfPerPokemon = perf / data.length;
-      console.table({ count, sortBy, asc, perf, perfPerPokemon });
+      console.table({ sortingCount, sortBy, asc });
 
       return data;
     }
@@ -113,7 +117,7 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
           ))}
         </tbody>
       </table>
-      {console.log(`Table rendered ${count} times`)}
+      {calcPerf(t1, tableCount)}
     </>
   );
 }
