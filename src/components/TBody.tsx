@@ -20,13 +20,12 @@ function TBody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
       <td>{item.id}</td>
       <td>{item.name}</td>
       <td>{item.type.join(" ")}</td>
-
-      <td>{item.HP}</td>
       <td>{item.Attack}</td>
       <td>{item.Defense}</td>
+      <td>{item.Speed}</td>
       <td>{item.SpAttack}</td>
       <td>{item.SpDefense}</td>
-      <td>{item.Speed}</td>
+      <td>{item.HP}</td>
     </tr>
   );
 }

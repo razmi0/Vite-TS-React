@@ -43,19 +43,21 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
         const valueA = a[sortBy];
         const valueB = b[sortBy];
 
-        if (typeof valueA === "number" && typeof valueB === "number") {
-          return asc ? valueA - valueB : valueB - valueA;
-        } else if (typeof valueA === "string" && typeof valueB === "string") {
-          return asc
-            ? valueA.localeCompare(valueB)
-            : valueB.localeCompare(valueA);
-        } else if (Array.isArray(valueA) && Array.isArray(valueB)) {
-          return asc
-            ? valueA[0].localeCompare(valueB[0])
-            : valueB[0].localeCompare(valueA[0]);
-        } else {
-          return 0;
-        }
+        return valueA > valueB ? (asc ? 1 : -1) : asc ? -1 : 1;
+
+        // if (typeof valueA === "number" && typeof valueB === "number") {
+        //   return asc ? valueA - valueB : valueB - valueA;
+        // } else if (typeof valueA === "string" && typeof valueB === "string") {
+        //   return asc
+        //     ? valueA.localeCompare(valueB)
+        //     : valueB.localeCompare(valueA);
+        // } else if (Array.isArray(valueA) && Array.isArray(valueB)) {
+        //   return asc
+        //     ? valueA[0].localeCompare(valueB[0])
+        //     : valueB[0].localeCompare(valueA[0]);
+        // } else {
+        //   return 0;
+        // }
       });
 
       const t2 = performance.now();
@@ -80,8 +82,8 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
     return index < colors.length ? colors[index] : colors[sortsLength % index];
   };
 
-  console.log(`Table rendered ${count} times`);
   const sortedData = sorting(data, activeSortBy, sortByAsc);
+  console.log(`Table rendered ${count} times`);
   return (
     <>
       <h1 className="my-2"> {heading} </h1>
@@ -96,9 +98,7 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
                 onActive={setactiveSortBy}
                 currentAsc={sortByAsc}
                 onAsc={setSortByAsc}
-              >
-                Sort by
-              </THeader>
+              ></THeader>
             ))}
           </tr>
         </thead>

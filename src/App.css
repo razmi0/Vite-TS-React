@@ -9,7 +9,7 @@
 html,
 body,
 #root {
-  background-color: grey;
+  background-color: #e8e8e8;
 }
 table {
   border-collapse: collapse;
@@ -17,6 +17,7 @@ table {
   border: 1px solid #ddd;
   border-radius: 2%;
   box-shadow: inset 0 0 10px #000000;
+  margin-top: 5%;
 }
 tr {
   padding: 5px;
