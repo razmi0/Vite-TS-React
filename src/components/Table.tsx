@@ -3,8 +3,10 @@ import { DataTypes, KeyOfDataType, SortsTypes } from "../SharedTypes/types";
 import THeader from "./THeader";
 import TBody from "./TBody";
 
+let count = 0;
+
 interface Props {
-  heading: string;
+  heading?: string;
   data: DataTypes;
   children?: ReactNode;
   sorts: SortsTypes;
@@ -12,7 +14,22 @@ interface Props {
   colors?: string[];
 }
 
-let count = 0;
+const setColor = (
+  index: number,
+  colors: string[] | undefined,
+  sortsLength: number
+): string => {
+  if (!colors) return "primary";
+  return index < colors.length ? colors[index] : colors[sortsLength % index];
+};
+
+const setStyle = (selectedIndex: number, index: number): string => {
+  return selectedIndex === index ? "table-dark" : "table-secondary";
+};
+
+/* --------- */
+/* COMPONENT */
+/* --------- */
 
 function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
   if (!data) return <></>;
@@ -21,14 +38,6 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
   const [activeSortBy, setactiveSortBy] = useState<KeyOfDataType>(sorts[0]);
   const [sortByAsc, setSortByAsc] = useState<boolean>(isAsc);
 
-  const handleClick = (index: number) => {
-    setSelectedIndex(index);
-  };
-
-  const setStyle = (selectedIndex: number, index: number): string => {
-    return selectedIndex === index ? "table-dark" : "table-secondary";
-  };
-
   const sorting = (
     data: DataTypes,
     sortBy: KeyOfDataType,
@@ -36,36 +45,31 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
   ): DataTypes => {
     const t1 = performance.now();
     count += 1;
-    console.log(`Sorting for the ${count} and by ${sortBy}`);
 
     if (Array.isArray(data)) {
       data.sort((a, b) => {
         const valueA = a[sortBy];
         const valueB = b[sortBy];
 
-        return valueA > valueB ? (asc ? 1 : -1) : asc ? -1 : 1;
-
-        // if (typeof valueA === "number" && typeof valueB === "number") {
-        //   return asc ? valueA - valueB : valueB - valueA;
-        // } else if (typeof valueA === "string" && typeof valueB === "string") {
-        //   return asc
-        //     ? valueA.localeCompare(valueB)
-        //     : valueB.localeCompare(valueA);
-        // } else if (Array.isArray(valueA) && Array.isArray(valueB)) {
-        //   return asc
-        //     ? valueA[0].localeCompare(valueB[0])
-        //     : valueB[0].localeCompare(valueA[0]);
-        // } else {
-        //   return 0;
-        // }
+        if (typeof valueA === "number" && typeof valueB === "number") {
+          return asc ? valueA - valueB : valueB - valueA;
+        } else if (typeof valueA === "string" && typeof valueB === "string") {
+          return asc
+            ? valueA.localeCompare(valueB)
+            : valueB.localeCompare(valueA);
+        } else if (Array.isArray(valueA) && Array.isArray(valueB)) {
+          return asc
+            ? valueA[0].localeCompare(valueB[0])
+            : valueB[0].localeCompare(valueA[0]);
+        } else {
+          return 0;
+        }
       });
 
       const t2 = performance.now();
-      console.log(
-        `Sorting took ${t2 - t1} milliseconds. ${
-          (t2 - t1) / data.length
-        } ms / pokemon.`
-      );
+      const perf = t2 - t1;
+      const perfPerPokemon = perf / data.length;
+      console.table({ count, sortBy, asc, perf, perfPerPokemon });
 
       return data;
     }
@@ -73,17 +77,12 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
     return data;
   };
 
-  const setColor = (
-    index: number,
-    colors: string[] | undefined,
-    sortsLength: number
-  ): string => {
-    if (!colors) return "primary";
-    return index < colors.length ? colors[index] : colors[sortsLength % index];
+  const handleClick = (index: number) => {
+    setSelectedIndex(index);
   };
 
   const sortedData = sorting(data, activeSortBy, sortByAsc);
-  console.log(`Table rendered ${count} times`);
+
   return (
     <>
       <h1 className="my-2"> {heading} </h1>
@@ -115,6 +114,7 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
           ))}
         </tbody>
       </table>
+      {console.log(`Table rendered ${count} times`)}
     </>
   );
 }

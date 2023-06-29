@@ -10,32 +10,16 @@ interface Props {
   onAsc: (isAsc: boolean) => void;
 }
 
-function THeader({
-  children,
-  color,
-  sortBy,
-  onActive,
-  currentAsc,
-  onAsc,
-}: Props) {
+function THeader({ color, sortBy, onActive, currentAsc, onAsc }: Props) {
   if (!sortBy) return <></>;
-
-  const handleClickSortType = () => {
-    onActive(sortBy);
-  };
-
-  const handleClickSortAsc = () => {
-    const asc_str = currentAsc ? "ASC" : "DSC";
-    onAsc(!currentAsc);
-  };
 
   return (
     <th
       scope="col"
       className={"my-3 table-" + color}
       onClick={() => {
-        handleClickSortType();
-        handleClickSortAsc();
+        onActive(sortBy);
+        onAsc(!currentAsc);
       }}
     >
       {sortBy} {currentAsc ? "▲" : "▼"}
