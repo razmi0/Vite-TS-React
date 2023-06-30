@@ -1,10 +1,11 @@
 import { ReactNode, useState } from "react";
 import { DataTypes, KeyOfDataType, SortsTypes } from "../SharedTypes/types";
 import { THeader, TBody } from "./index";
+import { sorting } from "../utils/functions";
 
 function calcPerf(t1: number, count: number) {
   performance.now() - t1;
-  console.table({ count, Table_renderingTime: performance.now() - t1 });
+  // console.table({ count, Table_renderingTime: performance.now() - t1 });
 }
 
 let sortingCount = 0;
@@ -17,6 +18,7 @@ interface Props {
   sorts: SortsTypes;
   isAsc?: boolean;
   colors?: string[];
+  checkedTypes: boolean[];
 }
 
 const setColor = (
@@ -36,7 +38,14 @@ const setStyle = (selectedIndex: number, index: number): string => {
 /* COMPONENT */
 /* --------- */
 
-function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
+function Table({
+  heading,
+  data,
+  sorts,
+  colors,
+  isAsc = true,
+  checkedTypes,
+}: Props) {
   tableCount += 1;
   let t1 = performance.now();
   if (!data) return <></>;
@@ -45,44 +54,11 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
   const [activeSortBy, setactiveSortBy] = useState<KeyOfDataType>(sorts[0]);
   const [sortByAsc, setSortByAsc] = useState<boolean>(isAsc);
 
-  const sorting = (
-    data: DataTypes,
-    sortBy: KeyOfDataType,
-    asc: boolean
-  ): DataTypes => {
-    sortingCount += 1;
-
-    if (Array.isArray(data)) {
-      data.sort((a, b) => {
-        const valueA = a[sortBy];
-        const valueB = b[sortBy];
-
-        if (typeof valueA === "number" && typeof valueB === "number") {
-          return asc ? valueA - valueB : valueB - valueA;
-        } else if (typeof valueA === "string" && typeof valueB === "string") {
-          return asc
-            ? valueA.localeCompare(valueB)
-            : valueB.localeCompare(valueA);
-        } else if (Array.isArray(valueA) && Array.isArray(valueB)) {
-          return asc
-            ? valueA[0].localeCompare(valueB[0])
-            : valueB[0].localeCompare(valueA[0]);
-        } else {
-          return 0;
-        }
-      });
-
-      console.table({ sortingCount, sortBy, asc });
-
-      return data;
-    }
-
-    return data;
-  };
-
   const handleClick = (index: number) => {
     setSelectedIndex(index);
   };
+
+  console.log(checkedTypes);
 
   const sortedData = sorting(data, activeSortBy, sortByAsc);
 
@@ -105,6 +81,7 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
           </tr>
         </thead>
         <tbody>
+          {/* si l'index ici =  un des number de isChecked(checkTypes) */}
           {sortedData.map((item, index) => (
             <TBody
               item={item}
@@ -113,6 +90,7 @@ function Table({ heading, data, sorts, colors, isAsc = true }: Props) {
               selectedIndex={selectedIndex}
               key={item.id}
               setStyle={setStyle}
+              checkTypes={checkedTypes}
             />
           ))}
         </tbody>

@@ -1,12 +1,25 @@
 import { Table, Range, Types } from "./components/index";
 import pokemon from "./data.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DataTypes, SortsTypes, KeyOfDataType } from "./SharedTypes/types";
 import "./App.css";
+import { isChecked } from "./utils/functions";
 
 function calcPerf(t1: number, count: number) {
   performance.now() - t1;
-  console.table({ count, App_renderingTime: performance.now() - t1 });
+  // console.table({ count, App_renderingTime: performance.now() - t1 });
+}
+
+function changeLength<T>(targetLength: number, user: T[]): T[] {
+  const diff = targetLength - user.length;
+  console.log(diff);
+  if (diff > 0) {
+    const filler = new Array(diff).fill(false);
+    user = user.concat(filler);
+  } else if (diff < 0) {
+    user = user.slice(0, diff);
+  }
+  return user;
 }
 
 const colors = [
@@ -48,19 +61,30 @@ function App() {
       };
     });
 
-  const pokemon_types = pokemon_display.flatMap((item) => item.type);
-
+  /* TOTAL TYPES */
+  const pokemon_types = pokemon.flatMap((item) => item.type);
   const uniqueTypes = [...new Set(pokemon_types)];
+  /* DISPLAYED AND DYNAMIC TYPES */
+  const displayedTypes = pokemon_display.flatMap((item) => item.type);
+  const uniqueDisplayedTypes = [...new Set(displayedTypes)];
 
   const [checked, setChecked] = useState(
-    new Array(uniqueTypes.length).fill(false)
+    new Array(uniqueDisplayedTypes.length).fill(false) // uniqueTypes.length -
   );
 
   const handleToggle = (index: number) => {
-    const updatedCheckedState = checked.map((item, i) =>
-      i === index ? !item : item
-    );
+    const updatedCheckedState: boolean[] = checked.map((item, i) => {
+      return i === index ? !item : item;
+    });
+
     setChecked(updatedCheckedState);
+  };
+
+  const handleChange = (value: number): void => {
+    if (value < 1) {
+      value = 1;
+    }
+    setUserPoksLength(value);
   };
 
   const isAsc = true;
@@ -68,6 +92,17 @@ function App() {
   const sortsTypes: SortsTypes = Object.keys(
     pokemon_display[0]
   ) as KeyOfDataType[];
+
+  useEffect(() => {
+    console.log("App useEffect");
+    setChecked(changeLength(uniqueDisplayedTypes.length, checked));
+  });
+
+  const checkedTypes = () => {
+    if (isChecked(checked) !== -1) {
+    }
+  };
+  // console.log(checked);
 
   return (
     <>
@@ -79,12 +114,13 @@ function App() {
               userPoksLength={userPoksLength}
               setUserPoksLength={setUserPoksLength}
               poksLength={poksLength}
+              handleChange={handleChange}
             />
           </div>
           <div className="col-5 d-flex flex-wrap justify-content-start align-content-start ">
             {uniqueTypes.length > 0 && (
               <Types
-                data={uniqueTypes}
+                data={uniqueDisplayedTypes}
                 checked={checked}
                 handleToggle={handleToggle}
               />
@@ -98,6 +134,9 @@ function App() {
               sorts={sortsTypes}
               colors={colors}
               isAsc={isAsc}
+              checkedTypes={checkedTypes}
+              // si dans checked ya un seul true alors j'affiche que celui la ou les autres si plus
+              // sinon j'affiche tous. donc si true j'affiche data[index] de checkedTypes[index] ===true
             />
           )}
         </section>

@@ -2,18 +2,13 @@ export function Range({
   userPoksLength,
   setUserPoksLength,
   poksLength,
+  handleChange,
 }: {
   userPoksLength: number;
   setUserPoksLength: (value: number) => void;
   poksLength: number;
+  handleChange: (value: number) => void;
 }) {
-  const handleChange = (value: number): void => {
-    if (value < 1) {
-      value = 1;
-    }
-    setUserPoksLength(value);
-  };
-
   return (
     <>
       <label htmlFor="userRange" className="form-label fw-bold mt-1">

@@ -6,9 +6,19 @@ interface Props {
   handleClick: (index: number, item: DataType) => void;
   selectedIndex: number;
   setStyle: (selectedIndex: number, index: number) => string;
+  checkTypes: boolean[];
 }
 
-function TBody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
+function TBody({
+  item,
+  index,
+  handleClick,
+  selectedIndex,
+  setStyle,
+  checkTypes,
+}: Props) {
+  // all false => display all
+
   return (
     <tr
       className={setStyle(selectedIndex, index)}
@@ -28,6 +38,8 @@ function TBody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
       <td>{item.HP}</td>
     </tr>
   );
+
+  // index in trueIndex
 }
 
 export default TBody;

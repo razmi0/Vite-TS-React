@@ -15,7 +15,7 @@ function Types({ data, checked, handleToggle }: TypesProps) {
             id={`btn-check-outlined-${index}`}
             autoComplete="off"
             checked={checked[index]}
-            key={data[index]}
+            key={index}
             onChange={() => {
               handleToggle(index);
             }}
@@ -25,7 +25,7 @@ function Types({ data, checked, handleToggle }: TypesProps) {
             htmlFor={`btn-check-outlined-${index}`}
             key={index + 1}
           >
-            {data[index]}
+            {item}
           </label>
         </>
       ))}
