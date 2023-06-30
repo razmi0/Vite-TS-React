@@ -12,6 +12,31 @@ export function calcPerf(t1: number, count: number, subject: string) {
   performance.now() - t1;
   console.table({ count, subject: performance.now() - t1 });
 }
+/**
+ * Set color for thead
+ * @param index
+ * @param colors
+ * @param sortsLength
+ * @returns
+ */
+export const setColor = (
+  index: number,
+  colors: string[] | undefined,
+  sortsLength: number
+): string => {
+  if (!colors) return "primary";
+  return index < colors.length ? colors[index] : colors[sortsLength % index];
+};
+
+/**
+ * Set style for tbody if user select a row
+ * @param selectedIndex
+ * @param index
+ * @returns
+ */
+export const setStyle = (selectedIndex: number, index: number): string => {
+  return selectedIndex === index ? "table-dark" : "table-secondary";
+};
 
 /**
  * Update user length to targetLength
@@ -128,16 +153,34 @@ export function updateVisibility(
   onPureSwitch: boolean,
   onDoubleSwitch: boolean
 ): void {
+  console.log("updateVisibility");
   arr1.map((item) => {
     item.visible = false;
+    if (onPureSwitch) {
+      item.visible = item.type.length === 1 ? true : false;
+    }
+    if (onDoubleSwitch) {
+      item.visible = item.type.length === 2 ? true : false;
+    }
     if (arr2) {
-      arr2.map((type) => {
-        if (type.isChecked) {
-          if (item.type.includes(type.type)) {
-            if (item.type.length === 1 && onPureSwitch) {
+      arr2.map((checkedType) => {
+        if (checkedType.isChecked) {
+          if (item.type.includes(checkedType.type)) {
+            item.visible = true;
+            if (onPureSwitch) {
+              item.visible = item.type.length === 1 ? true : false;
+            }
+            if (onDoubleSwitch) {
+              item.visible = item.type.length === 2 ? true : false;
+            }
+            if (!onPureSwitch && !onDoubleSwitch) {
               item.visible = true;
-            } else if (item.type.length > 1 && !onPureSwitch) {
-              item.visible = true;
+            }
+            if (!onPureSwitch) {
+              item.visible = item.type.length === 1 ? false : true;
+            }
+            if (!onDoubleSwitch) {
+              item.visible = item.type.length === 2 ? false : true;
             }
           }
         }

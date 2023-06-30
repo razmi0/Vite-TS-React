@@ -1,28 +1,10 @@
-import { ReactNode, useState } from "react";
-import {
-  DataTypes,
-  KeyOfDataType,
-  SortsTypes,
-  TableProps,
-} from "../SharedTypes";
+import { useState } from "react";
+import { KeyOfDataType, TableProps } from "../SharedTypes";
 import { THeader, TBody } from "./index";
-import { sorting, calcPerf } from "../utils";
+import { sorting, calcPerf, setColor, setStyle } from "../utils";
 
 let sortingCount = 0;
 let tableCount = 0;
-
-const setColor = (
-  index: number,
-  colors: string[] | undefined,
-  sortsLength: number
-): string => {
-  if (!colors) return "primary";
-  return index < colors.length ? colors[index] : colors[sortsLength % index];
-};
-
-const setStyle = (selectedIndex: number, index: number): string => {
-  return selectedIndex === index ? "table-dark" : "table-secondary";
-};
 
 /* --------- */
 /* COMPONENT */

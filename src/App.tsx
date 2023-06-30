@@ -51,21 +51,25 @@ function App() {
       };
     });
 
-  /* ------ */
+  /* ---------------- */
   /* TOTAL SORT TYPES */
-  /* ------ */
+  /* ---------------- */
+
   const sortsTypes: SortsTypes = Object.keys(
     pokemon_display[0]
   ) as KeyOfDataType[];
-  /* ------ */
+
+  /* ----------- */
   /* TOTAL TYPES */
-  /* ------ */
+  /* ----------- */
 
   const pokemon_types = pokemon.flatMap((item) => item.type);
   const uniqueTypes = [...new Set(pokemon_types)];
+
   /* ------ */
   /* DISPLAYED AND DYNAMIC TYPES */
   /* ------ */
+
   const displayedTypes = pokemon_display.flatMap((item) => item.type);
   const uniqueDisplayedTypes = [...new Set(displayedTypes)];
   /* ------ */
@@ -73,27 +77,8 @@ function App() {
   const [checked, setChecked] = useState(
     new Array(uniqueDisplayedTypes.length).fill(false)
   );
-  /**
-   * Contain informations about the state of the checkboxes and the types of the pokemon displayed | {type: string, visible: boolean}[]
-   */
-  const checkedTypes: CheckedTypes = mergeAtIndex(
-    uniqueDisplayedTypes,
-    checked,
-    "type",
-    "isChecked"
-  );
-  /* If all checkbox are false => we display all pokemons */
-  if (checkIfAllFalse(checked)) {
-    pokemon_display.map((item) => (item.visible = true));
-  } else if (!checkIfAllFalse(checked) && checkedTypes) {
-    /* else if at least one true => all visible false except type check (true) */
-    updateVisibility(
-      pokemon_display,
-      checkedTypes,
-      isPureSwitchOn,
-      isDoubleSwitchOn
-    );
-  }
+
+  //#region HANDLERS
 
   /**
    * Handle the toggle checkbox dynamic, change checkbox states | bool[] (checked)
@@ -136,9 +121,32 @@ function App() {
     }
   };
 
+  //#endregion HANDLERS
+
   useEffect(() => {
     console.log("App useEffect");
     setChecked(changeLength(uniqueDisplayedTypes.length, checked));
+    /**
+     * Contain informations about the state of the checkboxes and the types of the pokemon displayed | {type: string, visible: boolean}[]
+     */
+    const checkedTypes: CheckedTypes = mergeAtIndex(
+      uniqueDisplayedTypes,
+      checked,
+      "type",
+      "isChecked"
+    );
+    /* If all checkbox are false => we display all pokemons */
+    if (checkIfAllFalse(checked) && !isPureSwitchOn && !isDoubleSwitchOn) {
+      pokemon_display.map((item) => (item.visible = true));
+    } else {
+      /* else if at least one true => all visible false except type check (true) */
+      updateVisibility(
+        pokemon_display,
+        checkedTypes,
+        isPureSwitchOn,
+        isDoubleSwitchOn
+      );
+    }
   });
 
   return (
