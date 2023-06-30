@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export type DataType = {
   id: number;
   name: string;
@@ -8,14 +10,14 @@ export type DataType = {
   SpAttack: number;
   SpDefense: number;
   HP: number;
+  visible: boolean;
 };
 
 export type DataTypes = DataType[];
 
-
 export type HasName = {
-    name: string
-}
+  name: string;
+};
 
 export type KeyOfDataType = keyof DataType;
 
@@ -23,31 +25,46 @@ export type KeyOf<P> = keyof P;
 
 export type SortsTypes = KeyOfDataType[];
 
+export type CheckedTypes =
+  | {
+      type: string;
+      isChecked: boolean;
+    }[]
+  | undefined;
 
-// QUICK TYPES 
+export interface TableProps {
+  heading?: string;
+  data: DataTypes;
+  children?: ReactNode;
+  sorts: SortsTypes;
+  isAsc?: boolean;
+  colors?: string[];
+}
+
+// QUICK TYPES
 //
 
 export interface Data {
-  id:   number;
+  id: number;
   name: Name;
   type: Type[];
   base: Base;
 }
 
 export interface Base {
-  HP:            number;
-  Attack:        number;
-  Defense:       number;
-  "Sp. Attack":  number;
+  HP: number;
+  Attack: number;
+  Defense: number;
+  "Sp. Attack": number;
   "Sp. Defense": number;
-  Speed:         number;
+  Speed: number;
 }
 
 export interface Name {
-  english:  string;
+  english: string;
   japanese: string;
-  chinese:  string;
-  french:   string;
+  chinese: string;
+  french: string;
 }
 
 export enum Type {

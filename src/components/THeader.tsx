@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { KeyOfDataType } from "../SharedTypes/types";
+import { KeyOfDataType } from "../SharedTypes";
 
 interface Props {
   children?: ReactNode;
@@ -11,7 +11,7 @@ interface Props {
 }
 
 function THeader({ color, sortBy, onActive, currentAsc, onAsc }: Props) {
-  if (!sortBy) return <></>;
+  if (!sortBy || sortBy === "visible" || sortBy === "id") return <></>;
 
   return (
     <th
@@ -22,7 +22,8 @@ function THeader({ color, sortBy, onActive, currentAsc, onAsc }: Props) {
         onAsc(!currentAsc);
       }}
     >
-      {sortBy} {currentAsc ? "▲" : "▼"}
+      {sortBy.charAt(0).toLocaleUpperCase() + sortBy.slice(1, sortBy.length)}{" "}
+      {currentAsc ? "▲" : "▼"}
     </th>
   );
 }

@@ -1,25 +1,15 @@
 import { ReactNode, useState } from "react";
-import { DataTypes, KeyOfDataType, SortsTypes } from "../SharedTypes/types";
+import {
+  DataTypes,
+  KeyOfDataType,
+  SortsTypes,
+  TableProps,
+} from "../SharedTypes";
 import { THeader, TBody } from "./index";
-import { sorting } from "../utils/functions";
-
-function calcPerf(t1: number, count: number) {
-  performance.now() - t1;
-  // console.table({ count, Table_renderingTime: performance.now() - t1 });
-}
+import { sorting, calcPerf } from "../utils";
 
 let sortingCount = 0;
 let tableCount = 0;
-
-interface Props {
-  heading?: string;
-  data: DataTypes;
-  children?: ReactNode;
-  sorts: SortsTypes;
-  isAsc?: boolean;
-  colors?: string[];
-  checkedTypes: boolean[];
-}
 
 const setColor = (
   index: number,
@@ -38,14 +28,7 @@ const setStyle = (selectedIndex: number, index: number): string => {
 /* COMPONENT */
 /* --------- */
 
-function Table({
-  heading,
-  data,
-  sorts,
-  colors,
-  isAsc = true,
-  checkedTypes,
-}: Props) {
+function Table({ heading, data, sorts, colors, isAsc = true }: TableProps) {
   tableCount += 1;
   let t1 = performance.now();
   if (!data) return <></>;
@@ -57,8 +40,6 @@ function Table({
   const handleClick = (index: number) => {
     setSelectedIndex(index);
   };
-
-  console.log(checkedTypes);
 
   const sortedData = sorting(data, activeSortBy, sortByAsc);
 
@@ -90,12 +71,11 @@ function Table({
               selectedIndex={selectedIndex}
               key={item.id}
               setStyle={setStyle}
-              checkTypes={checkedTypes}
             />
           ))}
         </tbody>
       </table>
-      {calcPerf(t1, tableCount)}
+      {/* {calcPerf(t1, tableCount, "Table")} */}
     </>
   );
 }

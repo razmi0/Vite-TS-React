@@ -1,4 +1,4 @@
-import { DataType } from "../SharedTypes/types";
+import { DataType } from "../SharedTypes";
 
 interface Props {
   item: DataType;
@@ -6,19 +6,14 @@ interface Props {
   handleClick: (index: number, item: DataType) => void;
   selectedIndex: number;
   setStyle: (selectedIndex: number, index: number) => string;
-  checkTypes: boolean[];
 }
 
-function TBody({
-  item,
-  index,
-  handleClick,
-  selectedIndex,
-  setStyle,
-  checkTypes,
-}: Props) {
-  // all false => display all
-
+function TBody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
+  // index.visible === true ? display : no display
+  //
+  if (!item.visible) {
+    return <></>;
+  }
   return (
     <tr
       className={setStyle(selectedIndex, index)}
@@ -27,7 +22,7 @@ function TBody({
         handleClick(index, item);
       }}
     >
-      <td>{item.id}</td>
+      {/* <td>{item.id}</td> */}
       <td>{item.name}</td>
       <td>{item.type.join(" ")}</td>
       <td>{item.Attack}</td>
