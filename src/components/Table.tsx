@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { KeyOfDataType, TableProps } from "../SharedTypes";
+import { useState, useMemo, useEffect } from "react";
+import { KeyOfDataType, TableProps } from "../sharedTypes";
 import { THeader, TBody } from "./index";
 import { sorting, calcPerf, setColor, setStyle } from "../utils";
+import { colors } from "../utils/staticData";
 
 let sortingCount = 0;
 let tableCount = 0;
@@ -10,7 +11,7 @@ let tableCount = 0;
 /* COMPONENT */
 /* --------- */
 
-function Table({ heading, data, sorts, colors, isAsc = true }: TableProps) {
+function Table({ heading, data, sorts, isAsc = true }: TableProps) {
   tableCount += 1;
   let t1 = performance.now();
   if (!data) return <></>;
@@ -24,6 +25,8 @@ function Table({ heading, data, sorts, colors, isAsc = true }: TableProps) {
   };
 
   const sortedData = sorting(data, activeSortBy, sortByAsc);
+
+  // sorting(data, activeSortBy, sortByAsc);
 
   return (
     <>

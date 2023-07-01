@@ -32,6 +32,7 @@ export function Range({
         max={poksLength}
         step="1"
         onMouseUp={(e) => handleChange(Number(e.currentTarget.value))}
+        onTouchEnd={(e) => handleChange(Number(e.currentTarget.value))}
         id="userRange"
       />
     </>

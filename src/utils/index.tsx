@@ -1,6 +1,34 @@
 // si dans checked ya un seul true alors j'affiche que celui la ou les autres si plus
 // sinon j'affiche tous. donc si true j'affiche data[index] de checkedTypes[index] ===true
-import { DataTypes, KeyOfDataType, KeyOf, CheckedTypes } from "../SharedTypes";
+import { DataTypes, KeyOfDataType, KeyOf, CheckedTypes } from "../sharedTypes";
+
+/**
+ * Primary usable data preparation
+ * @param rawData
+ * @param target
+ * @returns
+ */
+export function prepareData(rawData: any, target: number): DataTypes {
+  console.log("rawData computed !");
+
+  const data = rawData
+    .slice(0, target /* userPoksLength */)
+    .map((item: any) => {
+      return {
+        id: item.id,
+        name: item.name.french,
+        type: item.type,
+        Attack: item.base["Attack"],
+        Defense: item.base["Defense"],
+        Speed: item.base["Speed"],
+        SpAttack: item.base["Sp. Attack"],
+        SpDefense: item.base["Sp. Defense"],
+        HP: item.base["HP"],
+        visible: true,
+      };
+    });
+  return data;
+}
 
 /**
  * Perf measurement and displayed in console
@@ -46,7 +74,6 @@ export const setStyle = (selectedIndex: number, index: number): string => {
  */
 export function changeLength<T>(targetLength: number, user: T[]): T[] {
   const diff = targetLength - user.length;
-  // console.log(`diff : ${diff}   ||   targetLength: ${targetLength}`);
   if (diff > 0) {
     const filler = new Array(diff).fill(false);
     user = user.concat(filler);
@@ -80,6 +107,8 @@ export const sorting = (
   asc: boolean
 ): DataTypes => {
   if (Array.isArray(data)) {
+    console.log("sorting !");
+
     data.sort((a, b) => {
       const valueA = a[sortBy];
       const valueB = b[sortBy];
@@ -155,32 +184,20 @@ export function updateVisibility(
 ): void {
   console.log("updateVisibility");
   arr1.map((item) => {
-    item.visible = false;
-    if (onPureSwitch) {
-      item.visible = item.type.length === 1 ? true : false;
-    }
-    if (onDoubleSwitch) {
-      item.visible = item.type.length === 2 ? true : false;
-    }
+    item.visible = true;
     if (arr2) {
       arr2.map((checkedType) => {
         if (checkedType.isChecked) {
           if (item.type.includes(checkedType.type)) {
-            item.visible = true;
-            if (onPureSwitch) {
-              item.visible = item.type.length === 1 ? true : false;
-            }
-            if (onDoubleSwitch) {
-              item.visible = item.type.length === 2 ? true : false;
-            }
-            if (!onPureSwitch && !onDoubleSwitch) {
+            if (onPureSwitch && item.type.length === 1) {
+              console.log("onPureSwitch");
+
               item.visible = true;
-            }
-            if (!onPureSwitch) {
-              item.visible = item.type.length === 1 ? false : true;
-            }
-            if (!onDoubleSwitch) {
-              item.visible = item.type.length === 2 ? false : true;
+            } else if (onDoubleSwitch && item.type.length >= 2) {
+              console.log("onDoubleSwitch");
+              item.visible = true;
+            } else {
+              item.visible = false;
             }
           }
         }
