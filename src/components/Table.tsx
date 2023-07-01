@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { KeyOfDataType, TableProps } from "../sharedTypes";
-import { THeader, TBody } from "./index";
+import { Thead, Tbody } from "./index";
 import { sorting, calcPerf, setColor, setStyle } from "../utils";
 import { colors } from "../utils/staticData";
 
@@ -35,21 +35,21 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
         <thead>
           <tr>
             {sorts.map((sortBy, index) => (
-              <THeader
+              <Thead
                 key={index}
                 color={setColor(index, colors, sorts.length)}
                 sortBy={sortBy}
                 onActive={setactiveSortBy}
                 currentAsc={sortByAsc}
                 onAsc={setSortByAsc}
-              ></THeader>
+              ></Thead>
             ))}
           </tr>
         </thead>
         <tbody>
           {/* si l'index ici =  un des number de isChecked(checkTypes) */}
           {sortedData.map((item, index) => (
-            <TBody
+            <Tbody
               item={item}
               index={index}
               handleClick={handleClick}

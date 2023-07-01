@@ -1,5 +1,7 @@
+import { Fams } from "../sharedTypes";
+
 interface TypesProps {
-  data: string[];
+  data: Fams[];
   checked: boolean[];
   handleToggle: (index: number) => void;
 }

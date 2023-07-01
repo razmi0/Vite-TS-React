@@ -8,7 +8,7 @@ interface Props {
   setStyle: (selectedIndex: number, index: number) => string;
 }
 
-function TBody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
+function Tbody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
   // index.visible === true ? display : no display
   //
   if (!item.visible) {
@@ -37,4 +37,4 @@ function TBody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
   // index in trueIndex
 }
 
-export default TBody;
+export default Tbody;

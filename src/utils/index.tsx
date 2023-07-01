@@ -1,34 +1,12 @@
 // si dans checked ya un seul true alors j'affiche que celui la ou les autres si plus
 // sinon j'affiche tous. donc si true j'affiche data[index] de checkedTypes[index] ===true
-import { DataTypes, KeyOfDataType, KeyOf, CheckedTypes } from "../sharedTypes";
-
-/**
- * Primary usable data preparation
- * @param rawData
- * @param target
- * @returns
- */
-export function prepareData(rawData: any, target: number): DataTypes {
-  console.log("rawData computed !");
-
-  const data = rawData
-    .slice(0, target /* userPoksLength */)
-    .map((item: any) => {
-      return {
-        id: item.id,
-        name: item.name.french,
-        type: item.type,
-        Attack: item.base["Attack"],
-        Defense: item.base["Defense"],
-        Speed: item.base["Speed"],
-        SpAttack: item.base["Sp. Attack"],
-        SpDefense: item.base["Sp. Defense"],
-        HP: item.base["HP"],
-        visible: true,
-      };
-    });
-  return data;
-}
+import {
+  DataTypes,
+  KeyOfDataType,
+  KeyOf,
+  CheckedTypes,
+  Pokemon,
+} from "../sharedTypes";
 
 /**
  * Perf measurement and displayed in console
@@ -142,9 +120,11 @@ export function mergeAtIndex<T extends any[], P extends any[]>(
   key1: string,
   key2: string
 ): any[] | undefined {
-  let merged = [];
   const diff = arr1.length - arr2.length;
-  if (diff === 0) {
+
+  diff !== 0 ? console.log("mergeAtIndex diff = ", diff) : null;
+  let merged = [];
+  try {
     for (let i = 0; i < arr1.length; i++) {
       merged.push({
         [key1]: arr1[i],
@@ -152,8 +132,13 @@ export function mergeAtIndex<T extends any[], P extends any[]>(
       });
     }
     return merged;
-  } else {
-    console.warn("mergeAtIndex impossible because diff = ", diff);
+  } catch (e) {
+    console.warn(
+      "mergeAtIndex impossible because ",
+      console.log(e),
+      " diff = ",
+      diff
+    );
     return;
   }
 }
@@ -176,32 +161,35 @@ export function checkIfAllFalse(arr: boolean[]): boolean {
  * @param arr1 pokemon_display
  * @param arr2 checkedTypes
  */
-export function updateVisibility(
-  arr1: DataTypes,
-  arr2: CheckedTypes,
-  onPureSwitch: boolean,
-  onDoubleSwitch: boolean
-): void {
+export function updateVisibility(arr1: DataTypes, arr2: CheckedTypes): void {
   console.log("updateVisibility");
   arr1.map((item) => {
-    item.visible = true;
     if (arr2) {
       arr2.map((checkedType) => {
         if (checkedType.isChecked) {
           if (item.type.includes(checkedType.type)) {
-            if (onPureSwitch && item.type.length === 1) {
-              console.log("onPureSwitch");
-
-              item.visible = true;
-            } else if (onDoubleSwitch && item.type.length >= 2) {
-              console.log("onDoubleSwitch");
-              item.visible = true;
-            } else {
-              item.visible = false;
-            }
+            item.visible = true;
           }
         }
       });
     }
   });
+}
+
+export function prepareData(rawData: Pokemon[]): DataTypes {
+  const data = rawData.map((item: Pokemon) => {
+    return {
+      id: item.id,
+      name: item.name.french,
+      type: item.type,
+      Attack: item.base["Attack"],
+      Defense: item.base["Defense"],
+      Speed: item.base["Speed"],
+      SpAttack: item.base["Sp. Attack"],
+      SpDefense: item.base["Sp. Defense"],
+      HP: item.base["HP"],
+      visible: true,
+    };
+  });
+  return data;
 }

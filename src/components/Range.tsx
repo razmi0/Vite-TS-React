@@ -1,11 +1,11 @@
 export function Range({
-  userPoksLength,
-  setUserPoksLength,
+  pokemonQuantity,
+  setPokemonQuantity,
   poksLength,
   handleChange,
 }: {
-  userPoksLength: number;
-  setUserPoksLength: (value: number) => void;
+  pokemonQuantity: number;
+  setPokemonQuantity: (value: number) => void;
   poksLength: number;
   handleChange: (value: number) => void;
 }) {
@@ -21,7 +21,7 @@ export function Range({
         minLength={1}
         maxLength={3}
         className="poks-input mb-1"
-        value={userPoksLength}
+        value={pokemonQuantity}
         onChange={(e) => handleChange(Number(e.currentTarget.value))}
       />
       / {poksLength}

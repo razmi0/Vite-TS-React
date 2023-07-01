@@ -1,5 +1,21 @@
 import { ReactNode } from "react";
 
+export type Pokemon = {
+  id: number;
+  name: {
+    french: string;
+  };
+  type: string[];
+  base: {
+    HP: number;
+    Attack: number;
+    Defense: number;
+    "Sp. Attack": number;
+    "Sp. Defense": number;
+    Speed: number;
+  };
+};
+
 export type DataType = {
   id: number;
   name: string;
@@ -23,7 +39,7 @@ export type KeyOfDataType = keyof DataType;
 
 export type KeyOf<P> = keyof P;
 
-export type SortsTypes = KeyOfDataType[];
+export type SortsKeys = KeyOfDataType[];
 
 export type CheckedTypes =
   | {
@@ -36,7 +52,7 @@ export interface TableProps {
   heading?: string;
   data: DataTypes;
   children?: ReactNode;
-  sorts: SortsTypes;
+  sorts: SortsKeys;
   isAsc?: boolean;
   colors?: string[];
 }
@@ -66,24 +82,22 @@ export interface Name {
   chinese: string;
   french: string;
 }
-
-export enum Type {
-  Bug = "Bug",
-  Dark = "Dark",
-  Dragon = "Dragon",
-  Electric = "Electric",
-  Fairy = "Fairy",
-  Fighting = "Fighting",
-  Fire = "Fire",
-  Flying = "Flying",
-  Ghost = "Ghost",
-  Grass = "Grass",
-  Ground = "Ground",
-  Ice = "Ice",
-  Normal = "Normal",
-  Poison = "Poison",
-  Psychic = "Psychic",
-  Rock = "Rock",
-  Steel = "Steel",
-  Water = "Water",
-}
+type Fams =
+  | "Bug"
+  | "Dark"
+  | "Dragon"
+  | "Electric"
+  | "Fairy"
+  | "Fighting"
+  | "Fire"
+  | "Flying"
+  | "Ghost"
+  | "Grass"
+  | "Ground"
+  | "Ice"
+  | "Normal"
+  | "Poison"
+  | "Psychic"
+  | "Rock"
+  | "Steel"
+  | "Water";

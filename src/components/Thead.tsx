@@ -10,7 +10,7 @@ interface Props {
   onAsc: (isAsc: boolean) => void;
 }
 
-function THeader({ color, sortBy, onActive, currentAsc, onAsc }: Props) {
+function Thead({ color, sortBy, onActive, currentAsc, onAsc }: Props) {
   if (!sortBy || sortBy === "visible" || sortBy === "id") return <></>;
 
   return (
@@ -28,4 +28,4 @@ function THeader({ color, sortBy, onActive, currentAsc, onAsc }: Props) {
   );
 }
 
-export default THeader;
+export default Thead;
