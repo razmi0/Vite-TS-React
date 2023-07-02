@@ -7,7 +7,7 @@ interface SwitchProps {
   double_quantity: number;
 }
 
-function Switch({
+function Switches({
   handlePureSwitch,
   isPureSwitchOn,
   handleDoubleSwitch,
@@ -16,8 +16,8 @@ function Switch({
   double_quantity,
 }: SwitchProps) {
   return (
-    <section className="row justify-content-around">
-      <div className="form-check my-4">
+    <section className="row justify-content-around p-inherit">
+      <div className="form-check my-1">
         <input
           className="form-check-input"
           type="checkbox"
@@ -30,7 +30,7 @@ function Switch({
           Pure Type ( {pure_quantity} )
         </label>
       </div>
-      <div className="form-check my-4">
+      <div className="form-check my-1">
         <input
           className="form-check-input"
           type="checkbox"
@@ -40,11 +40,11 @@ function Switch({
           onChange={() => handleDoubleSwitch(isDoubleSwitchOn)}
         />
         <label className="form-check-label" htmlFor="switch_pure_type">
-          Doubled Types ( { double_quantity } )
+          Doubled Types ( {double_quantity} )
         </label>
       </div>
     </section>
   );
 }
 
-export default Switch;
+export default Switches;

@@ -52,6 +52,9 @@ input[type="range"]::-webkit-slider-runnable-track {
   max-width: fit-content;
   max-height: fit-content;
 }
+.p-inherit {
+  padding: inherit;
+}
 .border_wrapper {
   border: none;
   background-color: #fff;

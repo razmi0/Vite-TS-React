@@ -1,6 +1,6 @@
 //#region IMPORTS
 
-import { Table, Range, Types, Switch } from "./components";
+import { Table, Range, Types, Switches } from "./components";
 import pokemon from "./data.json";
 import { useState } from "react";
 import { DataTypes, SortsKeys, KeyOfDataType, Fams } from "./sharedTypes";
@@ -49,9 +49,6 @@ function App() {
   const fams_displayed = [
     ...new Set(pokemon_display.flatMap((item) => item.type)),
   ] as Fams[];
-
-  console.log(fams);
-  console.log(checked);
 
   //#region FILTERS SWITCHES
 
@@ -125,8 +122,6 @@ function App() {
   };
 
   const { pureLength, doubleLength } = countTypes(pokemon_display);
-  console.log(checked);
-  console.log(fams_displayed);
 
   //#endregion HANDLERS
 
@@ -135,7 +130,7 @@ function App() {
       <h1 className="mt-5 mb-5 text-center"> Pokemon Table </h1>
       <div className="px-5 flex-grow-1 d-flex flex-column">
         <section /* FILTERS */ className="mb-3 pt-3 row flex-nowrap">
-          <div className="col-3 pt-3 border_wrapper">
+          <div className="col-3 py-3 border_wrapper">
             <Range
               pokemonQuantity={pokemonQuantity}
               setPokemonQuantity={setPokemonQuantity}
@@ -146,14 +141,14 @@ function App() {
             <span className="my-4">{pokemon_display.length} pokemons </span>
           </div>
           <div className="types_wrapper col-4 border_wrapper ms-2 pt-3">
-            <div className="d-flex flex-wrap justify-content-start align-content-start mb-3">
+            <div className="d-flex flex-wrap justify-content-start align-content-start mb-1">
               <Types
                 data={fams_displayed}
                 checked={checked}
                 handleToggle={handleToggle}
               />
             </div>
-            <Switch
+            <Switches
               handlePureSwitch={handlePureSwitch}
               isPureSwitchOn={isPureSwitchOn}
               handleDoubleSwitch={handleDoubleSwitch}

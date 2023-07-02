@@ -3,7 +3,6 @@
 import {
   DataTypes,
   KeyOfDataType,
-  KeyOf,
   CheckedTypes,
   Pokemon,
 } from "../sharedTypes";
@@ -15,8 +14,8 @@ import {
  * @param subject
  */
 export function calcPerf(t1: number, count: number, subject: string) {
-  performance.now() - t1;
-  console.table({ count, subject: performance.now() - t1 });
+  const measure = performance.now() - t1;
+  console.table({ count, [subject]: measure, renderingTime: measure });
 }
 /**
  * Set color for thead
@@ -67,13 +66,11 @@ export function changeLength<T>(targetLength: number, user: T[]): T[] {
 export function isIndexedChecked(user: boolean[]): number[] | -1 {
   let arr = [];
   for (let i = 0; i < user.length; i++) {
-    console.log("one true");
     if (user[i] === true) {
       arr.push(i);
     }
   }
   if (!arr.length) {
-    console.log("all false no length");
     return -1;
   }
   return arr;
@@ -121,25 +118,16 @@ export function mergeAtIndex<T extends any[], P extends any[]>(
   key2: string
 ): any[] | undefined {
   const diff = arr1.length - arr2.length;
-
-  diff !== 0
-    ? console.log("mergeAtIndex diff = ", diff)
-    : console.log("same length");
+  diff !== 0 ? console.log("Unexpected inputs length. Diff = ", diff) : null;
   let merged = [];
-  try {
-    for (let i = 0; i < arr1.length; i++) {
-      console.log("arr2[i] = ", arr2[i]);
-      merged.push({
-        [key1]: arr1[i],
-        [key2]: arr2[i] === undefined ? false : arr2[i],
-      });
-    }
-    return merged;
-  } catch (e) {
-    console.log(e),
-      console.warn("mergeAtIndex impossible because ", "\n diff = ", diff);
-    return;
+
+  for (let i = 0; i < arr1.length; i++) {
+    merged.push({
+      [key1]: arr1[i],
+      [key2]: arr2[i] === undefined ? false : arr2[i],
+    });
   }
+  return merged;
 }
 /**
  * If all false return true ; if at least one true return false
