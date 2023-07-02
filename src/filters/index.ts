@@ -55,3 +55,14 @@ export function filterByFam(
   }
   return data;
 }
+
+/**
+ * filterBytypeLength
+ */
+export function countTypes(data: DataTypes): number[] {
+  const counts = [0, 0];
+  data.map(({ type }) => {
+    type.length === 1 ? counts[0]++ : counts[1]++;
+  });
+  return counts;
+}

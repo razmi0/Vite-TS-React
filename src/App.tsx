@@ -1,17 +1,15 @@
 import { Table, Range, Types, Switch } from "./components";
 import pokemon from "./data.json";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DataTypes, SortsKeys, KeyOfDataType, Fams } from "./sharedTypes";
 import "./App.css";
+import { mergeAtIndex, calcPerf, changeLength, prepareData } from "./utils";
 import {
-  mergeAtIndex,
-  checkIfAllFalse,
-  updateVisibility,
-  calcPerf,
-  changeLength,
-  prepareData,
-} from "./utils";
-import { filterByQuantity, filterByVisibility, filterByFam } from "./filters";
+  filterByQuantity,
+  filterByVisibility,
+  filterByFam,
+  countTypes,
+} from "./filters";
 import { CheckedTypes } from "./sharedTypes/index";
 
 /* App component local variables */
@@ -32,7 +30,7 @@ function App() {
   const [isPureSwitchOn, setIsPureSwitchOn] = useState(false);
   const [isDoubleSwitchOn, setIsDoubleSwitchOn] = useState(false);
   const [checked, setChecked] = useState(initial_state);
-  // const [checkedTypes, setCheckedTypes] = useState<CheckedTypes>([]);
+
   let pokemon_display: DataTypes = prepareData(pokemon);
   pokemon_display = filterByQuantity(pokemon, pokemonQuantity);
 
@@ -67,8 +65,6 @@ function App() {
     "type",
     "isChecked"
   );
-
-  // setCheckedTypes(() => statesCheckedTypes);
 
   pokemon_display = filterByFam(pokemon_display, checkedTypes);
 
@@ -116,6 +112,9 @@ function App() {
     }
   };
 
+  const [pureLength, doubleLength] = countTypes(pokemon_display);
+  console.log(pureLength, doubleLength);
+
   //#endregion HANDLERS
 
   return (
@@ -146,6 +145,8 @@ function App() {
               isPureSwitchOn={isPureSwitchOn}
               handleDoubleSwitch={handleDoubleSwitch}
               isDoubleSwitchOn={isDoubleSwitchOn}
+              pure_quantity={pureLength}
+              double_quantity={doubleLength}
             />
           </div>
         </section>
@@ -159,7 +160,7 @@ function App() {
         )}
       </div>
       <footer className="footer"> ¤¤¤¤ </footer>
-      {/* {calcPerf(t1, count, "App")} */}
+      {calcPerf(t1, count, "App")}
     </>
   );
 }

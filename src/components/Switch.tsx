@@ -3,6 +3,8 @@ interface SwitchProps {
   handleDoubleSwitch: (isDoubleSwitchOn: boolean) => void;
   isPureSwitchOn: boolean;
   isDoubleSwitchOn: boolean;
+  pure_quantity: number;
+  double_quantity: number;
 }
 
 function Switch({
@@ -10,6 +12,8 @@ function Switch({
   isPureSwitchOn,
   handleDoubleSwitch,
   isDoubleSwitchOn,
+  pure_quantity,
+  double_quantity,
 }: SwitchProps) {
   return (
     <section className="row justify-content-around">
@@ -23,7 +27,7 @@ function Switch({
           onChange={() => handlePureSwitch(isPureSwitchOn)}
         />
         <label className="form-check-label" htmlFor="switch_pure_type">
-          Pure Type
+          Pure Type ( {pure_quantity} )
         </label>
       </div>
       <div className="form-check my-4">
@@ -36,7 +40,7 @@ function Switch({
           onChange={() => handleDoubleSwitch(isDoubleSwitchOn)}
         />
         <label className="form-check-label" htmlFor="switch_pure_type">
-          Doubled Types
+          Doubled Types ( { double_quantity } )
         </label>
       </div>
     </section>
