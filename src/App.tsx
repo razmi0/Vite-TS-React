@@ -1,6 +1,6 @@
 //#region IMPORTS
 
-import { Table, Range, Types, Switches } from "./components";
+import { Table, Range, Checkboxes, Switches } from "./components";
 import pokemon from "./data.json";
 import { useState } from "react";
 import { DataTypes, SortsKeys, KeyOfDataType, Fams } from "./sharedTypes";
@@ -127,7 +127,7 @@ function App() {
 
   return (
     <>
-      <h1 className="mt-5 mb-5 text-center"> Pokemon Table </h1>
+      <h1 className="mt-3 mb-3 text-center"> Pokemon Table </h1>
       <div className="px-5 flex-grow-1 d-flex flex-column">
         <section /* FILTERS */ className="mb-3 pt-3 row flex-nowrap">
           <div className="col-3 py-3 border_wrapper">
@@ -140,9 +140,9 @@ function App() {
             <div className="form-label fw-bold mt-3">Filtered :</div>
             <span className="my-4">{pokemon_display.length} pokemons </span>
           </div>
-          <div className="types_wrapper col-4 border_wrapper ms-2 pt-3">
+          <div className="types_wrapper col-4 border_wrapper ms-2 py-3">
             <div className="d-flex flex-wrap justify-content-start align-content-start mb-1">
-              <Types
+              <Checkboxes
                 data={fams_displayed}
                 checked={checked}
                 handleToggle={handleToggle}

@@ -1,12 +1,12 @@
 import { Fams } from "../sharedTypes";
 
-interface TypesProps {
+interface CheckboxesProps {
   data: Fams[];
   checked: boolean[];
   handleToggle: (index: number) => void;
 }
 
-function Types({ data, checked, handleToggle }: TypesProps) {
+function Checkboxes({ data, checked, handleToggle }: CheckboxesProps) {
   return (
     <>
       {data.map((item, index) => (
@@ -33,4 +33,4 @@ function Types({ data, checked, handleToggle }: TypesProps) {
   );
 }
 
-export default Types;
+export default Checkboxes;
