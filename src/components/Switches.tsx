@@ -16,7 +16,8 @@ function Switches({
   double_quantity,
 }: SwitchProps) {
   return (
-    <section className="row justify-content-around p-inherit">
+    <section className="flex-column justify-content-around p-inherit mt-4">
+      <hr />
       <div className="form-check my-1">
         <input
           className="form-check-input"

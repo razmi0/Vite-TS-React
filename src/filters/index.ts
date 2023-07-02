@@ -1,4 +1,4 @@
-import { CheckedTypes, DataTypes, Pokemon } from "../sharedTypes";
+import { CheckedTypes, DataTypes, Pokemon } from "../types";
 
 /**
  * return all items with visible set to true

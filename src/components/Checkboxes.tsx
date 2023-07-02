@@ -1,4 +1,4 @@
-import { Fams } from "../sharedTypes";
+import { Fams } from "../types";
 
 interface CheckboxesProps {
   data: Fams[];

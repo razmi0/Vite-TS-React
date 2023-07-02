@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { KeyOfDataType } from "../sharedTypes";
+import { KeyOfDataType } from "../types";
 
 interface Props {
   children?: ReactNode;

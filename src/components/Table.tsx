@@ -1,10 +1,10 @@
-import { useState, useMemo, useEffect } from "react";
-import { DataType, KeyOfDataType, TableProps } from "../sharedTypes";
+import { useState } from "react";
+import { DataType, KeyOfDataType, TableProps } from "../types";
 import { Thead, Tbody } from "./index";
 import { sorting, calcPerf, setColor, setStyle } from "../utils";
 import { colors } from "../utils/staticData";
+import Pagination from "./Pagination";
 
-let sortingCount = 0;
 let tableCount = 0;
 
 /* --------- */
@@ -19,11 +19,43 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [activeSortBy, setactiveSortBy] = useState<KeyOfDataType>(sorts[0]);
   const [sortByAsc, setSortByAsc] = useState<boolean>(isAsc);
+  /**
+   * Pagination States
+   */
+  const [start, setStart] = useState<number>(0);
+  const [end, setEnd] = useState<number>(10);
+  const [activePage, setActivePage] = useState<number>(1);
 
-  const handleClick = (index: number, item: DataType) => {
+  const page_length = end - start;
+
+  const handleClickRow = (index: number, item: DataType) => {
     setSelectedIndex(index);
-    console.log("handleClick, : ", item);
+    console.log("handleClickRow, : ", item);
   };
+
+  const handlePreviousPage = () => {
+    if (start > 0) {
+      setStart(start - page_length);
+      setEnd(end - page_length);
+      setActivePage(activePage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (start < data.length - page_length) {
+      setStart(start + page_length);
+      setEnd(end + page_length);
+      setActivePage(activePage + 1);
+    }
+  };
+
+  const handleIndexedPage = (index: number) => {
+    setStart(index * page_length - page_length);
+    setEnd(index * page_length);
+    setActivePage(index);
+  };
+
+  const handlePageLength = (length: number) => {};
 
   const sortedData = sorting(data, activeSortBy, sortByAsc);
 
@@ -31,7 +63,6 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
 
   return (
     <>
-      <h1 className="my-2"> {heading} </h1>
       <table className="table table-striped table-bordered table-hover">
         <thead>
           <tr>
@@ -43,17 +74,16 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
                 onActive={setactiveSortBy}
                 currentAsc={sortByAsc}
                 onAsc={setSortByAsc}
-              ></Thead>
+              />
             ))}
           </tr>
         </thead>
         <tbody>
-          {/* si l'index ici =  un des number de isChecked(checkTypes) */}
-          {sortedData.map((item, index) => (
+          {sortedData.slice(start, end).map((item, index) => (
             <Tbody
               item={item}
               index={index}
-              handleClick={handleClick}
+              handleClick={handleClickRow}
               selectedIndex={selectedIndex}
               key={item.id}
               setStyle={setStyle}
@@ -61,7 +91,17 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
           ))}
         </tbody>
       </table>
-      {/* {calcPerf(t1, tableCount, "Table")} */}
+      <div className="d-flex flex-row flex-wrap align-content-center justify-content-end">
+        <Pagination
+          data_length={data.length}
+          page_length={page_length}
+          handleIndexedPage={handleIndexedPage}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          activePage={activePage}
+        />
+      </div>
+      {calcPerf(t1, tableCount, "Table")}
     </>
   );
 }

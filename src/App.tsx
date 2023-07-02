@@ -3,7 +3,7 @@
 import { Table, Range, Checkboxes, Switches } from "./components";
 import pokemon from "./data.json";
 import { useState } from "react";
-import { DataTypes, SortsKeys, KeyOfDataType, Fams } from "./sharedTypes";
+import { DataTypes, SortsKeys, KeyOfDataType, Fams } from "./types";
 import "./App.css";
 import { mergeAtIndex, calcPerf, prepareData } from "./utils";
 import {
@@ -12,7 +12,7 @@ import {
   filterByFam,
   countTypes,
 } from "./filters";
-import { CheckedTypes } from "./sharedTypes/index";
+import { CheckedTypes } from "./types/index";
 
 //#endregion IMPORTS
 
@@ -128,19 +128,20 @@ function App() {
   return (
     <>
       <h1 className="mt-3 mb-3 text-center"> Pokemon Table </h1>
-      <div className="px-5 flex-grow-1 d-flex flex-column">
-        <section /* FILTERS */ className="mb-3 pt-3 row flex-nowrap">
-          <div className="col-3 py-3 border_wrapper">
-            <Range
-              pokemonQuantity={pokemonQuantity}
-              setPokemonQuantity={setPokemonQuantity}
-              poksLength={poksLength}
-              handleChange={handleChange}
-            />
-            <div className="form-label fw-bold mt-3">Filtered :</div>
-            <span className="my-4">{pokemon_display.length} pokemons </span>
-          </div>
-          <div className="types_wrapper col-4 border_wrapper ms-2 py-3">
+      <div className="px-2 d-flex">
+        <section
+          /* FILTERS */ className="types_wrapper border_wrapper ms-2 p-3 d-flex flex-column col-4 flex-wrap"
+        >
+          <Range
+            pokemonQuantity={pokemonQuantity}
+            poksLength={poksLength}
+            displayedLength={pokemon_display.length}
+            handleChange={handleChange}
+          />
+
+          <div className="spacer"></div>
+
+          <div>
             <div className="d-flex flex-wrap justify-content-start align-content-start mb-1">
               <Checkboxes
                 data={fams_displayed}
@@ -159,7 +160,7 @@ function App() {
           </div>
         </section>
         {pokemon_display.length && (
-          <section className="table-section" /* TABLE */>
+          <section className="table-section col-7" /* TABLE */>
             <Table data={pokemon_display} sorts={sortsKeys} isAsc={isAsc} />
           </section>
         )}
@@ -167,7 +168,6 @@ function App() {
           <div className="text-center"> No pokemon found </div>
         )}
       </div>
-      <footer className="footer"> ¤¤¤¤ </footer>
       {calcPerf(t1, count, "App")}
     </>
   );

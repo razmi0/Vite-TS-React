@@ -1,11 +1,6 @@
 // si dans checked ya un seul true alors j'affiche que celui la ou les autres si plus
 // sinon j'affiche tous. donc si true j'affiche data[index] de checkedTypes[index] ===true
-import {
-  DataTypes,
-  KeyOfDataType,
-  CheckedTypes,
-  Pokemon,
-} from "../sharedTypes";
+import { DataTypes, KeyOfDataType, CheckedTypes, Pokemon } from "../types";
 
 /**
  * Perf measurement and displayed in console
@@ -15,7 +10,8 @@ import {
  */
 export function calcPerf(t1: number, count: number, subject: string) {
   const measure = performance.now() - t1;
-  console.table({ count, [subject]: measure, renderingTime: measure });
+  subject = subject + " Time";
+  console.table({ count, [subject]: measure });
 }
 /**
  * Set color for thead
@@ -76,11 +72,14 @@ export function isIndexedChecked(user: boolean[]): number[] | -1 {
   return arr;
 }
 
+let count = 0;
 export const sorting = (
   data: DataTypes,
   sortBy: KeyOfDataType,
   asc: boolean
 ): DataTypes => {
+  count++;
+  const t1 = performance.now();
   if (Array.isArray(data)) {
     console.log("sorting computed !");
 
@@ -103,10 +102,11 @@ export const sorting = (
       }
     });
 
-    // console.table({ sortingCount, sortBy, asc });
+    calcPerf(t1, count, "sorting");
 
     return data;
   }
+  calcPerf(t1, count, "sorting");
 
   return data;
 };
@@ -179,4 +179,30 @@ export function prepareData(rawData: Pokemon[]): DataTypes {
     };
   });
   return data;
+}
+
+export function pagination(pages: number[], activePage: number): number[] {
+  const displayedPages = [];
+  const totalPages = pages.length; // Assuming there are 10 pages in total. Replace this with the actual total number of pages.
+
+  for (let i = activePage - 2; i <= activePage + 2; i++) {
+    if (i >= 1 && i <= totalPages) {
+      displayedPages.push(i);
+    }
+  }
+
+  // If there are not enough pages on the left side, add more on the right side
+  while (
+    displayedPages.length < 5 &&
+    displayedPages[displayedPages.length - 1] < totalPages
+  ) {
+    displayedPages.push(displayedPages[displayedPages.length - 1] + 1);
+  }
+
+  // If there are not enough pages on the right side, add more on the left side
+  while (displayedPages.length < 5 && displayedPages[0] > 1) {
+    displayedPages.unshift(displayedPages[0] - 1);
+  }
+
+  return displayedPages;
 }

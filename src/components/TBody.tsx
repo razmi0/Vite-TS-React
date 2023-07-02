@@ -1,4 +1,4 @@
-import { DataType } from "../sharedTypes";
+import { DataType } from "../types";
 
 interface Props {
   item: DataType;
