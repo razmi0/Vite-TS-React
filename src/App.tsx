@@ -1,9 +1,11 @@
+//#region IMPORTS
+
 import { Table, Range, Types, Switch } from "./components";
 import pokemon from "./data.json";
 import { useState } from "react";
 import { DataTypes, SortsKeys, KeyOfDataType, Fams } from "./sharedTypes";
 import "./App.css";
-import { mergeAtIndex, calcPerf, changeLength, prepareData } from "./utils";
+import { mergeAtIndex, calcPerf, prepareData } from "./utils";
 import {
   filterByQuantity,
   filterByVisibility,
@@ -12,24 +14,30 @@ import {
 } from "./filters";
 import { CheckedTypes } from "./sharedTypes/index";
 
+//#endregion IMPORTS
+
 /* App component local variables */
 
 const poksLength = pokemon.length;
 let count = 0;
 const isAsc = true;
-const initial_state: boolean[] = new Array(10).fill(false);
+const fams = [...new Set(pokemon.flatMap((item) => item.type))] as Fams[];
+const initialState: boolean[] = new Array(fams.length).fill(false);
+
 /* --------- */
 /* COMPONENT */
 /* --------- */
 
 function App() {
+  console.log("/********** APP COMPONENT **********/");
+
   count++;
   let t1 = performance.now();
 
   const [pokemonQuantity, setPokemonQuantity] = useState(10);
   const [isPureSwitchOn, setIsPureSwitchOn] = useState(false);
   const [isDoubleSwitchOn, setIsDoubleSwitchOn] = useState(false);
-  const [checked, setChecked] = useState(initial_state);
+  const [checked, setChecked] = useState(initialState);
 
   let pokemon_display: DataTypes = prepareData(pokemon);
   pokemon_display = filterByQuantity(pokemon, pokemonQuantity);
@@ -38,9 +46,14 @@ function App() {
     pokemon_display[0]
   ) as KeyOfDataType[];
 
-  const uniqueDisplayedFams = [
+  const fams_displayed = [
     ...new Set(pokemon_display.flatMap((item) => item.type)),
   ] as Fams[];
+
+  console.log(fams);
+  console.log(checked);
+
+  //#region FILTERS SWITCHES
 
   if (isPureSwitchOn) {
     pokemon_display.map(
@@ -57,10 +70,10 @@ function App() {
     pokemon_display = filterByVisibility(pokemon_display);
   }
 
-  console.log(checked);
+  //#endregion FILTERS SWITCHES
 
   const checkedTypes: CheckedTypes = mergeAtIndex(
-    uniqueDisplayedFams,
+    fams,
     checked,
     "type",
     "isChecked"
@@ -89,7 +102,6 @@ function App() {
       value = 1;
     }
     setPokemonQuantity(value);
-    setChecked(changeLength(uniqueDisplayedFams.length, checked));
   };
   /**
    * Handle the pure switch button by updating the state of the switch | boolean (isPureSwitchOn)
@@ -112,8 +124,9 @@ function App() {
     }
   };
 
-  const [pureLength, doubleLength] = countTypes(pokemon_display);
-  console.log(pureLength, doubleLength);
+  const { pureLength, doubleLength } = countTypes(pokemon_display);
+  console.log(checked);
+  console.log(fams_displayed);
 
   //#endregion HANDLERS
 
@@ -135,7 +148,7 @@ function App() {
           <div className="types_wrapper col-4 border_wrapper ms-2 pt-3">
             <div className="d-flex flex-wrap justify-content-start align-content-start mb-3">
               <Types
-                data={uniqueDisplayedFams as Fams[]}
+                data={fams_displayed}
                 checked={checked}
                 handleToggle={handleToggle}
               />

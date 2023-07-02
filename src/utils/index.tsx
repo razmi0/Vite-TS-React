@@ -85,7 +85,7 @@ export const sorting = (
   asc: boolean
 ): DataTypes => {
   if (Array.isArray(data)) {
-    console.log("sorting !");
+    console.log("sorting computed !");
 
     data.sort((a, b) => {
       const valueA = a[sortBy];
@@ -122,23 +122,22 @@ export function mergeAtIndex<T extends any[], P extends any[]>(
 ): any[] | undefined {
   const diff = arr1.length - arr2.length;
 
-  diff !== 0 ? console.log("mergeAtIndex diff = ", diff) : null;
+  diff !== 0
+    ? console.log("mergeAtIndex diff = ", diff)
+    : console.log("same length");
   let merged = [];
   try {
     for (let i = 0; i < arr1.length; i++) {
+      console.log("arr2[i] = ", arr2[i]);
       merged.push({
         [key1]: arr1[i],
-        [key2]: arr2[i],
+        [key2]: arr2[i] === undefined ? false : arr2[i],
       });
     }
     return merged;
   } catch (e) {
-    console.warn(
-      "mergeAtIndex impossible because ",
-      console.log(e),
-      " diff = ",
-      diff
-    );
+    console.log(e),
+      console.warn("mergeAtIndex impossible because ", "\n diff = ", diff);
     return;
   }
 }

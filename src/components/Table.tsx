@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import { KeyOfDataType, TableProps } from "../sharedTypes";
+import { DataType, KeyOfDataType, TableProps } from "../sharedTypes";
 import { Thead, Tbody } from "./index";
 import { sorting, calcPerf, setColor, setStyle } from "../utils";
 import { colors } from "../utils/staticData";
@@ -20,8 +20,9 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
   const [activeSortBy, setactiveSortBy] = useState<KeyOfDataType>(sorts[0]);
   const [sortByAsc, setSortByAsc] = useState<boolean>(isAsc);
 
-  const handleClick = (index: number) => {
+  const handleClick = (index: number, item: DataType) => {
     setSelectedIndex(index);
+    console.log("handleClick, : ", item);
   };
 
   const sortedData = sorting(data, activeSortBy, sortByAsc);

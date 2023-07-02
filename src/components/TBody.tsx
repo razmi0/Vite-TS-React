@@ -9,8 +9,6 @@ interface Props {
 }
 
 function Tbody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
-  // index.visible === true ? display : no display
-  //
   if (!item.visible) {
     return <></>;
   }
@@ -22,7 +20,6 @@ function Tbody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
         handleClick(index, item);
       }}
     >
-      {/* <td>{item.id}</td> */}
       <td>{item.name}</td>
       <td>{item.type.join(" ")}</td>
       <td>{item.Attack}</td>

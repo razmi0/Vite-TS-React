@@ -59,10 +59,13 @@ export function filterByFam(
 /**
  * filterBytypeLength
  */
-export function countTypes(data: DataTypes): number[] {
-  const counts = [0, 0];
+export function countTypes(data: DataTypes): {
+  pureLength: number;
+  doubleLength: number;
+} {
+  const counts = { pureLength: 0, doubleLength: 0 };
   data.map(({ type }) => {
-    type.length === 1 ? counts[0]++ : counts[1]++;
+    type.length === 1 ? counts.pureLength++ : counts.doubleLength++;
   });
   return counts;
 }
