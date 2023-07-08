@@ -24,12 +24,10 @@ import {
 
 /* App component local variables */
 const url = "http://localhost:4444/pokemons";
-let pokemon = [] as Pokemon[];
 let sortsKeys = [] as SortsKeys;
-const poksLength = pokemon.length;
 let count = 0;
 const isAsc = true;
-const fams = [...new Set(pokemon.flatMap((item) => item.type))] as Fams[];
+let fams = [] as Fams[];
 const initialState: boolean[] = new Array(fams.length).fill(false);
 
 /* --------- */
@@ -42,6 +40,8 @@ function App() {
   count++;
   let t1 = performance.now();
 
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [poksLength, setPoksLength] = useState(0);
   const [pokemonQuantity, setPokemonQuantity] = useState(10);
   const [isPureSwitchOn, setIsPureSwitchOn] = useState(false);
   const [isDoubleSwitchOn, setIsDoubleSwitchOn] = useState(false);
@@ -49,15 +49,18 @@ function App() {
 
   useEffect(() => {
     console.log("useEffect");
-    const data = async () => {
+    const fetching = async () => {
       const response = await fetch(url);
-      pokemon = await response.json();
+      const data = await response.json();
+      setPokemons(data);
+      setPoksLength(data.length);
     };
-    data();
+    fetching();
   }, []);
 
-  let pokemon_display: DataTypes = prepareData(pokemon);
-  pokemon_display = filterByQuantity(pokemon, pokemonQuantity);
+  let pokemon_display: DataTypes = prepareData(pokemons);
+
+  pokemon_display = filterByQuantity(pokemons, pokemonQuantity);
 
   if (pokemon_display.length !== 0) {
     sortsKeys = Object.keys(pokemon_display[0]) as KeyOfDataType[];
