@@ -23,7 +23,7 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
    * Pagination States
    */
   const [start, setStart] = useState<number>(0);
-  const [end, setEnd] = useState<number>(10);
+  const [end, setEnd] = useState<number>(16);
   const [activePage, setActivePage] = useState<number>(1);
 
   const page_length = end - start;

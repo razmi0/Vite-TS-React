@@ -63,7 +63,7 @@ export interface TableProps {
 export interface Data {
   id: number;
   name: Name;
-  type: Type[];
+  type: Fams[];
   base: Base;
 }
 
@@ -82,7 +82,7 @@ export interface Name {
   chinese: string;
   french: string;
 }
-type Fams =
+export type Fams =
   | "Bug"
   | "Dark"
   | "Dragon"

@@ -1,9 +1,16 @@
 //#region IMPORTS
 
 import { Table, Range, Checkboxes, Switches } from "./components";
-import pokemon from "./data.json";
-import { useState } from "react";
-import { DataTypes, SortsKeys, KeyOfDataType, Fams } from "./types";
+// import pokemon from "./data.json";
+import { useEffect, useState } from "react";
+import {
+  DataTypes,
+  SortsKeys,
+  KeyOfDataType,
+  Fams,
+  CheckedTypes,
+  Pokemon,
+} from "./types";
 import "./App.css";
 import { mergeAtIndex, calcPerf, prepareData } from "./utils";
 import {
@@ -12,12 +19,13 @@ import {
   filterByFam,
   countTypes,
 } from "./filters";
-import { CheckedTypes } from "./types/index";
 
 //#endregion IMPORTS
 
 /* App component local variables */
-
+const url = "http://localhost:4444/pokemons";
+let pokemon = [] as Pokemon[];
+let sortsKeys = [] as SortsKeys;
 const poksLength = pokemon.length;
 let count = 0;
 const isAsc = true;
@@ -39,12 +47,21 @@ function App() {
   const [isDoubleSwitchOn, setIsDoubleSwitchOn] = useState(false);
   const [checked, setChecked] = useState(initialState);
 
+  useEffect(() => {
+    console.log("useEffect");
+    const data = async () => {
+      const response = await fetch(url);
+      pokemon = await response.json();
+    };
+    data();
+  }, []);
+
   let pokemon_display: DataTypes = prepareData(pokemon);
   pokemon_display = filterByQuantity(pokemon, pokemonQuantity);
 
-  const sortsKeys: SortsKeys = Object.keys(
-    pokemon_display[0]
-  ) as KeyOfDataType[];
+  if (pokemon_display.length !== 0) {
+    sortsKeys = Object.keys(pokemon_display[0]) as KeyOfDataType[];
+  }
 
   const fams_displayed = [
     ...new Set(pokemon_display.flatMap((item) => item.type)),
