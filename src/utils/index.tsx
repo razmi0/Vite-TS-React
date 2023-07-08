@@ -3,9 +3,9 @@
 import {
   DataTypes,
   KeyOfDataType,
-  KeyOf,
   CheckedTypes,
   Pokemon,
+  Data,
 } from "../sharedTypes";
 
 /**
@@ -16,7 +16,7 @@ import {
  */
 export function calcPerf(t1: number, count: number, subject: string) {
   performance.now() - t1;
-  console.table({ count, subject: performance.now() - t1 });
+  console.table({ count, [subject]: performance.now() - t1 });
 }
 /**
  * Set color for thead
@@ -174,6 +174,18 @@ export function updateVisibility(arr1: DataTypes, arr2: CheckedTypes): void {
       });
     }
   });
+}
+
+export async function fetchPokemons(urls: string[]): Promise<Data[]> {
+  const url = urls[0];
+  let data = [] as Data[];
+  try {
+    const response = await fetch(url);
+    data = await response.json();
+  } catch (error) {
+    console.warn(error);
+  }
+  return data;
 }
 
 export function prepareData(rawData: Pokemon[]): DataTypes {

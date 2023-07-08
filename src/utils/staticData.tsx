@@ -7,3 +7,5 @@ export const colors = [
   "secondary",
   "primary",
 ];
+
+export const urls = ["http://localhost:4444/pokemons"];

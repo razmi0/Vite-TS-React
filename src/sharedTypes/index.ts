@@ -3,7 +3,10 @@ import { ReactNode } from "react";
 export type Pokemon = {
   id: number;
   name: {
+    english: string;
     french: string;
+    japanese: string;
+    chinese: string;
   };
   type: string[];
   base: {
@@ -63,7 +66,7 @@ export interface TableProps {
 export interface Data {
   id: number;
   name: Name;
-  type: Type[];
+  type: Fams[];
   base: Base;
 }
 
@@ -82,7 +85,7 @@ export interface Name {
   chinese: string;
   french: string;
 }
-type Fams =
+export type Fams =
   | "Bug"
   | "Dark"
   | "Dragon"
