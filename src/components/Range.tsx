@@ -1,11 +1,11 @@
 export function Range({
   pokemonQuantity,
-  poksLength,
+  rawLength,
   handleChange,
   displayedLength,
 }: {
   pokemonQuantity: number;
-  poksLength: number;
+  rawLength: number;
   handleChange: (value: number) => void;
   displayedLength: number;
 }) {
@@ -24,7 +24,7 @@ export function Range({
           value={pokemonQuantity}
           onChange={(e) => handleChange(Number(e.currentTarget.value))}
         />
-        / {poksLength}
+        / {rawLength}
         <br />
         <span className="form-label fw-bold mt-3">Filtered : </span>
         <span className="mt-1 mb-3">{displayedLength} pokemons</span>
@@ -33,7 +33,7 @@ export function Range({
         type="range"
         className="form-range"
         min={1}
-        max={poksLength}
+        max={rawLength}
         step="1"
         onMouseUp={(e) => handleChange(Number(e.currentTarget.value))}
         onTouchEnd={(e) => handleChange(Number(e.currentTarget.value))}

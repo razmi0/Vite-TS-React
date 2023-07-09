@@ -3,14 +3,7 @@
 import { Table, Range, Checkboxes, Switches } from "./components";
 // import pokemon from "./data.json";
 import { useEffect, useState } from "react";
-import {
-  DataTypes,
-  SortsKeys,
-  KeyOfDataType,
-  Fams,
-  CheckedTypes,
-  Pokemon,
-} from "./types";
+import { DataTypes, SortsKeys, Fams, CheckedTypes, Pokemon } from "./types";
 import "./App.css";
 import { mergeAtIndex, calcPerf, prepareData } from "./utils";
 import {
@@ -18,85 +11,107 @@ import {
   filterByVisibility,
   filterByFam,
   countTypes,
+  filterByPure,
+  filterByDouble,
 } from "./filters";
 
 //#endregion IMPORTS
 
-/* App component local variables */
+/* App component global scope variables */
 const url = "http://localhost:4444/pokemons";
-let sortsKeys = [] as SortsKeys;
+let sortsKeys: SortsKeys = [];
+let fams: Fams[] = [];
+let fams_displayed: Fams[] = [];
+let origin_pokemons: DataTypes = [];
+let pokemons: DataTypes = [];
 let count = 0;
 const isAsc = true;
-let fams = [] as Fams[];
-const initialState: boolean[] = new Array(fams.length).fill(false);
 
 /* --------- */
 /* COMPONENT */
 /* --------- */
 
 function App() {
-  console.log("/********** APP COMPONENT **********/");
+  count++;
+  console.log("/*** APP COMPONENT ***/ : ", count);
 
   count++;
   let t1 = performance.now();
 
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [poksLength, setPoksLength] = useState(0);
-  const [pokemonQuantity, setPokemonQuantity] = useState(10);
-  const [isPureSwitchOn, setIsPureSwitchOn] = useState(false);
-  const [isDoubleSwitchOn, setIsDoubleSwitchOn] = useState(false);
-  const [checked, setChecked] = useState(initialState);
+  const [raw, setRaw] = useState<Pokemon[]>([]);
+  const [rawLength, setRawLength] = useState<number>(0);
+  const [pokemonQuantity, setPokemonQuantity] = useState<number>(10);
+  const [isPureSwitchOn, setIsPureSwitchOn] = useState<boolean>(false);
+  const [isDoubleSwitchOn, setIsDoubleSwitchOn] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean[]>([]);
 
+  /**
+   * Fetching
+   */
   useEffect(() => {
-    console.log("useEffect");
+    console.log("UE : fetching computed");
     const fetching = async () => {
       const response = await fetch(url);
       const data = await response.json();
-      setPokemons(data);
-      setPoksLength(data.length);
+      setRaw(data);
     };
     fetching();
   }, []);
 
-  let pokemon_display: DataTypes = prepareData(pokemons);
+  /**
+   * Initial setup
+   */
+  useEffect(() => {
+    console.log("UE: initial setup");
+    if (raw.length === 0) return;
+    setRawLength(raw.length);
+    fams = [...new Set(raw.flatMap((item) => item.type))] as Fams[];
+    setChecked(() => new Array(fams.length).fill(false));
+    pokemons = prepareData(raw);
+    sortsKeys = Object.keys(pokemons[0]) as SortsKeys;
+    pokemons = filterByQuantity(pokemons, pokemonQuantity);
+  }, [raw]);
 
-  pokemon_display = filterByQuantity(pokemons, pokemonQuantity);
+  /**
+   * Quantity
+   */
+  useEffect(() => {
+    console.log("UE: quantity computed");
+    pokemons = filterByQuantity(pokemons, pokemonQuantity);
+    fams_displayed = [
+      ...new Set(pokemons.flatMap((item) => item.type)),
+    ] as Fams[];
+  }, [pokemonQuantity]);
 
-  if (pokemon_display.length !== 0) {
-    sortsKeys = Object.keys(pokemon_display[0]) as KeyOfDataType[];
-  }
+  /**
+   * Pure
+   */
+  useEffect(() => {
+    console.log("UE: pure computed");
+    if (isPureSwitchOn) pokemons = filterByPure(pokemons);
+  }, [isPureSwitchOn]);
 
-  const fams_displayed = [
-    ...new Set(pokemon_display.flatMap((item) => item.type)),
-  ] as Fams[];
+  /**
+   * Double
+   */
+  useEffect(() => {
+    console.log("UE: double computed");
+    if (isDoubleSwitchOn) pokemons = filterByDouble(pokemons);
+  }, [isDoubleSwitchOn]);
 
-  //#region FILTERS SWITCHES
-
-  if (isPureSwitchOn) {
-    pokemon_display.map(
-      (item) => (item.visible = item.type.length === 1 ? true : false)
+  /**
+   * Fam
+   **/
+  useEffect(() => {
+    console.log("UE: fam computed");
+    const checkedFams: CheckedTypes = mergeAtIndex(
+      fams,
+      checked,
+      "type",
+      "isChecked"
     );
-
-    pokemon_display = filterByVisibility(pokemon_display);
-  }
-
-  if (isDoubleSwitchOn) {
-    pokemon_display.map(
-      (item) => (item.visible = item.type.length > 1 ? true : false)
-    );
-    pokemon_display = filterByVisibility(pokemon_display);
-  }
-
-  //#endregion FILTERS SWITCHES
-
-  const checkedTypes: CheckedTypes = mergeAtIndex(
-    fams,
-    checked,
-    "type",
-    "isChecked"
-  );
-
-  pokemon_display = filterByFam(pokemon_display, checkedTypes);
+    pokemons = filterByFam(pokemons, checkedFams);
+  }, [checked]);
 
   //#region HANDLERS
 
@@ -141,9 +156,11 @@ function App() {
     }
   };
 
-  const { pureLength, doubleLength } = countTypes(pokemon_display);
-
   //#endregion HANDLERS
+  console.log(pokemons.length);
+  const refined_pokemons = filterByVisibility(pokemons);
+  console.log(refined_pokemons.length);
+  const { pureLength, doubleLength } = countTypes(refined_pokemons);
 
   return (
     <>
@@ -154,8 +171,8 @@ function App() {
         >
           <Range
             pokemonQuantity={pokemonQuantity}
-            poksLength={poksLength}
-            displayedLength={pokemon_display.length}
+            rawLength={rawLength}
+            displayedLength={refined_pokemons.length}
             handleChange={handleChange}
           />
 
@@ -179,16 +196,16 @@ function App() {
             />
           </div>
         </section>
-        {pokemon_display.length && (
+        {refined_pokemons.length && (
           <section className="table-section col-7" /* TABLE */>
-            <Table data={pokemon_display} sorts={sortsKeys} isAsc={isAsc} />
+            <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
           </section>
         )}
-        {pokemon_display.length === 0 && (
+        {refined_pokemons.length === 0 && (
           <div className="text-center"> No pokemon found </div>
         )}
       </div>
-      {calcPerf(t1, count, "App")}
+      {/* {calcPerf(t1, count, "App")} */}
     </>
   );
 }

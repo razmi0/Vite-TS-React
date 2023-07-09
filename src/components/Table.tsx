@@ -12,6 +12,7 @@ let tableCount = 0;
 /* --------- */
 
 function Table({ heading, data, sorts, isAsc = true }: TableProps) {
+  console.log("/*** TABLE COMPONENT ***/");
   tableCount += 1;
   let t1 = performance.now();
   if (!data) return <></>;
@@ -23,7 +24,7 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
    * Pagination States
    */
   const [start, setStart] = useState<number>(0);
-  const [end, setEnd] = useState<number>(16);
+  const [end, setEnd] = useState<number>(12);
   const [activePage, setActivePage] = useState<number>(1);
 
   const page_length = end - start;
@@ -101,7 +102,7 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
           activePage={activePage}
         />
       </div>
-      {calcPerf(t1, tableCount, "Table")}
+      {/* {calcPerf(t1, tableCount, "Table")} */}
     </>
   );
 }

@@ -13,32 +13,43 @@ export function filterByVisibility(data: DataTypes) {
 
 /**
  * return array at correct length
- * @param rawData
+ * @param data
  * @param target
  * @returns
  */
-export function filterByQuantity(
-  rawData: Pokemon[],
-  target: number
-): DataTypes {
+export function filterByQuantity(data: DataTypes, target: number): DataTypes {
   console.log("filterByQuantity computed !");
+  for (let i = 0; i < data.length; i++) {
+    if (i < target) {
+      data[i].visible = true;
+    } else {
+      data[i].visible = false;
+    }
+  }
+  return data;
+}
 
-  const data = rawData
-    .slice(0, target /* userPoksLength */)
-    .map((item: Pokemon) => {
-      return {
-        id: item.id,
-        name: item.name.french,
-        type: item.type,
-        Attack: item.base["Attack"],
-        Defense: item.base["Defense"],
-        Speed: item.base["Speed"],
-        SpAttack: item.base["Sp. Attack"],
-        SpDefense: item.base["Sp. Defense"],
-        HP: item.base["HP"],
-        visible: true,
-      };
-    });
+export function filterByPure(data: DataTypes): DataTypes {
+  console.log("filterByPure computed !");
+  data.map((item) => {
+    if (item.type.length === 1) {
+      item.visible = true;
+    } else {
+      item.visible = false;
+    }
+  });
+  return data;
+}
+
+export function filterByDouble(data: DataTypes): DataTypes {
+  console.log("filterByDouble computed !");
+  data.map((item) => {
+    if (item.type.length === 2) {
+      item.visible = true;
+    } else {
+      item.visible = false;
+    }
+  });
   return data;
 }
 
@@ -50,7 +61,14 @@ export function filterByFam(
   if (!checkedTypes) return data;
   for (let i = 0; i < checkedTypes.length; i++) {
     if (checkedTypes[i].isChecked) {
-      data = data.filter((item) => item.type.includes(checkedTypes[i].type));
+      // data = data.filter((item) => item.type.includes(checkedTypes[i].type));
+      data.map((item) => {
+        if (item.type.includes(checkedTypes[i].type)) {
+          item.visible = true;
+        } else {
+          item.visible = false;
+        }
+      });
     }
   }
   return data;
@@ -64,7 +82,8 @@ export function countTypes(data: DataTypes): {
   doubleLength: number;
 } {
   const counts = { pureLength: 0, doubleLength: 0 };
-  data.map(({ type }) => {
+  data.map(({ type, visible }) => {
+    if (!visible) return;
     type.length === 1 ? counts.pureLength++ : counts.doubleLength++;
   });
   return counts;

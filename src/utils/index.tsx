@@ -102,11 +102,11 @@ export const sorting = (
       }
     });
 
-    calcPerf(t1, count, "sorting");
+    // calcPerf(t1, count, "sorting");
 
     return data;
   }
-  calcPerf(t1, count, "sorting");
+  // calcPerf(t1, count, "sorting");
 
   return data;
 };
@@ -118,7 +118,14 @@ export function mergeAtIndex<T extends any[], P extends any[]>(
   key2: string
 ): any[] | undefined {
   const diff = arr1.length - arr2.length;
-  diff !== 0 ? console.log("Unexpected inputs length. Diff = ", diff) : null;
+  diff !== 0
+    ? console.log(
+        "Unexpected inputs length. Diff = ",
+        diff + " | arr1: ",
+        arr1.length + " | arr2: ",
+        arr2.length
+      )
+    : null;
   let merged = [];
 
   for (let i = 0; i < arr1.length; i++) {
@@ -144,8 +151,8 @@ export function checkIfAllFalse(arr: boolean[]): boolean {
 }
 
 /**
- * Update visibility of pokemon_display in function of checkedTypes | onPureSwitch | onDoubleSwitch
- * @param arr1 pokemon_display
+ * Update visibility of pokemons in function of checkedTypes | onPureSwitch | onDoubleSwitch
+ * @param arr1 pokemons
  * @param arr2 checkedTypes
  */
 export function updateVisibility(arr1: DataTypes, arr2: CheckedTypes): void {
