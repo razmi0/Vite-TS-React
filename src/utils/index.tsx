@@ -102,11 +102,11 @@ export const sorting = (
       }
     });
 
-    calcPerf(t1, count, "sorting");
+    // calcPerf(t1, count, "sorting");
 
     return data;
   }
-  calcPerf(t1, count, "sorting");
+  // calcPerf(t1, count, "sorting");
 
   return data;
 };

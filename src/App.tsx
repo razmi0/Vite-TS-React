@@ -1,5 +1,4 @@
 //#region IMPORTS
-
 import { Table, Range, Checkboxes, Switches } from "./components";
 // import pokemon from "./data.json";
 import { useEffect, useState } from "react";
@@ -35,7 +34,7 @@ const initialState: boolean[] = new Array(fams.length).fill(false);
 /* --------- */
 
 function App() {
-  console.log("/********** APP COMPONENT **********/");
+  console.log("App");
 
   count++;
   let t1 = performance.now();
@@ -188,7 +187,7 @@ function App() {
           <div className="text-center"> No pokemon found </div>
         )}
       </div>
-      {calcPerf(t1, count, "App")}
+      {/* {calcPerf(t1, count, "App")} */}
     </>
   );
 }

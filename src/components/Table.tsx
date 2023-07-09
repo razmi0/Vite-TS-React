@@ -101,7 +101,7 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
           activePage={activePage}
         />
       </div>
-      {calcPerf(t1, tableCount, "Table")}
+      {/* {calcPerf(t1, tableCount, "Table")} */}
     </>
   );
 }
