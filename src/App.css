@@ -20,6 +20,13 @@ body {
   max-height: 100vh;
   /* overflow: hidden; */
 }
+
+.font-sm {
+  display: flex;
+  font-size: 0.8rem;
+  background-color: inherit;
+}
+
 .poks-input {
   border: none;
   margin-right: 2px;

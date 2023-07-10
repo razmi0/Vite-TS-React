@@ -62,7 +62,7 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
   // sorting(data, activeSortBy, sortByAsc);
 
   return (
-    <>
+    <section className="table-section col-7">
       <table className="table table-striped table-bordered table-hover">
         <thead>
           <tr>
@@ -102,7 +102,7 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
         />
       </div>
       {/* {calcPerf(t1, tableCount, "Table")} */}
-    </>
+    </section>
   );
 }
 

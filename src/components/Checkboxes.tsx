@@ -8,7 +8,7 @@ interface CheckboxesProps {
 
 function Checkboxes({ data, checked, handleToggle }: CheckboxesProps) {
   return (
-    <>
+    <div className="d-flex flex-wrap justify-content-start align-content-start mb-1">
       {data.map((item, index) => (
         <div key={index}>
           <input
@@ -29,7 +29,7 @@ function Checkboxes({ data, checked, handleToggle }: CheckboxesProps) {
           </label>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 

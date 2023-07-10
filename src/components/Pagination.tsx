@@ -28,10 +28,10 @@ function Pagination({
     <nav aria-label="Page navigation table">
       <ul className="pagination">
         <li className="page-item" onClick={() => handleIndexedPage(pages[0])}>
-          <button className="btn no-outline p-1"> ◀◀ </button>
+          <button className="btn no-outline p-1 font-sm"> ◀◀ </button>
         </li>
         <li className="page-item" onClick={handlePreviousPage}>
-          <button className="btn no-outline p-1"> ◀ </button>
+          <button className="btn no-outline p-1 font-sm"> ◀ </button>
         </li>
         {displayed_pages.map((page, i) => (
           <li
@@ -42,8 +42,8 @@ function Pagination({
             <button
               className={
                 activePage === page
-                  ? "page-link no-outline active"
-                  : "page-link no-outline"
+                  ? "page-link no-outline active font-sm"
+                  : "page-link no-outline font-sm"
               }
             >
               {page}
@@ -52,13 +52,13 @@ function Pagination({
         ))}
 
         <li className="page-item" onClick={handleNextPage}>
-          <button className="btn no-outline p-1"> ▶ </button>
+          <button className="btn no-outline p-1 font-sm"> ▶ </button>
         </li>
         <li
           className="page-item"
           onClick={() => handleIndexedPage(pages[pages.length - 1])}
         >
-          <button className="btn no-outline p-1"> ▶▶ </button>
+          <button className="btn no-outline p-1 font-sm"> ▶▶ </button>
         </li>
       </ul>
     </nav>

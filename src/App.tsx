@@ -1,15 +1,8 @@
 //#region IMPORTS
-import { Table, Range, Checkboxes, Switches } from "./components";
+import { Table, Range, Checkboxes, Switches, Filters } from "./components";
 // import pokemon from "./data.json";
-import { useEffect, useState } from "react";
-import {
-  DataTypes,
-  SortsKeys,
-  KeyOfDataType,
-  Fams,
-  CheckedTypes,
-  Pokemon,
-} from "./types";
+import { useEffect, useMemo, useState } from "react";
+import { SortsKeys, Fams, checkedFams, Pokemon } from "./types";
 import "./App.css";
 import { mergeAtIndex, calcPerf, prepareData } from "./utils";
 import {
@@ -17,6 +10,7 @@ import {
   filterByVisibility,
   filterByFam,
   countTypes,
+  filterByMode,
 } from "./filters";
 
 //#endregion IMPORTS
@@ -27,7 +21,6 @@ let sortsKeys = [] as SortsKeys;
 let count = 0;
 const isAsc = true;
 let fams = [] as Fams[];
-const initialState: boolean[] = new Array(fams.length).fill(false);
 
 /* --------- */
 /* COMPONENT */
@@ -39,63 +32,70 @@ function App() {
   count++;
   let t1 = performance.now();
 
-  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [poksLength, setPoksLength] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [raw, setRaw] = useState<Pokemon[]>([]);
+  const [rawLength, setRawLength] = useState(0);
   const [pokemonQuantity, setPokemonQuantity] = useState(10);
   const [isPureSwitchOn, setIsPureSwitchOn] = useState(false);
   const [isDoubleSwitchOn, setIsDoubleSwitchOn] = useState(false);
-  const [checked, setChecked] = useState(initialState);
+  const [checked, setChecked] = useState<boolean[]>([false]);
 
+  /**
+   * Fetching
+   */
   useEffect(() => {
-    console.log("useEffect");
+    console.log("UE : fetching computed");
     const fetching = async () => {
       const response = await fetch(url);
       const data = await response.json();
-      setPokemons(data);
-      setPoksLength(data.length);
+      setRaw(data);
+      setLoading(false);
     };
     fetching();
   }, []);
 
-  let pokemon_display: DataTypes = prepareData(pokemons);
+  /**
+   * Initial setup on fetch resolve ( setRaw )
+   */
+  useEffect(() => {
+    console.log("UE: initial setup");
+    if (raw.length === 0) return;
+    setRawLength(raw.length);
+    fams = [...new Set(raw.flatMap((item) => item.type))] as Fams[];
+    setChecked(() => new Array(fams.length).fill(false));
+    sortsKeys = Object.keys(pokemons[0]) as SortsKeys;
+  }, [raw]);
 
-  pokemon_display = filterByQuantity(pokemons, pokemonQuantity);
-
-  if (pokemon_display.length !== 0) {
-    sortsKeys = Object.keys(pokemon_display[0]) as KeyOfDataType[];
-  }
-
-  const fams_displayed = [
-    ...new Set(pokemon_display.flatMap((item) => item.type)),
-  ] as Fams[];
-
-  //#region FILTERS SWITCHES
-
-  if (isPureSwitchOn) {
-    pokemon_display.map(
-      (item) => (item.visible = item.type.length === 1 ? true : false)
-    );
-
-    pokemon_display = filterByVisibility(pokemon_display);
-  }
-
-  if (isDoubleSwitchOn) {
-    pokemon_display.map(
-      (item) => (item.visible = item.type.length > 1 ? true : false)
-    );
-    pokemon_display = filterByVisibility(pokemon_display);
-  }
-
-  //#endregion FILTERS SWITCHES
-
-  const checkedTypes: CheckedTypes = mergeAtIndex(
+  const checkedFams: checkedFams = mergeAtIndex(
     fams,
     checked,
     "type",
     "isChecked"
   );
 
-  pokemon_display = filterByFam(pokemon_display, checkedTypes);
+  let pokemons = useMemo(() => prepareData(raw), [raw]);
+
+  pokemons = filterByQuantity(raw, pokemonQuantity);
+
+  let fams_displayed = [
+    ...new Set(pokemons.flatMap((item) => item.type)),
+  ] as Fams[];
+
+  //#region FILTERS SWITCHES
+
+  if (isPureSwitchOn) {
+    pokemons = filterByMode(pokemons, "PURE");
+  }
+
+  if (isDoubleSwitchOn) {
+    pokemons = filterByMode(pokemons, "DOUBLE");
+  }
+
+  //#endregion FILTERS SWITCHES
+
+  pokemons = filterByFam(pokemons, checkedFams);
+
+  const { pureLength, doubleLength } = countTypes(pokemons);
 
   //#region HANDLERS
 
@@ -140,53 +140,34 @@ function App() {
     }
   };
 
-  const { pureLength, doubleLength } = countTypes(pokemon_display);
-
   //#endregion HANDLERS
+  console.log("App end");
 
   return (
     <>
       <h1 className="mt-3 mb-3 text-center"> Pokemon Table </h1>
-      <div className="px-2 d-flex">
-        <section
-          /* FILTERS */ className="types_wrapper border_wrapper ms-2 p-3 d-flex flex-column col-4 flex-wrap"
-        >
-          <Range
-            pokemonQuantity={pokemonQuantity}
-            poksLength={poksLength}
-            displayedLength={pokemon_display.length}
-            handleChange={handleChange}
+      {loading && <div className="text-center"> Loading... </div>}
+      {!loading && (
+        <div className="px-2 d-flex">
+          <Filters
+            pokemonLength={pokemonQuantity}
+            rawLength={rawLength}
+            filterLength={pokemons.length}
+            handleLength={handleChange}
+            data={fams_displayed}
+            checked={checked}
+            handleToggle={handleToggle}
+            handlePureSwitch={handlePureSwitch}
+            isPureSwitchOn={isPureSwitchOn}
+            handleDoubleSwitch={handleDoubleSwitch}
+            isDoubleSwitchOn={isDoubleSwitchOn}
+            pureLength={pureLength}
+            doubleLength={doubleLength}
           />
+          <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
+        </div>
+      )}
 
-          <div className="spacer"></div>
-
-          <div>
-            <div className="d-flex flex-wrap justify-content-start align-content-start mb-1">
-              <Checkboxes
-                data={fams_displayed}
-                checked={checked}
-                handleToggle={handleToggle}
-              />
-            </div>
-            <Switches
-              handlePureSwitch={handlePureSwitch}
-              isPureSwitchOn={isPureSwitchOn}
-              handleDoubleSwitch={handleDoubleSwitch}
-              isDoubleSwitchOn={isDoubleSwitchOn}
-              pure_quantity={pureLength}
-              double_quantity={doubleLength}
-            />
-          </div>
-        </section>
-        {pokemon_display.length && (
-          <section className="table-section col-7" /* TABLE */>
-            <Table data={pokemon_display} sorts={sortsKeys} isAsc={isAsc} />
-          </section>
-        )}
-        {pokemon_display.length === 0 && (
-          <div className="text-center"> No pokemon found </div>
-        )}
-      </div>
       {/* {calcPerf(t1, count, "App")} */}
     </>
   );

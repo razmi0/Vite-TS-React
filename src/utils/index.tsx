@@ -1,6 +1,6 @@
 // si dans checked ya un seul true alors j'affiche que celui la ou les autres si plus
-// sinon j'affiche tous. donc si true j'affiche data[index] de checkedTypes[index] ===true
-import { DataTypes, KeyOfDataType, CheckedTypes, Pokemon } from "../types";
+// sinon j'affiche tous. donc si true j'affiche data[index] de checkedFams[index] ===true
+import { DataTypes, KeyOfDataType, checkedFams, Pokemon } from "../types";
 
 /**
  * Perf measurement and displayed in console
@@ -144,11 +144,11 @@ export function checkIfAllFalse(arr: boolean[]): boolean {
 }
 
 /**
- * Update visibility of pokemon_display in function of checkedTypes | onPureSwitch | onDoubleSwitch
- * @param arr1 pokemon_display
- * @param arr2 checkedTypes
+ * Update visibility of pokemons in function of checkedFams | onPureSwitch | onDoubleSwitch
+ * @param arr1 pokemons
+ * @param arr2 checkedFams
  */
-export function updateVisibility(arr1: DataTypes, arr2: CheckedTypes): void {
+export function updateVisibility(arr1: DataTypes, arr2: checkedFams): void {
   console.log("updateVisibility");
   arr1.map((item) => {
     if (arr2) {
@@ -164,6 +164,8 @@ export function updateVisibility(arr1: DataTypes, arr2: CheckedTypes): void {
 }
 
 export function prepareData(rawData: Pokemon[]): DataTypes {
+  console.log("prepareData");
+
   const data = rawData.map((item: Pokemon) => {
     return {
       id: item.id,

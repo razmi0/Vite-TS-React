@@ -41,7 +41,7 @@ export type KeyOf<P> = keyof P;
 
 export type SortsKeys = KeyOfDataType[];
 
-export type CheckedTypes =
+export type checkedFams =
   | {
       type: string;
       isChecked: boolean;

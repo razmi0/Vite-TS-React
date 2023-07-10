@@ -1,4 +1,5 @@
-import { CheckedTypes, DataTypes, Pokemon } from "../types";
+import { checkedFams, DataTypes, Pokemon } from "../types";
+import { DataType } from "../types/index";
 
 /**
  * return all items with visible set to true
@@ -24,7 +25,7 @@ export function filterByQuantity(
   console.log("filterByQuantity computed !");
 
   const data = rawData
-    .slice(0, target /* userPoksLength */)
+    .slice(0, target /* userrawLength */)
     .map((item: Pokemon) => {
       return {
         id: item.id,
@@ -42,15 +43,30 @@ export function filterByQuantity(
   return data;
 }
 
+type ModeType = "PURE" | "DOUBLE";
+
+export function filterByMode(arr: DataTypes, mode: ModeType): DataTypes {
+  console.log("filterByPure computed !");
+  arr.map((item) => {
+    if (mode === "PURE") {
+      item.type.length === 1 ? (item.visible = true) : (item.visible = false);
+    }
+    if (mode === "DOUBLE") {
+      item.type.length === 2 ? (item.visible = true) : (item.visible = false);
+    }
+  });
+  return (arr = filterByVisibility(arr));
+}
+
 export function filterByFam(
   data: DataTypes,
-  checkedTypes: CheckedTypes
+  checkedFams: checkedFams
 ): DataTypes {
   console.log("filterByFam computed !");
-  if (!checkedTypes) return data;
-  for (let i = 0; i < checkedTypes.length; i++) {
-    if (checkedTypes[i].isChecked) {
-      data = data.filter((item) => item.type.includes(checkedTypes[i].type));
+  if (!checkedFams) return data;
+  for (let i = 0; i < checkedFams.length; i++) {
+    if (checkedFams[i].isChecked) {
+      data = data.filter((item) => item.type.includes(checkedFams[i].type));
     }
   }
   return data;
