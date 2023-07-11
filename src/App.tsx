@@ -1,16 +1,17 @@
 //#region IMPORTS
-import { Table, Range, Checkboxes, Switches, Filters } from "./components";
+import { Table, Filters } from "./components";
+import Fuse from "fuse.js";
 // import pokemon from "./data.json";
 import { useEffect, useMemo, useState } from "react";
-import { SortsKeys, Fams, checkedFams, Pokemon } from "./types";
+import { SortsKeys, Fams, checkedFams, Pokemon, DataType } from "./types";
 import "./App.css";
+import { Heading, Loader, VStack, HStack } from "./ui";
 import { mergeAtIndex, calcPerf, prepareData } from "./utils";
 import {
-  filterByQuantity,
-  filterByVisibility,
   filterByFam,
   countTypes,
   filterByMode,
+  filterBySearch,
 } from "./filters";
 
 //#endregion IMPORTS
@@ -21,6 +22,12 @@ let sortsKeys = [] as SortsKeys;
 let count = 0;
 const isAsc = true;
 let fams = [] as Fams[];
+let fams_displayed = [] as Fams[];
+let fuse = {} as Fuse<DataType>;
+const fuseOptions = {
+  includeScore: true,
+  keys: ["name"],
+};
 
 /* --------- */
 /* COMPONENT */
@@ -35,10 +42,10 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [raw, setRaw] = useState<Pokemon[]>([]);
   const [rawLength, setRawLength] = useState(0);
-  const [pokemonQuantity, setPokemonQuantity] = useState(10);
   const [isPureSwitchOn, setIsPureSwitchOn] = useState(false);
   const [isDoubleSwitchOn, setIsDoubleSwitchOn] = useState(false);
   const [checked, setChecked] = useState<boolean[]>([false]);
+  const [search, setSearch] = useState("");
 
   /**
    * Fetching
@@ -75,13 +82,11 @@ function App() {
 
   let pokemons = useMemo(() => prepareData(raw), [raw]);
 
-  pokemons = filterByQuantity(raw, pokemonQuantity);
+  //#region FILTERS
 
-  let fams_displayed = [
+  fams_displayed = [
     ...new Set(pokemons.flatMap((item) => item.type)),
   ] as Fams[];
-
-  //#region FILTERS SWITCHES
 
   if (isPureSwitchOn) {
     pokemons = filterByMode(pokemons, "PURE");
@@ -90,14 +95,27 @@ function App() {
   if (isDoubleSwitchOn) {
     pokemons = filterByMode(pokemons, "DOUBLE");
   }
-
-  //#endregion FILTERS SWITCHES
-
   pokemons = filterByFam(pokemons, checkedFams);
 
-  const { pureLength, doubleLength } = countTypes(pokemons);
+  if (search.length > 0) {
+    const fuse = new Fuse(pokemons, fuseOptions);
+    const result = fuse.search(search);
+    pokemons = filterBySearch(pokemons, result);
+    fams_displayed = [
+      ...new Set(pokemons.flatMap((item) => item.type)),
+    ] as Fams[];
+  }
+
+  //#endregion FILTERS
 
   //#region HANDLERS
+
+  /**
+   * Handle the search bar by updating the state of the search | string (search)
+   */
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
   /**
    * Handle the toggle fam checkbox dynamic, change checkbox states | bool[] (checked)
@@ -109,16 +127,7 @@ function App() {
     });
     setChecked(() => updatedCheckedState);
   };
-  /**
-   * Handle the range user output by updating length pokemons displayed array state | number (pokemonQuantity)
-   * @param value
-   */
-  const handleChange = (value: number): void => {
-    if (value < 1) {
-      value = 1;
-    }
-    setPokemonQuantity(value);
-  };
+
   /**
    * Handle the pure switch button by updating the state of the switch | boolean (isPureSwitchOn)
    * @param isChecked
@@ -141,19 +150,18 @@ function App() {
   };
 
   //#endregion HANDLERS
-  console.log("App end");
+
+  const { pureLength, doubleLength } = countTypes(pokemons);
 
   return (
     <>
-      <h1 className="mt-3 mb-3 text-center"> Pokemon Table </h1>
-      {loading && <div className="text-center"> Loading... </div>}
+      <Heading text={"Pokemon Table"} as={"h1"} />
+      {loading && <Loader color="success" />}
       {!loading && (
-        <div className="px-2 d-flex">
+        <HStack>
           <Filters
-            pokemonLength={pokemonQuantity}
             rawLength={rawLength}
             filterLength={pokemons.length}
-            handleLength={handleChange}
             data={fams_displayed}
             checked={checked}
             handleToggle={handleToggle}
@@ -163,9 +171,11 @@ function App() {
             isDoubleSwitchOn={isDoubleSwitchOn}
             pureLength={pureLength}
             doubleLength={doubleLength}
+            search={search}
+            handleSearch={handleSearch}
           />
           <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
-        </div>
+        </HStack>
       )}
 
       {/* {calcPerf(t1, count, "App")} */}

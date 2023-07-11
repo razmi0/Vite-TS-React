@@ -1,5 +1,6 @@
 import { checkedFams, DataTypes, Pokemon } from "../types";
 import { DataType } from "../types/index";
+import type Fuse from "fuse.js";
 
 /**
  * return all items with visible set to true
@@ -84,4 +85,25 @@ export function countTypes(data: DataTypes): {
     type.length === 1 ? counts.pureLength++ : counts.doubleLength++;
   });
   return counts;
+}
+
+/**
+ * filterBySearch
+ */
+export function filterBySearch(
+  data: DataTypes,
+  result: Fuse.FuseResult<DataType>[]
+): DataTypes {
+  if (!result) return data;
+  const matchData: DataTypes = [];
+  console.log("filterBySearch computed !");
+  const refs = result.map((item) => {
+    return { idx: item.refIndex as number, score: item.score as number };
+  });
+  for (let i = 0; i < refs.length; i++) {
+    if (refs[i].score < 0.1) {
+      matchData.push(data.at(refs[i].idx) as DataType);
+    }
+  }
+  return matchData;
 }

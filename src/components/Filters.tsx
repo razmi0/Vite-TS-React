@@ -1,12 +1,12 @@
-import { Range, Checkboxes, Switches, Spacer } from "./";
+import { ChangeEvent } from "react";
+import { Range, Checkboxes, Switches, Search } from "./";
+import { Spacer, Section, Container } from "../ui";
 import { Fams } from "../types";
 
 interface FilterProps {
   /* RANGE */
-  pokemonLength: number;
   rawLength: number;
   filterLength: number;
-  handleLength: (value: number) => void;
   /* CHECKBOXES FAMS */
   data: Fams[];
   checked: boolean[];
@@ -18,13 +18,13 @@ interface FilterProps {
   isDoubleSwitchOn: boolean;
   pureLength: number;
   doubleLength: number;
+  search: string;
+  handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 function Filters({
-  pokemonLength,
   rawLength,
   filterLength,
-  handleLength,
   data,
   checked,
   handleToggle,
@@ -34,17 +34,15 @@ function Filters({
   isDoubleSwitchOn,
   pureLength,
   doubleLength,
+  search,
+  handleSearch,
 }: FilterProps) {
   return (
-    <section className="types_wrapper border_wrapper ms-2 p-3 d-flex flex-column col-4 flex-wrap">
-      <Range
-        pokemonQuantity={pokemonLength}
-        rawLength={rawLength}
-        displayedLength={filterLength}
-        handleChange={handleLength}
-      />
+    <Section bsCol="col-4">
+      <Range rawLength={rawLength} displayedLength={filterLength} />
+      <Search search={search} handleSearch={handleSearch} />
       <Spacer />
-      <div>
+      <Container>
         <Checkboxes data={data} checked={checked} handleToggle={handleToggle} />
         <Switches
           handlePureSwitch={handlePureSwitch}
@@ -54,8 +52,8 @@ function Filters({
           pure_quantity={pureLength}
           double_quantity={doubleLength}
         />
-      </div>
-    </section>
+      </Container>
+    </Section>
   );
 }
 

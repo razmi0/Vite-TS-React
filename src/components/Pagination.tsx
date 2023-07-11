@@ -26,17 +26,20 @@ function Pagination({
 
   return (
     <nav aria-label="Page navigation table">
-      <ul className="pagination">
-        <li className="page-item" onClick={() => handleIndexedPage(pages[0])}>
-          <button className="btn no-outline p-1 font-sm"> ◀◀ </button>
+      <ul className="pagination d-flex">
+        <li
+          className="page-item font-sm-li"
+          onClick={() => handleIndexedPage(pages[0])}
+        >
+          <button className="btn no-outline p-1 font-sm-icon"> ◀◀ </button>
         </li>
-        <li className="page-item" onClick={handlePreviousPage}>
-          <button className="btn no-outline p-1 font-sm"> ◀ </button>
+        <li className="page-item font-sm-li" onClick={handlePreviousPage}>
+          <button className="btn no-outline p-1 font-sm-icon"> ◀ </button>
         </li>
         {displayed_pages.map((page, i) => (
           <li
             key={i}
-            className="page-item"
+            className="page-item font-sm-li"
             onClick={() => handleIndexedPage(page)}
           >
             <button
@@ -51,14 +54,14 @@ function Pagination({
           </li>
         ))}
 
-        <li className="page-item" onClick={handleNextPage}>
-          <button className="btn no-outline p-1 font-sm"> ▶ </button>
+        <li className="page-item font-sm-li" onClick={handleNextPage}>
+          <button className="btn no-outline p-1 font-sm-icon"> ▶ </button>
         </li>
         <li
-          className="page-item"
+          className="page-item font-sm-li"
           onClick={() => handleIndexedPage(pages[pages.length - 1])}
         >
-          <button className="btn no-outline p-1 font-sm"> ▶▶ </button>
+          <button className="btn no-outline p-1 font-sm-icon"> ▶▶ </button>
         </li>
       </ul>
     </nav>

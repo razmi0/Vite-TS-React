@@ -5,6 +5,17 @@ import Thead from "./Thead";
 import Checkboxes from "./Checkboxes";
 import Switches from "./Switches";
 import Filters from "./Filters";
-import Spacer from "./Spacer";
+import Spacer from "../ui/Spacer";
+import Search from "./Search";
 
-export { Range, Spacer, Table, Tbody, Thead, Checkboxes, Switches, Filters };
+export {
+  Range,
+  Spacer,
+  Table,
+  Tbody,
+  Thead,
+  Checkboxes,
+  Switches,
+  Filters,
+  Search,
+};

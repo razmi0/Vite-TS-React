@@ -1,3 +1,5 @@
+import { Container, Divider, Section, Checkbox } from "../ui";
+
 interface SwitchProps {
   handlePureSwitch: (isSwitchOn: boolean) => void;
   handleDoubleSwitch: (isDoubleSwitchOn: boolean) => void;
@@ -15,36 +17,31 @@ function Switches({
   pure_quantity,
   double_quantity,
 }: SwitchProps) {
+  // className="flex-column mt-4"
   return (
-    <section className="flex-column justify-content-around p-inherit mt-4">
-      <hr />
-      <div className="form-check my-1">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          role="switch"
+    <Section>
+      <Divider />
+      <Container>
+        <Checkbox
           id="switch_pure_type"
           checked={isPureSwitchOn}
           onChange={() => handlePureSwitch(isPureSwitchOn)}
-        />
-        <label className="form-check-label" htmlFor="switch_pure_type">
+          mode="jelly"
+        >
           Pure Type ( {pure_quantity} )
-        </label>
-      </div>
-      <div className="form-check my-1">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          role="switch"
-          id="switch_pure_type"
+        </Checkbox>
+      </Container>
+      <Container>
+        <Checkbox
+          id="switch_double_type"
           checked={isDoubleSwitchOn}
           onChange={() => handleDoubleSwitch(isDoubleSwitchOn)}
-        />
-        <label className="form-check-label" htmlFor="switch_pure_type">
+          mode="jelly"
+        >
           Doubled Types ( {double_quantity} )
-        </label>
-      </div>
-    </section>
+        </Checkbox>
+      </Container>
+    </Section>
   );
 }
 

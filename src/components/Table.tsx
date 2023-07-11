@@ -4,6 +4,7 @@ import { Thead, Tbody } from "./index";
 import { sorting, calcPerf, setColor, setStyle } from "../utils";
 import { colors } from "../utils/staticData";
 import Pagination from "./Pagination";
+import { Container, TableUi } from "../ui";
 
 let tableCount = 0;
 
@@ -12,6 +13,8 @@ let tableCount = 0;
 /* --------- */
 
 function Table({ heading, data, sorts, isAsc = true }: TableProps) {
+  //#region logic
+
   tableCount += 1;
   let t1 = performance.now();
   if (!data) return <></>;
@@ -59,50 +62,54 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
 
   const sortedData = sorting(data, activeSortBy, sortByAsc);
 
-  // sorting(data, activeSortBy, sortByAsc);
+  //#endregion logic
 
   return (
-    <section className="table-section col-7">
-      <table className="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            {sorts.map((sortBy, index) => (
-              <Thead
-                key={index}
-                color={setColor(index, colors, sorts.length)}
-                sortBy={sortBy}
-                onActive={setactiveSortBy}
-                currentAsc={sortByAsc}
-                onAsc={setSortByAsc}
+    // <Section className="table-section col-7 d-flex">
+    <>
+      <Container>
+        <TableUi>
+          <thead>
+            <tr>
+              {sorts.map((sortBy, index) => (
+                <Thead
+                  key={index}
+                  // color={setColor(index, colors, sorts.length)}
+                  sortBy={sortBy}
+                  onActive={setactiveSortBy}
+                  currentAsc={sortByAsc}
+                  onAsc={setSortByAsc}
+                />
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {sortedData.slice(start, end).map((item, index) => (
+              <Tbody
+                item={item}
+                index={index}
+                handleClick={handleClickRow}
+                selectedIndex={selectedIndex}
+                key={item.id}
+                setStyle={setStyle}
               />
             ))}
-          </tr>
-        </thead>
-        <tbody>
-          {sortedData.slice(start, end).map((item, index) => (
-            <Tbody
-              item={item}
-              index={index}
-              handleClick={handleClickRow}
-              selectedIndex={selectedIndex}
-              key={item.id}
-              setStyle={setStyle}
-            />
-          ))}
-        </tbody>
-      </table>
-      <div className="d-flex flex-row flex-wrap align-content-center justify-content-end">
-        <Pagination
-          data_length={data.length}
-          page_length={page_length}
-          handleIndexedPage={handleIndexedPage}
-          handleNextPage={handleNextPage}
-          handlePreviousPage={handlePreviousPage}
-          activePage={activePage}
-        />
-      </div>
+          </tbody>
+        </TableUi>
+        <div className="d-flex flex-row flex-wrap align-content-center justify-content-end">
+          <Pagination
+            data_length={data.length}
+            page_length={page_length}
+            handleIndexedPage={handleIndexedPage}
+            handleNextPage={handleNextPage}
+            handlePreviousPage={handlePreviousPage}
+            activePage={activePage}
+          />
+        </div>
+      </Container>
       {/* {calcPerf(t1, tableCount, "Table")} */}
-    </section>
+    </>
+    // </Section>
   );
 }
 

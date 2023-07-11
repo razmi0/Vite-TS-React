@@ -3,7 +3,7 @@ import { KeyOfDataType } from "../types";
 
 interface Props {
   children?: ReactNode;
-  color: string;
+  color?: string;
   sortBy: KeyOfDataType;
   onActive: (sortBy: KeyOfDataType) => void;
   currentAsc: boolean;
