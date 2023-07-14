@@ -1,4 +1,5 @@
 import { pagination } from "../utils";
+import { Nav, List, ListItem, ButtonList, Text } from "../ui";
 
 interface PaginationProps {
   data_length: number;
@@ -23,48 +24,45 @@ function Pagination({
   );
 
   const displayed_pages = pagination(pages, activePage);
-
+  // ◀
   return (
-    <nav aria-label="Page navigation table">
-      <ul className="pagination d-flex">
-        <li
-          className="page-item font-sm-li"
-          onClick={() => handleIndexedPage(pages[0])}
-        >
-          <button className="btn no-outline p-1 font-sm-icon"> ◀◀ </button>
-        </li>
-        <li className="page-item font-sm-li" onClick={handlePreviousPage}>
-          <button className="btn no-outline p-1 font-sm-icon"> ◀ </button>
-        </li>
+    <Nav aria-label="Page navigation table">
+      <List mode="VPage">
+        <ListItem>
+          <ButtonList
+            onClick={() => handleIndexedPage(pages[0])}
+            icon="./chevron-up.png"
+          />
+        </ListItem>
+        <ListItem>
+          <ButtonList onClick={handlePreviousPage}>
+            <Text mode="pagination">Prev</Text>
+          </ButtonList>
+        </ListItem>
         {displayed_pages.map((page, i) => (
-          <li
-            key={i}
-            className="page-item font-sm-li"
-            onClick={() => handleIndexedPage(page)}
-          >
-            <button
-              className={
-                activePage === page
-                  ? "page-link no-outline active font-sm"
-                  : "page-link no-outline font-sm"
-              }
+          <ListItem key={i}>
+            <ButtonList
+              onClick={() => handleIndexedPage(page)}
+              activeValue={activePage === page}
             >
               {page}
-            </button>
-          </li>
+            </ButtonList>
+          </ListItem>
         ))}
 
-        <li className="page-item font-sm-li" onClick={handleNextPage}>
-          <button className="btn no-outline p-1 font-sm-icon"> ▶ </button>
-        </li>
-        <li
-          className="page-item font-sm-li"
-          onClick={() => handleIndexedPage(pages[pages.length - 1])}
-        >
-          <button className="btn no-outline p-1 font-sm-icon"> ▶▶ </button>
-        </li>
-      </ul>
-    </nav>
+        <ListItem>
+          <ButtonList onClick={handleNextPage}>
+            <Text mode="pagination">Next</Text>
+          </ButtonList>
+        </ListItem>
+        <ListItem>
+          <ButtonList
+            onClick={() => handleIndexedPage(pages[pages.length - 1])}
+            icon="./chevron-down.png"
+          ></ButtonList>
+        </ListItem>
+      </List>
+    </Nav>
   );
 }
 

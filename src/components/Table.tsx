@@ -4,7 +4,7 @@ import { Thead, Tbody } from "./index";
 import { sorting, calcPerf, setColor, setStyle } from "../utils";
 import { colors } from "../utils/staticData";
 import Pagination from "./Pagination";
-import { Container, TableUi } from "../ui";
+import { Container, TableUi, HStack, VStack, Section } from "../ui";
 
 let tableCount = 0;
 
@@ -65,38 +65,37 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
   //#endregion logic
 
   return (
-    // <Section className="table-section col-7 d-flex">
-    <>
+    <Section bsCol="col-7">
       <Container>
-        <TableUi>
-          <thead>
-            <tr>
-              {sorts.map((sortBy, index) => (
-                <Thead
-                  key={index}
-                  // color={setColor(index, colors, sorts.length)}
-                  sortBy={sortBy}
-                  onActive={setactiveSortBy}
-                  currentAsc={sortByAsc}
-                  onAsc={setSortByAsc}
+        <HStack wrap="nowrap">
+          <TableUi>
+            <thead>
+              <tr>
+                {sorts.map((sortBy, index) => (
+                  <Thead
+                    key={index}
+                    // color={setColor(index, colors, sorts.length)}
+                    sortBy={sortBy}
+                    onActive={setactiveSortBy}
+                    currentAsc={sortByAsc}
+                    onAsc={setSortByAsc}
+                  />
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {sortedData.slice(start, end).map((item, index) => (
+                <Tbody
+                  item={item}
+                  index={index}
+                  handleClick={handleClickRow}
+                  selectedIndex={selectedIndex}
+                  key={item.id}
+                  setStyle={setStyle}
                 />
               ))}
-            </tr>
-          </thead>
-          <tbody>
-            {sortedData.slice(start, end).map((item, index) => (
-              <Tbody
-                item={item}
-                index={index}
-                handleClick={handleClickRow}
-                selectedIndex={selectedIndex}
-                key={item.id}
-                setStyle={setStyle}
-              />
-            ))}
-          </tbody>
-        </TableUi>
-        <div className="d-flex flex-row flex-wrap align-content-center justify-content-end">
+            </tbody>
+          </TableUi>
           <Pagination
             data_length={data.length}
             page_length={page_length}
@@ -105,11 +104,11 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
             handlePreviousPage={handlePreviousPage}
             activePage={activePage}
           />
-        </div>
+        </HStack>
+
+        {/* {calcPerf(t1, tableCount, "Table")} */}
       </Container>
-      {/* {calcPerf(t1, tableCount, "Table")} */}
-    </>
-    // </Section>
+    </Section>
   );
 }
 

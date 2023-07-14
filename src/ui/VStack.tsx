@@ -7,10 +7,15 @@ const VStackStyles = {
 
 interface VStackProps {
   children: React.ReactNode;
+  /**
+   * @default div
+   * @example as="div"
+   */
+  as?: React.ElementType;
 }
 
-function VStack({ children }: VStackProps) {
-  return <div style={VStackStyles}>{children}</div>;
+function VStack({ children, as: Component = "div" }: VStackProps) {
+  return <Component style={VStackStyles}>{children}</Component>;
 }
 
 export default VStack;

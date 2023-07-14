@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-type TextMode = "default" | "highlight";
+type TextMode = "default" | "highlight" | "pagination";
 
 type TextStylesProps = {
   [key in TextMode]: React.CSSProperties;
@@ -10,10 +10,18 @@ interface TextProps {
   mode?: TextMode;
   children: ReactNode;
 }
+let basicStyle = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  border: "none",
+  backgroundColor: "inherit",
+  textAlign: "center",
+} as React.CSSProperties;
 
 const textStyles: TextStylesProps = {
   default: {
-    color: "black",
+    color: "inherit",
     fontSize: "1em",
     fontWeight: "normal",
     textAlign: "left",
@@ -21,21 +29,27 @@ const textStyles: TextStylesProps = {
     padding: "0",
   },
   highlight: {
-    color: "black",
+    color: "inherit",
     fontSize: "1em",
     fontWeight: "bold",
     textAlign: "left",
     margin: "0",
     padding: "0",
   },
+  pagination: {
+    fontSize: "0.8em",
+    color: "#535bf2",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
 };
 
 function Text({ mode = "default", children }: TextProps) {
-  return (
-    <div style={textStyles[mode]}>
-      <span>{children}</span>
-    </div>
-  );
+  basicStyle = {
+    ...basicStyle,
+    ...textStyles[mode],
+  };
+  return <div style={basicStyle}>{children}</div>;
 }
 
 export default Text;

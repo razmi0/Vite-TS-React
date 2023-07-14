@@ -15,8 +15,8 @@ function Thead({ color, sortBy, onActive, currentAsc, onAsc }: Props) {
 
   return (
     <th
-      scope="col"
-      className={"my-3 table-" + color}
+      // scope="col"
+      // className={}
       onClick={() => {
         onActive(sortBy);
         onAsc(!currentAsc);

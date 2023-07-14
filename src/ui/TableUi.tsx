@@ -9,11 +9,7 @@ const tableStyle = {
 };
 
 function TableUi({ children }: TableUiProps) {
-  return (
-    <table className="table-bordered table table-hover" style={tableStyle}>
-      {children}
-    </table>
-  );
+  return <table style={tableStyle}>{children}</table>;
 }
 
 export default TableUi;

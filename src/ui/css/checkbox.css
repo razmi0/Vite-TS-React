@@ -3,6 +3,7 @@ Chekboxes
 */
 label:hover {
   color: var(--element-purple) !important;
+  border-width: 1px !important;
   border-color: var(--element-purple) !important;
   text-shadow: var(--element-purple) 0px 0px 0px 2px !important;
   transition: all 0.1s ease-in-out;
@@ -11,7 +12,7 @@ label:hover {
 .cbx {
   position: relative;
   top: 0px;
-  width: 18px;
+  width: 20px;
   height: 18px;
   border: 1px solid #c8ccd4;
   border-radius: 3px;
@@ -59,10 +60,6 @@ input[role="switch"]:checked ~ .cbx:after {
   align-items: center;
   gap: 5px;
 }
-
-/* position: relative;
-  text-align: start;
-  display: inline; */
 
 .hidden-xs-up {
   display: none !important;

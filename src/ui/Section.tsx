@@ -39,7 +39,7 @@ let sectionStyle: SectionStyleProps = {
   maxHeight: "fit-content",
 };
 
-function Section({ bgColor = "#fff", children, bsCol }: SectionProps) {
+function Section({ bgColor, children, bsCol }: SectionProps) {
   sectionStyle = {
     ...sectionStyle,
     backgroundColor: bgColor,

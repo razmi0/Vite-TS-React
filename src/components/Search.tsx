@@ -12,7 +12,7 @@ function Search({ search, handleSearch }: SearchProps) {
       <Divider />
       <Container>
         <IconInput
-          url="../../public/icon_search.svg"
+          url="/icon_search.svg"
           placeholder="Search by name"
           onChange={(e) => handleSearch(e)}
           value={search}

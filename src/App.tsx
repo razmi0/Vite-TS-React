@@ -1,12 +1,11 @@
 //#region IMPORTS
 import { Table, Filters } from "./components";
 import Fuse from "fuse.js";
-// import pokemon from "./data.json";
 import { useEffect, useMemo, useState } from "react";
 import { SortsKeys, Fams, checkedFams, Pokemon, DataType } from "./types";
 import "./App.css";
-import { Heading, Loader, VStack, HStack } from "./ui";
-import { mergeAtIndex, calcPerf, prepareData } from "./utils";
+import { Heading, Loader, HStack, Spacer, Container } from "./ui";
+import { mergeAtIndex, prepareData } from "./utils";
 import {
   filterByFam,
   countTypes,
@@ -154,7 +153,7 @@ function App() {
   const { pureLength, doubleLength } = countTypes(pokemons);
 
   return (
-    <>
+    <Container>
       <Heading text={"Pokemon Table"} as={"h1"} />
       {loading && <Loader color="success" />}
       {!loading && (
@@ -174,12 +173,13 @@ function App() {
             search={search}
             handleSearch={handleSearch}
           />
+          <Spacer />
           <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
         </HStack>
       )}
 
       {/* {calcPerf(t1, count, "App")} */}
-    </>
+    </Container>
   );
 }
 

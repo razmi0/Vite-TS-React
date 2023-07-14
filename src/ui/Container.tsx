@@ -1,6 +1,11 @@
 interface ContainerProps {
   children: React.ReactNode;
   mode?: "default" | "neutral";
+  /**
+   * @default div
+   * @example as="div"
+   */
+  as?: React.ElementType;
 }
 const containerStyle = {
   default: {
@@ -15,10 +20,14 @@ const containerStyle = {
 /**
  * Add .2em margin and padding to the children
  */
-function Container({ children, mode = "default" }: ContainerProps) {
+function Container({
+  children,
+  mode = "default",
+  as: Component = "div",
+}: ContainerProps) {
   return (
     <>
-      <div style={containerStyle[mode]}>{children}</div>
+      <Component style={containerStyle[mode]}>{children}</Component>
     </>
   );
 }

@@ -9,11 +9,7 @@ interface CheckboxProps {
   mode: "default" | "highlight" | "jelly";
 }
 
-type LabelStyle = {
-  [key: string]: string | number;
-};
-
-const labelStyleHigh: LabelStyle = {
+const labelStyleHigh = {
   display: "flex",
   justifyContent: "center",
   borderRadius: 0,
@@ -25,17 +21,25 @@ const labelStyleHigh: LabelStyle = {
   margin: "2px",
   padding: "2px 5px",
   cursor: "pointer",
-  color: "#212121",
-};
+  // color: "#212121",
+} as const;
 
-const labelStyleJelly: LabelStyle = {
+const labelStyleJelly = {
   minWidth: "20px",
   maxWidth: "25px",
   maxHeight: "25px",
-};
+  cursor: "pointer",
+} as const;
 
-function Checkbox({ id, checked, onChange, children, mode }: CheckboxProps) {
+function Checkbox({
+  id,
+  checked = false,
+  onChange,
+  children,
+  mode,
+}: CheckboxProps) {
   const localId = `btn-check-outlined-${id}`;
+
   return (
     <>
       {mode === "highlight" && (
@@ -48,11 +52,7 @@ function Checkbox({ id, checked, onChange, children, mode }: CheckboxProps) {
             checked={checked}
             onChange={onChange}
           />
-          <label
-            htmlFor={localId}
-            style={labelStyleHigh}
-            className="btn btn-outline-success"
-          >
+          <label htmlFor={localId} style={labelStyleHigh} className="">
             {children}
           </label>
         </>
@@ -67,14 +67,16 @@ function Checkbox({ id, checked, onChange, children, mode }: CheckboxProps) {
             autoComplete="off"
             checked={checked}
             onChange={onChange}
-            // style={labelStyleJelly}
+            style={labelStyleJelly}
           />
+          <label htmlFor={id + " cbx"} className="cbx"></label>
           <label
             htmlFor={id + " cbx"}
-            className="cbx"
-            style={labelStyleJelly}
-          ></label>
-          <label htmlFor={id + " cbx"}>{children}</label>
+            // className="cbx"
+            style={{ cursor: "pointer" }}
+          >
+            {children}
+          </label>
         </div>
       )}
     </>
