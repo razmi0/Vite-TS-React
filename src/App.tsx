@@ -4,7 +4,7 @@ import Fuse from "fuse.js";
 import { useEffect, useMemo, useState } from "react";
 import { SortsKeys, Fams, checkedFams, Pokemon, DataType } from "./types";
 import "./App.css";
-import { Heading, Loader, HStack, Spacer, Container } from "./ui";
+import { Heading, Loader, HStack, Spacer, Container, Section } from "./ui";
 import { mergeAtIndex, prepareData } from "./utils";
 import {
   filterByFam,
@@ -12,6 +12,19 @@ import {
   filterByMode,
   filterBySearch,
 } from "./filters";
+import { Radar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  Tooltip,
+  Legend,
+  RadialLinearScale,
+  Filler,
+} from "chart.js";
+import type { ChartData, ChartOptions } from "chart.js";
+
+ChartJS.register(LineElement, PointElement, Tooltip, Legend, RadialLinearScale);
 
 //#endregion IMPORTS
 
@@ -33,6 +46,49 @@ const fuseOptions = {
 /* --------- */
 
 function App() {
+  const dataRadar: ChartData<"radar"> = {
+    labels: ["HP", "Sp. Defense", "Speed"],
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [65, 59, 90, 81, 56, 55],
+        backgroundColor: "#535bf2",
+        tension: 0.1,
+      },
+      {
+        label: "My Second Dataset",
+        data: [28, 48, 40, 19, 96, 27],
+        backgroundColor: "#f2b053",
+        tension: 0.1,
+      },
+      {
+        label: "My Third Dataset",
+        data: [19, 96, 27],
+        backgroundColor: "#f25353",
+        tension: 0.1,
+      },
+      {
+        label: "My Fourth Dataset",
+        data: [28, 27],
+        backgroundColor: "#53f2b0",
+        tension: 0.1,
+      },
+    ],
+  };
+  const options: ChartOptions = {
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Chart.js Radar Chart",
+      },
+    },
+    layout: {
+      padding: 20,
+    },
+  };
   //#region LOGIC
 
   console.log("App");
@@ -159,31 +215,36 @@ function App() {
       <Heading text={"Pokemon Table"} as={"h1"} />
       {loading && <Loader color="success" />}
       {!loading && (
-        <HStack
-          sx={{
-            justifyContent: "flex-start",
-          }}
-        >
-          <Filters
-            rawLength={rawLength}
-            filterLength={pokemons.length}
-            data={fams_displayed}
-            checked={checked}
-            handleToggle={handleToggle}
-            handlePureSwitch={handlePureSwitch}
-            isPureSwitchOn={isPureSwitchOn}
-            handleDoubleSwitch={handleDoubleSwitch}
-            isDoubleSwitchOn={isDoubleSwitchOn}
-            pureLength={pureLength}
-            doubleLength={doubleLength}
-            search={search}
-            handleSearch={handleSearch}
-          />
-          <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
-        </HStack>
+        <>
+          <HStack
+            sx={{
+              justifyContent: "flex-start",
+            }}
+          >
+            <Filters
+              rawLength={rawLength}
+              filterLength={pokemons.length}
+              data={fams_displayed}
+              checked={checked}
+              handleToggle={handleToggle}
+              handlePureSwitch={handlePureSwitch}
+              isPureSwitchOn={isPureSwitchOn}
+              handleDoubleSwitch={handleDoubleSwitch}
+              isDoubleSwitchOn={isDoubleSwitchOn}
+              pureLength={pureLength}
+              doubleLength={doubleLength}
+              search={search}
+              handleSearch={handleSearch}
+            />
+            <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
+          </HStack>
+          <Section mode="card" sx={{ display: "block", width: "fit-content" }}>
+            <Radar data={dataRadar} />
+          </Section>
+        </>
       )}
 
-      {/* {calcPerf(t1, count, "App")} */}
+      {/* {calcPerf(t1, count, options={config} "App")} */}
     </Container>
   );
 }

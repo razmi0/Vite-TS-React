@@ -7,6 +7,7 @@ interface CheckboxProps {
   onChange: () => void;
   children: React.ReactNode;
   mode: "default" | "highlight" | "jelly";
+  active?: "checked" | "unchecked";
 }
 
 const labelStyleHigh = {
@@ -37,8 +38,13 @@ function Checkbox({
   onChange,
   children,
   mode,
+  active,
 }: CheckboxProps) {
-  const localId = `btn-check-outlined-${id}`;
+  let activeStyle = "unchecked-box";
+  const localId = `btn-check-outlined -${id}`;
+  if (active === "checked") {
+    activeStyle = "checked-box";
+  }
 
   return (
     <>
@@ -52,7 +58,11 @@ function Checkbox({
             checked={checked}
             onChange={onChange}
           />
-          <label htmlFor={localId} style={labelStyleHigh} className="">
+          <label
+            htmlFor={localId}
+            style={labelStyleHigh}
+            className={activeStyle}
+          >
             {children}
           </label>
         </>

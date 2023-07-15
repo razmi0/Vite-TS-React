@@ -42,7 +42,10 @@ label:hover {
   vertical-align: middle;
   cursor: pointer;
 }
-
+.checked-box {
+  color: #6871f1;
+  border-color: #6871f1;
+}
 input[role="switch"]:checked ~ .cbx {
   border-color: transparent;
   background: #6871f1;

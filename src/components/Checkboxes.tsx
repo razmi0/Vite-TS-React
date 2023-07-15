@@ -8,6 +8,9 @@ interface CheckboxesProps {
 }
 
 function Checkboxes({ data, checked, handleToggle }: CheckboxesProps) {
+  console.log(checked);
+  console.log();
+
   return (
     <>
       <Container>
@@ -19,9 +22,11 @@ function Checkboxes({ data, checked, handleToggle }: CheckboxesProps) {
             <Checkbox
               mode="highlight"
               id={index}
+              active={checked[index] ? "checked" : "unchecked"}
               checked={checked[index]}
               onChange={() => {
                 handleToggle(index);
+                console.log("index", index);
               }}
             >
               {item}

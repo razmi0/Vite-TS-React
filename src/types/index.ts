@@ -4,6 +4,7 @@ export type Pokemon = {
   id: number;
   name: {
     french: string;
+    english: string;
   };
   type: string[];
   base: {

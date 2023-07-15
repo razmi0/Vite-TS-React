@@ -33,7 +33,6 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
   const page_length = end - start;
 
   const setStyle = (selectedIndex: number, index: number): string => {
-    console.log("setStyle", selectedIndex, index);
     return selectedIndex === index ? "selected-row" : "default-row";
   };
 

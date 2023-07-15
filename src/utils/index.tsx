@@ -177,7 +177,7 @@ export function prepareData(rawData: Pokemon[]): DataTypes {
   const data = rawData.map((item: Pokemon) => {
     return {
       id: item.id,
-      name: item.name.french,
+      name: item.name.english,
       type: item.type,
       Attack: item.base["Attack"],
       Defense: item.base["Defense"],

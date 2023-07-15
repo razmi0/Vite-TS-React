@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { Range, Checkboxes, Switches, Search } from "./";
 import { Spacer, Section, Container } from "../ui";
 import { Fams } from "../types";
@@ -37,6 +37,9 @@ function Filters({
   search,
   handleSearch,
 }: FilterProps) {
+  const [selectedFam, setSelectedFam] = useState(null); // [Fams
+  console.log("Filters rendered");
+
   return (
     <Section mode="card">
       <Range rawLength={rawLength} displayedLength={filterLength} />
