@@ -8,8 +8,18 @@ interface NavProps {
   children?: ReactNode;
 }
 
+const navStyle: React.CSSProperties = {
+  height: "100%",
+  marginLeft: "1rem",
+  backgroundColor: "#282828",
+};
+
 function Nav({ children }: NavProps) {
-  return <nav aria-label="Page navigation table">{children}</nav>;
+  return (
+    <nav aria-label="Page navigation table " style={navStyle}>
+      {children}
+    </nav>
+  );
 }
 
 const listStyleV = {

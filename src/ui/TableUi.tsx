@@ -6,6 +6,7 @@ interface TableUiProps {
 
 const tableStyle = {
   width: "100%",
+  // border: "1px solid black",
 };
 
 function TableUi({ children }: TableUiProps) {

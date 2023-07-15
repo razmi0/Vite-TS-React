@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { DataType, KeyOfDataType, TableProps } from "../types";
 import { Thead, Tbody } from "./index";
-import { sorting, calcPerf, setColor, setStyle } from "../utils";
-import { colors } from "../utils/staticData";
+import { sorting } from "../utils";
 import Pagination from "./Pagination";
 import { Container, TableUi, HStack, VStack, Section } from "../ui";
+type VariantType = "default" | "variant";
 
 let tableCount = 0;
+let initialLength = 15;
 
 /* --------- */
 /* COMPONENT */
@@ -14,26 +15,26 @@ let tableCount = 0;
 
 function Table({ heading, data, sorts, isAsc = true }: TableProps) {
   //#region logic
+  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
 
   tableCount += 1;
   let t1 = performance.now();
   if (!data) return <></>;
 
-  const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [activeSortBy, setactiveSortBy] = useState<KeyOfDataType>(sorts[0]);
   const [sortByAsc, setSortByAsc] = useState<boolean>(isAsc);
   /**
    * Pagination States
    */
   const [start, setStart] = useState<number>(0);
-  const [end, setEnd] = useState<number>(16);
+  const [end, setEnd] = useState<number>(initialLength);
   const [activePage, setActivePage] = useState<number>(1);
 
   const page_length = end - start;
 
-  const handleClickRow = (index: number, item: DataType) => {
-    setSelectedIndex(index);
-    console.log("handleClickRow, : ", item);
+  const setStyle = (selectedIndex: number, index: number): string => {
+    console.log("setStyle", selectedIndex, index);
+    return selectedIndex === index ? "selected-row" : "default-row";
   };
 
   const handlePreviousPage = () => {
@@ -58,6 +59,10 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
     setActivePage(index);
   };
 
+  const handleClickRow = (index: number) => {
+    setSelectedIndex(index);
+  };
+
   const handlePageLength = (length: number) => {};
 
   const sortedData = sorting(data, activeSortBy, sortByAsc);
@@ -65,9 +70,14 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
   //#endregion logic
 
   return (
-    <Section bsCol="col-7">
-      <Container>
-        <HStack wrap="nowrap">
+    <>
+      <Section
+        mode="default"
+        sx={{
+          width: "70%",
+        }}
+      >
+        <HStack sx={{ flexWrap: "nowrap" }}>
           <TableUi>
             <thead>
               <tr>
@@ -96,19 +106,21 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
               ))}
             </tbody>
           </TableUi>
-          <Pagination
-            data_length={data.length}
-            page_length={page_length}
-            handleIndexedPage={handleIndexedPage}
-            handleNextPage={handleNextPage}
-            handlePreviousPage={handlePreviousPage}
-            activePage={activePage}
-          />
-        </HStack>
 
-        {/* {calcPerf(t1, tableCount, "Table")} */}
+          {/* {calcPerf(t1, tableCount, "Table")} */}
+        </HStack>
+      </Section>
+      <Container mode="pagination">
+        <Pagination
+          data_length={data.length}
+          page_length={page_length}
+          handleIndexedPage={handleIndexedPage}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          activePage={activePage}
+        />
       </Container>
-    </Section>
+    </>
   );
 }
 

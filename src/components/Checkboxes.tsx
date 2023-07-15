@@ -13,7 +13,7 @@ function Checkboxes({ data, checked, handleToggle }: CheckboxesProps) {
       <Container>
         <Text mode="default">Search by types : </Text>
       </Container>
-      <HStack>
+      <HStack sx={{ flexWrap: "wrap" }}>
         {data.map((item, index) => (
           <Container key={index} mode="neutral">
             <Checkbox

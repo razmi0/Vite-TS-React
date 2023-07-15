@@ -1,50 +1,24 @@
 import React from "react";
 
-// type ModeType =
-//   | "space-around"
-//   | "space-between"
-//   | "space-evenly"
-//   | "start"
-//   | "end"
-//   | "center"
-//   | "stretch";
-
-interface HStackStyleType {
-  display: "flex";
-  flexFlow: "row wrap";
-  justifyContent: "flex-start";
-  alignItems: "flex-start";
-  marginBottom: "1em";
-  // mode?: ModeType;
-  flexWrap?: "wrap" | "nowrap" | "wrap-reverse";
-}
-
-let HStackStyle: HStackStyleType = {
+let HStackStyle = {
   display: "flex",
   flexFlow: "row wrap",
   justifyContent: "flex-start",
   alignItems: "flex-start",
-  marginBottom: "1em",
-  // mode: "around",
 };
 
 interface HStackProps {
   children?: React.ReactNode;
   // mode?: ModeType;
   as?: React.ElementType;
-  wrap?: "wrap" | "nowrap" | "wrap-reverse";
+  sx?: React.CSSProperties;
 }
 
-function HStack({
-  children,
-  as: Component = "div",
-  wrap = "wrap",
-}: HStackProps) {
-  // HStackStyle.justifyContent = mode;
+function HStack({ children, as: Component = "div", sx }: HStackProps) {
   HStackStyle = {
     ...HStackStyle,
-    flexWrap: wrap as "wrap" | "nowrap" | "wrap-reverse",
-  };
+    ...sx,
+  } as const;
   return <Component style={HStackStyle}>{children}</Component>;
 }
 

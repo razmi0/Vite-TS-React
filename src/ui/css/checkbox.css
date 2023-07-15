@@ -26,7 +26,7 @@ label:hover {
   content: "";
   position: absolute;
   top: 0px;
-  left: 6px;
+  left: 4px;
   width: 7px;
   height: 12px;
   opacity: 0;
@@ -58,6 +58,7 @@ input[role="switch"]:checked ~ .cbx:after {
   display: flex;
   max-width: fit-content;
   align-items: center;
+  justify-content: center;
   gap: 5px;
 }
 

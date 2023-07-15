@@ -3,10 +3,18 @@ interface HeadingProps {
   as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
+const headingStyle = {
+  backgroundColor: "#282828",
+  color: "#fe7f2d",
+};
+
 function Heading({ text, as: Component = "h1" }: HeadingProps) {
   return (
-    <div className=" mt-3 mb-3 d-flex justify-content-center">
-      <Component className="text-center">{text}</Component>
+    <div
+      style={headingStyle}
+      className=" mt-3 d-flex justify-content-start aligh-item-center mx-1"
+    >
+      <Component className="text-center m-0 p-2">{text}</Component>
     </div>
   );
 }

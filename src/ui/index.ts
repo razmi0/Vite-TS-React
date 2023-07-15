@@ -13,8 +13,12 @@ import HStack from "./HStack";
 import Checkbox from "./Checkbox";
 import TableUi from "./TableUi";
 import { Nav, List, ListItem, ButtonList } from "./Nav";
+import TheadUi from "./TheadUi";
+import TbodyUi from "./TheadUi";
 
 export {
+  TheadUi,
+  TbodyUi,
   List,
   ListItem,
   ButtonList,

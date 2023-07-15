@@ -17,9 +17,8 @@ function Switches({
   pure_quantity,
   double_quantity,
 }: SwitchProps) {
-  // className="flex-column mt-4"
   return (
-    <Section>
+    <Section mode="filter">
       <Divider />
       <Container>
         <Checkbox

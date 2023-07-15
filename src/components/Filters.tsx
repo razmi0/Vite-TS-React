@@ -38,7 +38,7 @@ function Filters({
   handleSearch,
 }: FilterProps) {
   return (
-    <Section bsCol="col-4">
+    <Section mode="card">
       <Range rawLength={rawLength} displayedLength={filterLength} />
       <Search search={search} handleSearch={handleSearch} />
       <Spacer />

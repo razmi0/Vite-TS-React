@@ -11,12 +11,9 @@ interface TextProps {
   children: ReactNode;
 }
 let basicStyle = {
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
   border: "none",
   backgroundColor: "inherit",
-  textAlign: "center",
+  // textAlign: "center",
 } as React.CSSProperties;
 
 const textStyles: TextStylesProps = {

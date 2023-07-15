@@ -73,7 +73,10 @@ function Checkbox({
           <label
             htmlFor={id + " cbx"}
             // className="cbx"
-            style={{ cursor: "pointer" }}
+            style={{
+              cursor: "pointer",
+              width: "100%",
+            }}
           >
             {children}
           </label>

@@ -1,5 +1,5 @@
+import { useState, useEffect } from "react";
 import { DataType } from "../types";
-
 interface Props {
   item: DataType;
   index: number;
@@ -12,6 +12,7 @@ function Tbody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
   if (!item.visible) {
     return <></>;
   }
+
   return (
     <tr
       className={setStyle(selectedIndex, index)}

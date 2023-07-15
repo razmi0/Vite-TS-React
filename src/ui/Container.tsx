@@ -1,6 +1,6 @@
 interface ContainerProps {
   children: React.ReactNode;
-  mode?: "default" | "neutral";
+  mode?: "default" | "neutral" | "pagination";
   /**
    * @default div
    * @example as="div"
@@ -15,6 +15,14 @@ const containerStyle = {
   neutral: {
     margin: "0",
     padding: "0",
+  },
+  pagination: {
+    // padding: "0.5em",
+    position: "relative",
+    // margin: "0.2em",
+    top: "10em",
+    right: "1.3em",
+    zIndex: 1,
   },
 };
 /**

@@ -47,8 +47,11 @@ function IconInput({
     backgroundImage: `url(${url})`,
   };
   return (
-    <div className="input-group">
-      <span className="input-group-text" style={iconInputStyle}></span>
+    <div className="input-group no-outline">
+      <span
+        className="input-group-text no-outline"
+        style={iconInputStyle}
+      ></span>
       <input
         type={type}
         name={type}

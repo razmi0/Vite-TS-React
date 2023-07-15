@@ -2,7 +2,6 @@ type SectionStyleProps = {
   display: string;
   flexFlow: string;
   padding: string;
-  maxWidth: string;
   margin: string;
   borderRadius: string;
   border: string;
@@ -11,45 +10,57 @@ type SectionStyleProps = {
 };
 
 interface SectionProps {
-  bgColor?: string;
   children: React.ReactNode;
-  bsCol?:
-    | "col-1"
-    | "col-2"
-    | "col-3"
-    | "col-4"
-    | "col-5"
-    | "col-6"
-    | "col-7"
-    | "col-8"
-    | "col-9"
-    | "col-10"
-    | "col-11"
-    | "col-12";
+  mode: "default" | "dark" | "light" | "card" | "filter" | "table";
+  sx?: React.CSSProperties;
 }
-
+const theme = {
+  default: {
+    maxWidth: "100%",
+    width: "60%",
+  },
+  card: {
+    maxWidth: "800px",
+    width: "30%",
+    height: "500px",
+  },
+  filter: {
+    maxWidth: "100%",
+    width: "100%",
+    height: "fit-content",
+    minHeight: "fit-content",
+    maxHeight: "fit-content",
+  },
+  table: {
+    maxWidth: "100%",
+    width: "60%",
+    height: "500px",
+    // maxHeight: "100%",
+    // minHeight: "100%",
+  },
+};
 let sectionStyle: SectionStyleProps = {
   display: "flex",
   flexFlow: "column nowrap",
   padding: "0.5em",
-  maxWidth: "fit-content",
-  margin: "0.5em",
-  borderRadius: "5px",
+  margin: "0.2em",
+  borderRadius: "0px",
   border: "none",
-  maxHeight: "fit-content",
+  maxHeight: "100%",
+  backgroundColor: "#282828",
 };
 
-function Section({ bgColor, children, bsCol }: SectionProps) {
+function Section({ children, mode = "default", sx }: SectionProps) {
   sectionStyle = {
     ...sectionStyle,
-    backgroundColor: bgColor,
-    maxWidth: "100%",
-  };
-  return (
-    <section style={sectionStyle} className={bsCol}>
-      {children}
-    </section>
-  );
+    ...theme[mode as keyof typeof theme],
+    ...sx,
+  } as SectionStyleProps;
+  return <section style={sectionStyle}>{children}</section>;
 }
 
 export default Section;
+
+// height: "464px",
+// minHeight: "444px",
+// maxHeight: "444px",

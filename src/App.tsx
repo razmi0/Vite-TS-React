@@ -33,6 +33,8 @@ const fuseOptions = {
 /* --------- */
 
 function App() {
+  //#region LOGIC
+
   console.log("App");
 
   count++;
@@ -151,13 +153,17 @@ function App() {
   //#endregion HANDLERS
 
   const { pureLength, doubleLength } = countTypes(pokemons);
-
+  //#endregion LOGIC
   return (
-    <Container>
+    <Container mode="default">
       <Heading text={"Pokemon Table"} as={"h1"} />
       {loading && <Loader color="success" />}
       {!loading && (
-        <HStack>
+        <HStack
+          sx={{
+            justifyContent: "flex-start",
+          }}
+        >
           <Filters
             rawLength={rawLength}
             filterLength={pokemons.length}
@@ -173,7 +179,6 @@ function App() {
             search={search}
             handleSearch={handleSearch}
           />
-          <Spacer />
           <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
         </HStack>
       )}

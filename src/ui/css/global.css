@@ -17,18 +17,21 @@
   box-sizing: border-box;
   font-family: "JetBrains Mono", monospace;
   user-select: none;
-  text-align: center;
+  /* text-align: center; */
   color: var(--white-light);
+}
+.no-outline:focus,
+.no-outline:hover,
+.no-outline,
+.no-outline:active {
+  outline: none !important;
 }
 html {
   max-width: 100vw;
   max-height: 100vh;
 }
 body {
-  background-color: var(--secondary);
+  background-color: var(--tertiary);
   max-width: 100vw;
   max-height: 100vh;
-}
-section {
-  background-color: var(--tertiary);
 }

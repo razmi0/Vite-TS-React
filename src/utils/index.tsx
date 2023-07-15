@@ -29,15 +29,23 @@ export const setColor = (
   return index < colors.length ? colors[index] : colors[sortsLength % index];
 };
 
+let prevIndex = -1;
+
 /**
  * Set style for tbody if user select a row
  * @param selectedIndex
  * @param index
  * @returns
  */
-export const setStyle = (selectedIndex: number, index: number): string => {
-  return selectedIndex === index ? "table-dark" : "table-secondary";
-};
+// export const setStyle = (
+//   selectedIndex: number,
+//   index: number,
+//   variant: VariantType | string
+// ): string => {
+//   console.log("setStyle", selectedIndex, index, variant);
+
+//   return selectedIndex === index ? variant : "default";
+// };
 
 /**
  * Update user length to targetLength
