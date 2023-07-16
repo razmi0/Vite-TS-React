@@ -8,7 +8,10 @@ interface HeadingProps {
 
 function Heading({ text, as: Component = "h1", sx }: HeadingProps) {
   return (
-    <div style={sx} className={`${styles.heading}`}>
+    <div
+      style={sx}
+      className={`${styles.heading} ${Component === "h1" ? styles.wFull : ""}`}
+    >
       <Component className={styles.text}>{text}</Component>
     </div>
   );

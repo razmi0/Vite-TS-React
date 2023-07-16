@@ -10,7 +10,7 @@
 
 .pagination {
   position: relative;
-  top: 10em;
-  right: 1.6em;
-  z-index: 1;
+  bottom: 11rem;
+  left: 41.5rem;
+  width: fit-content;
 }

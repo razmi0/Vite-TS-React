@@ -1,18 +1,16 @@
 .tdDiv {
-  height: 20px;
-  max-height: 20px;
+  height: 35px;
+  max-height: 35px;
 }
 .td {
   cursor: pointer;
   border-bottom: 1px solid transparent;
-  line-height: 10px;
-
+  line-height: 20px;
   height: fit-content;
+  align-content: center;
 }
 .td:hover > div {
-  box-sizing: border-box;
   color: var(--element-orange);
   border-bottom: var(--element-orange) 1px solid;
-  padding-top: 0px;
   transition: all 0.1s ease-in-out;
 }

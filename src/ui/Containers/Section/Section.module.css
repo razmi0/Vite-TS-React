@@ -3,7 +3,8 @@
   display: flex;
   flex-flow: column nowrap;
   padding: 0.5em;
-  margin: 0.2em;
+  margin-right: 0.2em;
+  /* margin-top: 0.2em; */
   border-radius: 0px;
   border: none;
   max-height: 400px;
@@ -11,9 +12,8 @@
   background-color: #282828;
 }
 .card {
-  height: 45%;
-  width: 30%;
   min-height: 400px;
+  width: 100%;
 }
 .table {
   max-width: 100%;
@@ -24,4 +24,9 @@
   height: 100%;
   width: 100%;
   max-width: 100%;
+}
+.radar {
+  /* min-height: 400px; */
+  max-width: 500px;
+  width: 100%;
 }

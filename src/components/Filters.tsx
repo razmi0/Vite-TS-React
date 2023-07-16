@@ -41,7 +41,8 @@ function Filters({
   console.log("Filters rendered");
 
   return (
-    <Section mode="card">
+    // <Section mode="card">
+    <>
       <Range rawLength={rawLength} displayedLength={filterLength} />
       <Search search={search} handleSearch={handleSearch} />
       <Spacer />
@@ -56,7 +57,7 @@ function Filters({
           double_quantity={doubleLength}
         />
       </Container>
-    </Section>
+    </> // </Section>
   );
 }
 

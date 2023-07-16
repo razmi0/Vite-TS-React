@@ -12,8 +12,8 @@ import {
   TBodyUi,
   TrUi,
   THeadUi,
+  Heading,
 } from "../ui";
-type VariantType = "default" | "variant";
 
 let tableCount = 0;
 let initialLength = 10;
@@ -22,7 +22,7 @@ let initialLength = 10;
 /* COMPONENT */
 /* --------- */
 
-function Table({ heading, data, sorts, isAsc = true }: TableProps) {
+function Table({ data, sorts, isAsc = true }: TableProps) {
   //#region logic
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const [selectedTh, setSelectedTh] = useState<number>(-1);
@@ -87,46 +87,38 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
 
   return (
     <>
-      <Section mode="table">
-        <HStack>
-          <TableUi>
-            {/* <TrUi> */}
-            <THeadUi>
-              <tr>
-                {sorts.map((sortBy, index) => (
-                  <Thead
-                    sortBy={sortBy}
-                    index={index}
-                    handleClick={handleClickTh}
-                    onActive={setactiveSortBy}
-                    currentAsc={sortByAsc}
-                    onAsc={setSortByAsc}
-                    selectedTh={selectedTh}
-                    key={index}
-                    isSelectedTh={isSelectedTh}
-                  />
-                ))}
-              </tr>
-            </THeadUi>
-            {/* </TrUi> */}
+      <TableUi>
+        <THeadUi>
+          <tr>
+            {sorts.map((sortBy, index) => (
+              <Thead
+                sortBy={sortBy}
+                index={index}
+                handleClick={handleClickTh}
+                onActive={setactiveSortBy}
+                currentAsc={sortByAsc}
+                onAsc={setSortByAsc}
+                selectedTh={selectedTh}
+                key={index}
+                isSelectedTh={isSelectedTh}
+              />
+            ))}
+          </tr>
+        </THeadUi>
 
-            <TBodyUi>
-              {sortedData.slice(start, end).map((item, index) => (
-                <Tbody
-                  item={item}
-                  index={index}
-                  handleClick={handleClickRow}
-                  selectedIndex={selectedIndex}
-                  key={item.id}
-                  isSelectedRow={isSelectedRow}
-                />
-              ))}
-            </TBodyUi>
-          </TableUi>
-
-          {/* {calcPerf(t1, tableCount, "Table")} */}
-        </HStack>
-      </Section>
+        <TBodyUi>
+          {sortedData.slice(start, end).map((item, index) => (
+            <Tbody
+              item={item}
+              index={index}
+              handleClick={handleClickRow}
+              selectedIndex={selectedIndex}
+              key={item.id}
+              isSelectedRow={isSelectedRow}
+            />
+          ))}
+        </TBodyUi>
+      </TableUi>
       <Container mode="pagination">
         <Pagination
           data_length={data.length}

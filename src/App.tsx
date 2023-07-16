@@ -4,7 +4,15 @@ import Fuse from "fuse.js";
 import { useEffect, useMemo, useState } from "react";
 import { SortsKeys, Fams, checkedFams, Pokemon, DataType } from "./types";
 import "./App.css";
-import { Heading, Loader, HStack, Spacer, Container, Section } from "./ui";
+import {
+  Heading,
+  Loader,
+  HStack,
+  Spacer,
+  Container,
+  Section,
+  VStack,
+} from "./ui";
 import { mergeAtIndex, prepareData } from "./utils";
 import {
   filterByFam,
@@ -169,37 +177,54 @@ function App() {
   return (
     <Container mode="dflt">
       <Heading text={"Pokemon Table"} as={"h1"} />
-      {loading === "error" && (
-        <Loader color="danger" text={`${errored[0]} ${errored[1]}`} />
-      )}
-      {loading === "loading" && <Loader color="success" />}
-      {loading === "loaded" && (
-        <>
-          <HStack>
-            <Filters
-              rawLength={rawLength}
-              filterLength={pokemons.length}
-              data={fams_displayed}
-              checked={checked}
-              handleToggle={handleToggle}
-              handlePureSwitch={handlePureSwitch}
-              isPureSwitchOn={isPureSwitchOn}
-              handleDoubleSwitch={handleDoubleSwitch}
-              isDoubleSwitchOn={isDoubleSwitchOn}
-              pureLength={pureLength}
-              doubleLength={doubleLength}
-              search={search}
-              handleSearch={handleSearch}
-            />
-            <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
-          </HStack>
-          <Section mode="card">
-            <RadarChart />
-          </Section>
-        </>
-      )}
-
-      {/* {calcPerf(t1, count, options={config} "App")} */}
+      <HStack>
+        {loading === "error" && (
+          <Loader color="danger" text={`${errored[0]} ${errored[1]}`} />
+        )}
+        {loading === "loading" && <Loader color="success" />}
+        {loading === "loaded" && (
+          <>
+            <HStack>
+              <Container mode="neutral">
+                <Heading as={"h6"} text="Filters" />
+                <Section mode="card">
+                  <Filters
+                    rawLength={rawLength}
+                    filterLength={pokemons.length}
+                    data={fams_displayed}
+                    checked={checked}
+                    handleToggle={handleToggle}
+                    handlePureSwitch={handlePureSwitch}
+                    isPureSwitchOn={isPureSwitchOn}
+                    handleDoubleSwitch={handleDoubleSwitch}
+                    isDoubleSwitchOn={isDoubleSwitchOn}
+                    pureLength={pureLength}
+                    doubleLength={doubleLength}
+                    search={search}
+                    handleSearch={handleSearch}
+                  />
+                </Section>
+              </Container>
+              <VStack>
+                <Heading as={"h6"} text="Table" />
+                <HStack>
+                  <Section mode="table">
+                    <VStack>
+                      <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
+                    </VStack>
+                  </Section>
+                </HStack>
+              </VStack>
+            </HStack>
+            <VStack>
+              <Heading as={"h6"} text="Radar Chart" />
+              <Section mode="radar">
+                <RadarChart />
+              </Section>
+            </VStack>
+          </>
+        )}
+      </HStack>
     </Container>
   );
 }

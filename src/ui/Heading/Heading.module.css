@@ -3,6 +3,8 @@
   justify-content: start;
   align-items: center;
   margin: 0.2em;
+  margin-left: 0;
+  max-width: 50%;
   background-color: var(--quaternary);
   color: var(--element-orange);
 }
@@ -10,4 +12,8 @@
 .text {
   margin: 0;
   padding: 0.5rem;
+}
+
+.wFull {
+  max-width: 100%;
 }

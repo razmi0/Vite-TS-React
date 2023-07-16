@@ -4,7 +4,7 @@ const { dflt, card, filter } = styles;
 
 interface SectionProps {
   children: React.ReactNode;
-  mode?: "card" | "filter" | "dflt" | "table";
+  mode?: "card" | "filter" | "dflt" | "table" | "radar";
   sx?: React.CSSProperties;
 }
 
