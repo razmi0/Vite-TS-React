@@ -1,13 +1,13 @@
 // import "./css/index.css";
 
-import Spacer from "./Spacer";
-import Heading from "./Heading";
+import Spacer from "./Spacer/Spacer";
+import Heading from "./Heading/Heading";
 import Loader from "./Loader/Loader";
 import VStack from "./Containers/Stacks/VStack/VStack";
 import Section from "./Containers/Section/Section";
 import Container from "./Containers/Container/Container";
 import Text from "./Text/Text";
-import Divider from "./Divider";
+import Divider from "./Divider/Divider";
 import IconInput from "./IconInput/IconInput";
 import HStack from "./Containers/Stacks/HStack/HStack";
 import Checkbox from "./Checkbox/Checkbox";

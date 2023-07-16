@@ -1,0 +1,13 @@
+.heading {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 0.2em;
+  background-color: var(--quaternary);
+  color: var(--element-orange);
+}
+
+.text {
+  margin: 0;
+  padding: 0.5rem;
+}
