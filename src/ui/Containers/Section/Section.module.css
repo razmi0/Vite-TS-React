@@ -17,7 +17,8 @@
 }
 .table {
   max-width: 100%;
-  width: 70%;
+  flex: 1;
+  min-width: 45%;
 }
 .filter {
   height: 100%;

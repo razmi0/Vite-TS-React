@@ -167,7 +167,7 @@ function App() {
   const { pureLength, doubleLength } = countTypes(pokemons);
   //#endregion LOGIC
   return (
-    <Container mode="default">
+    <Container mode="dflt">
       <Heading text={"Pokemon Table"} as={"h1"} />
       {loading === "error" && (
         <Loader color="danger" text={`${errored[0]} ${errored[1]}`} />
@@ -175,11 +175,7 @@ function App() {
       {loading === "loading" && <Loader color="success" />}
       {loading === "loaded" && (
         <>
-          <HStack
-            sx={{
-              justifyContent: "flex-start",
-            }}
-          >
+          <HStack>
             <Filters
               rawLength={rawLength}
               filterLength={pokemons.length}

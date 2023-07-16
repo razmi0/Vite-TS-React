@@ -88,7 +88,7 @@ function Table({ heading, data, sorts, isAsc = true }: TableProps) {
   return (
     <>
       <Section mode="table">
-        <HStack sx={{ flexWrap: "nowrap" }}>
+        <HStack>
           <TableUi>
             {/* <TrUi> */}
             <THeadUi>
