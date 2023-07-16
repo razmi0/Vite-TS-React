@@ -12,9 +12,11 @@ function Heading({ text, as: Component = "h1" }: HeadingProps) {
   return (
     <div
       style={headingStyle}
-      className=" mt-3 d-flex justify-content-start aligh-item-center mx-1"
+      className={`${
+        Component === "h1" ? "mt-1" : "mt-3"
+      } d-flex justify-content-start aligh-item-center mx-1`}
     >
-      <Component className="text-center m-0 p-2">{text}</Component>
+      <Component className="m-0 p-2">{text}</Component>
     </div>
   );
 }

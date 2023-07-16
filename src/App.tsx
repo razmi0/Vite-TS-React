@@ -12,19 +12,7 @@ import {
   filterByMode,
   filterBySearch,
 } from "./filters";
-import { Radar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  LineElement,
-  PointElement,
-  Tooltip,
-  Legend,
-  RadialLinearScale,
-  Filler,
-} from "chart.js";
-import type { ChartData, ChartOptions } from "chart.js";
-
-ChartJS.register(LineElement, PointElement, Tooltip, Legend, RadialLinearScale);
+import RadarChart from "./components/Radar";
 
 //#endregion IMPORTS
 
@@ -35,7 +23,6 @@ let count = 0;
 const isAsc = true;
 let fams = [] as Fams[];
 let fams_displayed = [] as Fams[];
-let fuse = {} as Fuse<DataType>;
 const fuseOptions = {
   includeScore: true,
   keys: ["name"],
@@ -46,49 +33,6 @@ const fuseOptions = {
 /* --------- */
 
 function App() {
-  const dataRadar: ChartData<"radar"> = {
-    labels: ["HP", "Sp. Defense", "Speed"],
-    datasets: [
-      {
-        label: "My First Dataset",
-        data: [65, 59, 90, 81, 56, 55],
-        backgroundColor: "#535bf2",
-        tension: 0.1,
-      },
-      {
-        label: "My Second Dataset",
-        data: [28, 48, 40, 19, 96, 27],
-        backgroundColor: "#f2b053",
-        tension: 0.1,
-      },
-      {
-        label: "My Third Dataset",
-        data: [19, 96, 27],
-        backgroundColor: "#f25353",
-        tension: 0.1,
-      },
-      {
-        label: "My Fourth Dataset",
-        data: [28, 27],
-        backgroundColor: "#53f2b0",
-        tension: 0.1,
-      },
-    ],
-  };
-  const options: ChartOptions = {
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Chart.js Radar Chart",
-      },
-    },
-    layout: {
-      padding: 20,
-    },
-  };
   //#region LOGIC
 
   console.log("App");
@@ -96,7 +40,8 @@ function App() {
   count++;
   let t1 = performance.now();
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState("loading");
+  const [errored, setErrored] = useState<string[]>([]);
   const [raw, setRaw] = useState<Pokemon[]>([]);
   const [rawLength, setRawLength] = useState(0);
   const [isPureSwitchOn, setIsPureSwitchOn] = useState(false);
@@ -110,13 +55,24 @@ function App() {
   useEffect(() => {
     console.log("UE : fetching computed");
     const fetching = async () => {
-      const response = await fetch(url);
-      const data = await response.json();
-      setRaw(data);
-      setLoading(false);
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setRaw(data);
+        setLoading("loaded");
+      } catch (error: any) {
+        setErrored([error.message, 404]);
+        setLoading("error");
+      }
     };
     fetching();
-  }, []);
+    if (loading === "error") {
+      setTimeout(() => {
+        setLoading("loading");
+        console.log("loading set");
+      }, 3000);
+    }
+  }, [loading]);
 
   /**
    * Initial setup on fetch resolve ( setRaw )
@@ -213,8 +169,11 @@ function App() {
   return (
     <Container mode="default">
       <Heading text={"Pokemon Table"} as={"h1"} />
-      {loading && <Loader color="success" />}
-      {!loading && (
+      {loading === "error" && (
+        <Loader color="danger" text={`${errored[0]} ${errored[1]}`} />
+      )}
+      {loading === "loading" && <Loader color="success" />}
+      {loading === "loaded" && (
         <>
           <HStack
             sx={{
@@ -238,8 +197,8 @@ function App() {
             />
             <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
           </HStack>
-          <Section mode="card" sx={{ display: "block", width: "fit-content" }}>
-            <Radar data={dataRadar} />
+          <Section mode="card">
+            <RadarChart />
           </Section>
         </>
       )}

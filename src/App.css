@@ -1,1 +1,41 @@
-@import "./ui/css";
+@import url("bootstrap/dist/css/bootstrap.min.css");
+:root {
+  --white: #ffffff;
+  --white-light: #f2f2f2;
+  --primary: #121212;
+  --secondary: #181818;
+  --tertiary: #404040;
+  --tertiary-light: #535353;
+  --quaternary: #282828;
+  --quinary: #b3b3b3;
+  --element-purple: #535bf2;
+  --element-orange: #fe7f2d;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "JetBrains Mono", monospace;
+  user-select: none;
+  /* text-align: center; */
+  color: var(--white-light);
+  font-size: 0.9rem;
+}
+.no-outline:focus,
+.no-outline:hover,
+.no-outline,
+.no-outline:active {
+  outline: none !important;
+}
+html {
+  max-width: 100vw;
+  max-height: 100vh;
+}
+body {
+  background-color: var(--tertiary);
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+/* @import "./ui/css"; */

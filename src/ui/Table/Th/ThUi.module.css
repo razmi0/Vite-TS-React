@@ -1,0 +1,15 @@
+.dflt {
+  text-align: left;
+  padding: 5px 5px;
+  border-bottom: #fff 1px solid;
+}
+.active,
+.dflt:hover {
+  color: var(--element-orange);
+  border-bottom: var(--element-orange) 1px solid;
+  transition: all 0.1s ease-in-out;
+}
+.active {
+  color: var(--element-purple);
+  border-bottom: var(--element-purple) 1px solid;
+}

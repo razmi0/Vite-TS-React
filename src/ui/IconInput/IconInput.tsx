@@ -1,9 +1,11 @@
 import React from "react";
+import styles from "./IconInput.module.css";
 
 type TypeProps = "text" | "password" | "email" | "number";
 
 interface IconInputProps {
   url: string;
+  sx?: React.CSSProperties;
   type?: TypeProps;
   name?: string;
   value?: string;
@@ -11,54 +13,30 @@ interface IconInputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-interface InputProps {
-  textAlign?: "start" | "center" | "end";
-  paddingLeft?: string;
-  maxWidth?: string;
-}
-
-type IconInputStyleProps = {
-  [key: string]: string;
-};
-
-let iconInputStyle: IconInputStyleProps = {
-  backgroundSize: "contain",
-  backgroundRepeat: "no-repeat",
-  backgroundPosition: "center",
-  objectFit: "scale-down",
-  padding: "12px",
-};
-
-let inputStyle: InputProps = {
-  textAlign: "start",
-  paddingLeft: "10px",
-  maxWidth: "100%",
-};
-
 function IconInput({
   url,
+  sx,
   type = "text",
   value,
   placeholder,
   onChange,
 }: IconInputProps) {
-  iconInputStyle = {
-    ...iconInputStyle,
+  sx = {
+    ...sx,
     backgroundImage: `url(${url})`,
   };
   return (
     <div className="input-group no-outline">
       <span
-        className="input-group-text no-outline"
-        style={iconInputStyle}
+        className={`input-group-text no-outline ${styles.icon}`}
+        style={sx}
       ></span>
       <input
         type={type}
         name={type}
         value={value}
         placeholder={placeholder}
-        className="no-outline form-control"
-        style={inputStyle}
+        className={`no-outline form-control ${styles.input}`}
         onChange={(e) => onChange && onChange(e)}
       />
     </div>

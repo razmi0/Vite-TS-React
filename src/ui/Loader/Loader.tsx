@@ -1,3 +1,4 @@
+import styles from "./Loader.module.css";
 interface LoaderProps {
   text?: string;
   color?:
@@ -12,19 +13,11 @@ interface LoaderProps {
     | "dark";
 }
 
-const loaderContainer = {
-  display: "flex",
-  flexFlow: "row nowrap",
-  alignItems: "center",
-  justifyContent: "center",
-  margin: "1rem",
-};
-
 function Loader({ text = "Loading...", color = "primary" }: LoaderProps) {
   const spinnerColor = `spinner-border m-3 text-${color}`;
 
   return (
-    <div style={loaderContainer}>
+    <div className={styles.loader}>
       <div className={spinnerColor} role="status"></div>
       <span className="fw-bold">{text}</span>
     </div>

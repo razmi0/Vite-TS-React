@@ -1,0 +1,13 @@
+.icon {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  object-fit: "scale-down";
+  padding: 12px;
+}
+
+.input {
+  text-align: start;
+  padding-left: 10px;
+  max-width: 100%;
+}

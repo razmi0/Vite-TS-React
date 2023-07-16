@@ -1,0 +1,16 @@
+.dflt {
+  margin: 0.2em;
+  padding: 0.2em;
+}
+
+.neutral {
+  margin: 0em;
+  padding: 0em;
+}
+
+.pagination {
+  position: relative;
+  top: 10em;
+  right: 1.6em;
+  z-index: 1;
+}

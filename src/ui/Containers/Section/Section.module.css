@@ -1,0 +1,26 @@
+/*Sections*/
+.dflt {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0.5em;
+  margin: 0.2em;
+  border-radius: 0px;
+  border: none;
+  max-height: 400px;
+  max-width: 500px;
+  background-color: #282828;
+}
+.card {
+  height: 45%;
+  width: 30%;
+  min-height: 400px;
+}
+.table {
+  max-width: 100%;
+  width: 70%;
+}
+.filter {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+}

@@ -1,16 +1,14 @@
 import React from "react";
+import styles from "./TableUi.module.css";
+
+const { table } = styles;
 
 interface TableUiProps {
   children: React.ReactNode;
 }
 
-const tableStyle = {
-  width: "100%",
-  // border: "1px solid black",
-};
-
 function TableUi({ children }: TableUiProps) {
-  return <table style={tableStyle}>{children}</table>;
+  return <table className={table}>{children}</table>;
 }
 
 export default TableUi;

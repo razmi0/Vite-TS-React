@@ -1,0 +1,49 @@
+.nav {
+  height: 100%;
+  margin-left: 1rem;
+  background-color: var(--quaternary);
+}
+
+.vStack {
+  flex-direction: column;
+}
+
+.hStack {
+  flex-direction: row;
+}
+
+.ul {
+  display: flex;
+  width: "fit-content";
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.activeH {
+  color: #535bf2;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-bottom: 1px solid #535bf2;
+  padding-top: 1px;
+}
+.activeV {
+  color: #535bf2;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+.btnItem {
+  font-weight: normal;
+  font-size: 0.8rem;
+  color: #535353;
+  min-width: 1.5rem;
+  background-color: inherit;
+  border: none;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+}

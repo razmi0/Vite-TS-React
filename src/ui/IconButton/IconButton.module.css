@@ -1,0 +1,20 @@
+.dflt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: inherit;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  object-fit: scale-down;
+  margin: 2px;
+  padding: 2px;
+  cursor: pointer;
+  min-height: 0.7rem;
+  max-height: 0.7rem;
+  min-width: 0.7rem;
+  max-width: 0.7rem;
+  height: 0.7rem;
+  width: 0.7rem;
+}

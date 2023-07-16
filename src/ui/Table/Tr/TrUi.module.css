@@ -1,0 +1,12 @@
+.tr {
+  height: 20px;
+  max-height: 20px;
+}
+.active > td > div {
+  color: var(--element-orange) !important;
+  transition: all 0.1s ease-in;
+}
+.dflt > td > div {
+  color: var(--white-light);
+  transition: all 0.1s ease-in;
+}

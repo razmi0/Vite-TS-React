@@ -1,35 +1,41 @@
-import { useState, useEffect } from "react";
 import { DataType } from "../types";
+import { TdUi, TrUi } from "../ui";
 interface Props {
   item: DataType;
   index: number;
   handleClick: (index: number, item: DataType) => void;
   selectedIndex: number;
-  setStyle: (selectedIndex: number, index: number) => string;
+  isSelectedRow: (selectedIndex: number, index: number) => boolean;
 }
 
-function Tbody({ item, index, handleClick, selectedIndex, setStyle }: Props) {
+function Tbody({
+  item,
+  index,
+  handleClick,
+  selectedIndex,
+  isSelectedRow,
+}: Props) {
   if (!item.visible) {
     return <></>;
   }
 
   return (
-    <tr
-      className={setStyle(selectedIndex, index)}
+    <TrUi
+      active={isSelectedRow(selectedIndex, index)}
       key={item.id}
       onClick={() => {
         handleClick(index, item);
       }}
     >
-      <td>{item.name}</td>
-      <td>{item.type.join(" ")}</td>
-      <td>{item.Attack}</td>
-      <td>{item.Defense}</td>
-      <td>{item.Speed}</td>
-      <td>{item.SpAttack}</td>
-      <td>{item.SpDefense}</td>
-      <td>{item.HP}</td>
-    </tr>
+      <TdUi>{item.name}</TdUi>
+      <TdUi>{item.type.join(" ")}</TdUi>
+      <TdUi>{item.Attack}</TdUi>
+      <TdUi>{item.Defense}</TdUi>
+      <TdUi>{item.Speed}</TdUi>
+      <TdUi>{item.SpAttack}</TdUi>
+      <TdUi>{item.SpDefense}</TdUi>
+      <TdUi>{item.HP}</TdUi>
+    </TrUi>
   );
 
   // index in trueIndex

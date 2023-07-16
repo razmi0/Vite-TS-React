@@ -1,24 +1,30 @@
-import "./css/index.css";
+// import "./css/index.css";
 
 import Spacer from "./Spacer";
 import Heading from "./Heading";
-import Loader from "./Loader";
-import VStack from "./VStack";
-import Section from "./Section";
-import Container from "./Container";
-import Text from "./Text";
+import Loader from "./Loader/Loader";
+import VStack from "./Containers/Stacks/VStack/VStack";
+import Section from "./Containers/Section/Section";
+import Container from "./Containers/Container/Container";
+import Text from "./Text/Text";
 import Divider from "./Divider";
-import IconInput from "./IconInput";
-import HStack from "./HStack";
-import Checkbox from "./Checkbox";
-import TableUi from "./TableUi";
-import { Nav, List, ListItem, ButtonList } from "./Nav";
-import TheadUi from "./TheadUi";
-import TbodyUi from "./TheadUi";
+import IconInput from "./IconInput/IconInput";
+import HStack from "./Containers/Stacks/HStack/HStack";
+import Checkbox from "./Checkbox/Checkbox";
+import TableUi from "./Table/TableUi";
+import { Nav, List, ListItem, ButtonList } from "./Nav/Nav";
+import THeadUi from "./Table/THead/THeadUi";
+import TBodyUi from "./Table/TBody/TBodyUi";
+import TdUi from "./Table/Td/TdUi";
+import TrUi from "./Table/Tr/TrUi";
+import ThUi from "./Table/Th/ThUi";
 
 export {
-  TheadUi,
-  TbodyUi,
+  ThUi,
+  TrUi,
+  TdUi,
+  TBodyUi,
+  THeadUi,
   List,
   ListItem,
   ButtonList,

@@ -37,12 +37,12 @@ let prevIndex = -1;
  * @param index
  * @returns
  */
-// export const setStyle = (
+// export const isSelectedRow = (
 //   selectedIndex: number,
 //   index: number,
 //   variant: VariantType | string
 // ): string => {
-//   console.log("setStyle", selectedIndex, index, variant);
+//   console.log("isSelectedRow", selectedIndex, index, variant);
 
 //   return selectedIndex === index ? variant : "default";
 // };
