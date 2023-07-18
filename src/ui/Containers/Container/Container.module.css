@@ -8,9 +8,13 @@
   padding: 0em;
 }
 
-.pagination {
+.paginationH {
   position: relative;
-  bottom: 11rem;
-  left: 41.5rem;
+  bottom: 29.4rem;
+  left: 18rem;
+  width: fit-content;
+}
+.paginationV {
+  position: relative;
   width: fit-content;
 }

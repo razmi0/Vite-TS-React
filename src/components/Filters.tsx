@@ -45,9 +45,9 @@ function Filters({
     <>
       <Range rawLength={rawLength} displayedLength={filterLength} />
       <Search search={search} handleSearch={handleSearch} />
-      <Spacer />
       <Container>
         <Checkboxes data={data} checked={checked} handleToggle={handleToggle} />
+        {/* <Spacer /> */}
         <Switches
           handlePureSwitch={handlePureSwitch}
           isPureSwitchOn={isPureSwitchOn}

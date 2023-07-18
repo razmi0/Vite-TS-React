@@ -119,7 +119,7 @@ function Table({ data, sorts, isAsc = true }: TableProps) {
           ))}
         </TBodyUi>
       </TableUi>
-      <Container mode="pagination">
+      <Container mode="paginationH">
         <Pagination
           data_length={data.length}
           page_length={page_length}

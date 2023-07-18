@@ -8,10 +8,17 @@ import { DataTypes, KeyOfDataType, checkedFams, Pokemon } from "../types";
  * @param count
  * @param subject
  */
-export function calcPerf(t1: number, count: number, subject: string) {
+export function calcPerf(
+  t1: number,
+  subject: string,
+  count?: number,
+  ...rest: any
+) {
   const measure = performance.now() - t1;
   subject = subject + " Time";
-  console.table({ count, [subject]: measure });
+  count
+    ? console.table({ count, [subject]: measure, ...rest })
+    : console.table({ [subject]: measure, ...rest });
 }
 /**
  * Set color for thead

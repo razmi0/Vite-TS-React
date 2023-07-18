@@ -36,6 +36,10 @@ export type HasName = {
   name: string;
 };
 
+export type HasNumber = {
+  [key: string]: number;
+};
+
 export type KeyOfDataType = keyof DataType;
 
 export type KeyOf<P> = keyof P;

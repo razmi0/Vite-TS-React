@@ -1,11 +1,11 @@
 .tdDiv {
-  height: 35px;
-  max-height: 35px;
+  height: 20px;
+  max-height: 20px;
 }
 .td {
   cursor: pointer;
   border-bottom: 1px solid transparent;
-  line-height: 20px;
+  line-height: 15px;
   height: fit-content;
   align-content: center;
 }

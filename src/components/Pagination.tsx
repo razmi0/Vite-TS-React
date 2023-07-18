@@ -1,5 +1,6 @@
 import { pagination } from "../utils";
 import { Nav, List, ListItem, ButtonList, Text } from "../ui";
+import { createContext } from "react";
 
 interface PaginationProps {
   data_length: number;
@@ -27,11 +28,11 @@ function Pagination({
   // ◀
   return (
     <Nav aria-label="Page navigation table">
-      <List mode="VPage">
+      <List mode="HPage">
         <ListItem>
           <ButtonList
             onClick={() => handleIndexedPage(pages[0])}
-            icon="./chevron-up.png"
+            icon="./chevron-left.png"
           />
         </ListItem>
         <ListItem>
@@ -58,7 +59,7 @@ function Pagination({
         <ListItem>
           <ButtonList
             onClick={() => handleIndexedPage(pages[pages.length - 1])}
-            icon="./chevron-down.png"
+            icon="./chevron-right.png"
           ></ButtonList>
         </ListItem>
       </List>

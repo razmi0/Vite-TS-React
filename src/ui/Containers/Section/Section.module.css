@@ -4,7 +4,6 @@
   flex-flow: column nowrap;
   padding: 0.5em;
   margin-right: 0.2em;
-  /* margin-top: 0.2em; */
   border-radius: 0px;
   border: none;
   max-height: 400px;
@@ -26,7 +25,9 @@
   max-width: 100%;
 }
 .radar {
-  /* min-height: 400px; */
+  /* padding-top: 30px; */
+  min-width: none;
   max-width: 500px;
-  width: 100%;
+  width: fit-content;
+  height: fit-content;
 }

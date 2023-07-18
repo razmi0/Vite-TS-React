@@ -2,7 +2,7 @@ import styles from "./Container.module.css";
 
 interface ContainerProps {
   children: React.ReactNode;
-  mode?: "dflt" | "neutral" | "pagination";
+  mode?: "dflt" | "neutral" | "paginationH" | "paginationV";
   sx?: React.CSSProperties;
   as?: React.ElementType;
 }

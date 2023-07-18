@@ -35,6 +35,7 @@ const fuseOptions = {
   includeScore: true,
   keys: ["name"],
 };
+let init = 10;
 
 /* --------- */
 /* COMPONENT */
@@ -56,6 +57,9 @@ function App() {
   const [isDoubleSwitchOn, setIsDoubleSwitchOn] = useState(false);
   const [checked, setChecked] = useState<boolean[]>([false]);
   const [search, setSearch] = useState("");
+  const [start, setStart] = useState<number>(0);
+  const [end, setEnd] = useState<number>(init);
+  const [activePage, setActivePage] = useState<number>(1);
 
   /**
    * Fetching
@@ -219,7 +223,7 @@ function App() {
             <VStack>
               <Heading as={"h6"} text="Radar Chart" />
               <Section mode="radar">
-                <RadarChart />
+                <RadarChart data={pokemons} />
               </Section>
             </VStack>
           </>
