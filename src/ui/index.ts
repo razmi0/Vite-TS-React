@@ -1,5 +1,6 @@
 // import "./css/index.css";
 
+import DashBoardWrapper from "./DashBoardWrapper";
 import Spacer from "./Spacer/Spacer";
 import Heading from "./Heading/Heading";
 import Loader from "./Loader/Loader";
@@ -20,6 +21,7 @@ import TrUi from "./Table/Tr/TrUi";
 import ThUi from "./Table/Th/ThUi";
 
 export {
+  DashBoardWrapper,
   ThUi,
   TrUi,
   TdUi,

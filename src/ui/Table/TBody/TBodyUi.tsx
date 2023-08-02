@@ -1,8 +1,6 @@
 import React from "react";
 import styles from "./TbodyUi.module.css";
 
-console.log(styles);
-
 interface TBodyUiProps {
   children: React.ReactNode;
 }

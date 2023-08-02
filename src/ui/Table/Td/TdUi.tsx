@@ -1,7 +1,6 @@
 import React from "react";
 
 import styles from "./TdUi.module.css";
-console.log(styles);
 
 interface TdUiProps {
   children: React.ReactNode;
