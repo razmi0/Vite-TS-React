@@ -87,6 +87,16 @@ function Table({ data, sorts, isAsc = true }: TableProps) {
 
   return (
     <>
+      <Container mode="paginationH">
+        <Pagination
+          data_length={data.length}
+          page_length={page_length}
+          handleIndexedPage={handleIndexedPage}
+          handleNextPage={handleNextPage}
+          handlePreviousPage={handlePreviousPage}
+          activePage={activePage}
+        />
+      </Container>
       <TableUi>
         <THeadUi>
           <tr>
@@ -119,16 +129,6 @@ function Table({ data, sorts, isAsc = true }: TableProps) {
           ))}
         </TBodyUi>
       </TableUi>
-      <Container mode="paginationH">
-        <Pagination
-          data_length={data.length}
-          page_length={page_length}
-          handleIndexedPage={handleIndexedPage}
-          handleNextPage={handleNextPage}
-          handlePreviousPage={handlePreviousPage}
-          activePage={activePage}
-        />
-      </Container>
     </>
   );
 }

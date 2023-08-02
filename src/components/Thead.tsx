@@ -36,8 +36,7 @@ function Thead({
       }}
       active={isSelectedTh(selectedTh, index)}
     >
-      {sortBy.charAt(0).toLocaleUpperCase() +
-        sortBy.slice(1, sortBy.length - 2)}{" "}
+      {sortBy.charAt(0).toLocaleUpperCase() + sortBy.slice(1, sortBy.length)}{" "}
       {currentAsc ? "▲" : "▼"}
     </ThUi>
   );

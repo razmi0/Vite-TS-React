@@ -105,7 +105,8 @@ function App() {
     "isChecked"
   );
 
-  let pokemons = useMemo(() => prepareData(raw), [raw]);
+  // let pokemons = useMemo(() => prepareData(raw), [raw]);
+  let pokemons = prepareData(raw);
 
   //#region FILTERS
 
@@ -181,7 +182,11 @@ function App() {
   return (
     <Container mode="dflt">
       <Heading text={"Pokemon Table"} as={"h1"} />
-      <HStack>
+      <VStack
+        sx={{
+          gap: "1rem",
+        }}
+      >
         {loading === "error" && (
           <Loader color="danger" text={`${errored[0]} ${errored[1]}`} />
         )}
@@ -209,26 +214,32 @@ function App() {
                   />
                 </Section>
               </Container>
+
               <VStack>
-                <Heading as={"h6"} text="Table" />
-                <HStack>
-                  <Section mode="table">
-                    <VStack>
-                      <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
-                    </VStack>
-                  </Section>
-                </HStack>
+                <Heading as={"h6"} text="Radar Chart" />
+                <Section mode="radar">
+                  <RadarChart data={pokemons} />
+                </Section>
               </VStack>
             </HStack>
-            <VStack>
-              <Heading as={"h6"} text="Radar Chart" />
-              <Section mode="radar">
-                <RadarChart data={pokemons} />
-              </Section>
+            {/* <Spacer /> */}
+            <VStack
+              sx={{
+                width: "100%",
+              }}
+            >
+              <Heading as={"h6"} text="Table" />
+              <HStack>
+                <Section mode="table">
+                  <VStack>
+                    <Table data={pokemons} sorts={sortsKeys} isAsc={isAsc} />
+                  </VStack>
+                </Section>
+              </HStack>
             </VStack>
           </>
         )}
-      </HStack>
+      </VStack>
     </Container>
   );
 }

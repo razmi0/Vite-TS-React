@@ -9,9 +9,9 @@
 }
 
 .paginationH {
-  position: relative;
-  bottom: 29.4rem;
-  left: 18rem;
+  position: absolute;
+  right: 0.55rem;
+  bottom: 11rem;
   width: fit-content;
 }
 .paginationV {

@@ -11,13 +11,14 @@
   background-color: #282828;
 }
 .card {
-  min-height: 400px;
+  /* min-height: 400px; */
   width: 100%;
 }
 .table {
   max-width: 100%;
   flex: 1;
-  min-width: 45%;
+  width: 100%;
+  min-width: 30%;
 }
 .filter {
   height: 100%;
